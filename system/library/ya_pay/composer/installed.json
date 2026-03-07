@@ -1,0 +1,96 @@
+{
+    "packages": [
+        {
+            "name": "yandex_pay_and_split/jwt",
+            "version": "1.0.0",
+            "version_normalized": "1.0.0.0",
+            "dist": {
+                "type": "path",
+                "url": "../../packagist/jwt",
+                "reference": "4d859742cc5de6db4ec6392fac5074f439e6279b"
+            },
+            "require": {
+                "php": ">=5.3"
+            },
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "classmap": [
+                    "./src"
+                ],
+                "psr-4": {
+                    "YandexPayAndSplit\\JWT\\": "./src"
+                }
+            },
+            "scripts": {
+                "lint:php": [
+                    "../../vendor/bin/phpcs -s --standard=PSR2 --extensions=php . --ignore=$(composer config vendor-dir)"
+                ],
+                "lint:php:fix": [
+                    "../../vendor/bin/phpcbf --standard=PSR2 --extensions=php . --ignore=$(composer config vendor-dir)"
+                ],
+                "compat": [
+                    "../../vendor/bin/phpcs -n -p ./src --standard=PHPCompatibility --runtime-set testVersion 5.3-8.3 --ignore=$(composer config vendor-dir)"
+                ]
+            },
+            "authors": [
+                {
+                    "name": "YandexPay SMB Team",
+                    "email": "yapay@yandex-team.ru"
+                }
+            ],
+            "transport-options": {
+                "symlink": false,
+                "relative": true
+            },
+            "install-path": "../yandex_pay_and_split/jwt"
+        },
+        {
+            "name": "yandex_pay_and_split/opencart",
+            "version": "1.0.0",
+            "version_normalized": "1.0.0.0",
+            "dist": {
+                "type": "path",
+                "url": "../../packagist/opencart",
+                "reference": "5fd0db6d2bc7d2506aca14323a3d5497e46ac202"
+            },
+            "require": {
+                "php": ">=5.3"
+            },
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "classmap": [
+                    "./src"
+                ],
+                "psr-4": {
+                    "YandexPayAndSplit\\OpenCart\\": "./src"
+                }
+            },
+            "scripts": {
+                "lint:php": [
+                    "../../vendor/bin/phpcs -s --standard=PSR2 --extensions=php . --ignore=$(composer config vendor-dir)"
+                ],
+                "lint:php:fix": [
+                    "../../vendor/bin/phpcbf --standard=PSR2 --extensions=php . --ignore=$(composer config vendor-dir)"
+                ],
+                "compat": [
+                    "../../vendor/bin/phpcs -n -p ./src --standard=PHPCompatibility --runtime-set testVersion 5.3-8.3 --ignore=$(composer config vendor-dir)"
+                ]
+            },
+            "authors": [
+                {
+                    "name": "YandexPay SMB Team",
+                    "email": "yapay@yandex-team.ru"
+                }
+            ],
+            "transport-options": {
+                "symlink": false,
+                "relative": true
+            },
+            "install-path": "../yandex_pay_and_split/opencart"
+        }
+    ],
+    "dev": false,
+    "dev-package-names": []
+}
