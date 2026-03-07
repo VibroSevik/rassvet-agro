@@ -116,7 +116,7 @@
 			         {% if (option['required']) %}*{% endif %} <label>{{ option['name'] }}:</label><br />
 			         {% for option_value in option['product_option_value'] %}
 			         <input type="radio" price_prefix="{{ option_value['price_prefix'] }}" price="{{ option_value['price'] }}" onchange="recalc({{ product['product_id'] }});" name="option[{{ option['product_option_id'] }}]" value="{{ option_value['product_option_value_id'] }}" id="option-value-{{ option_value['product_option_value_id'] }}" />
-			         <label for="option-value-{{ option_value['product_option_value_id'] }}">{{ option_value['name'] }}</label><br />
+                     <label for="option-value-{{ option_value['product_option_value_id'] }}">{{ option_value['name'] }} {% if (option_value['price']) %}({{ option_value['price_prefix'] }}{{ option_value['price'] }}){% endif %}</label><br />
 			         {% endfor %}
 			      </div>
 			      {% endif %} 

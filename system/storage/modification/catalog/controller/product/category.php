@@ -213,19 +213,7 @@ class ControllerProductCategory extends Controller {
 		    $var_currency['thousand_point'] = $this->language->get('thousand_point');
 		    $data['currency'] = $var_currency;
 			$options = $this->model_catalog_product->getProductOptions($result['product_id']);
-                echo '<pre>';
-                foreach($options as &$option) {
-                    echo "Option ID: " . $option['product_option_id'] . "\n";
-                    echo "Name: " . $option['name'] . "\n";
-                    if(isset($option['product_option_value'])) {
-                        foreach($option['product_option_value'] as &$value) {
-                            $value['price'] = (int) $value['price'];
-                            echo "  - Value ID: " . $value['product_option_value_id'] . "\n";
-                        }
-                    }
-                    echo "\n";
-                }
-                echo '</pre>';
+
 			$this->document->addScript('catalog/view/javascript/opt_in_cat.js');
 		    
 				$data['products'][] = array(
@@ -238,7 +226,7 @@ class ControllerProductCategory extends Controller {
 					'thumb'       => $image,
 					'name'        => $result['name'],
 					'description' => utf8_substr(trim(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8'))), 0, $this->config->get('theme_' . $this->config->get('config_theme') . '_product_description_length')) . '..',
-					'price'       => (int) $price,
+					'price'       => $price,
 					'special'     => $special,
 					'tax'         => $tax,
 					'minimum'     => $result['minimum'] > 0 ? $result['minimum'] : 1,
@@ -246,28 +234,6 @@ class ControllerProductCategory extends Controller {
 					'href'        => $this->url->link('product/product', 'path=' . $this->request->get['path'] . '&product_id=' . $result['product_id'] . $url)
 				);
 			}
-
-            foreach ($options as $option) {
-                echo $options[0]['product_option_id'] . PHP_EOL;
-            }
-
-            foreach ($options[0]['product_option_value'] as &$optionValue) {
-                $optionValue['price'] = (int) $optionValue['price'];
-            }
-
-            #$options[0]['product_option_value'][0]['price'] = (int) $options[0]['product_option_value'][0]['price'];
-
-            try {
-                echo $options[0]['type'] . PHP_EOL;
-                echo $options[0]['product_option_id'] . PHP_EOL;
-                echo $options[0]['product_option_value'][0]['price_prefix'] . PHP_EOL;
-                echo $options[0]['product_option_value'][0]['price'] . PHP_EOL;
-                #echo implode(' ', array_keys($options[0]['product_option_value'][0])) . PHP_EOL;
-                #echo implode(' ', array_keys($options[0]['product_option_value'])) . PHP_EOL;
-                #echo $options[0]['product_option_value']['price'];
-            } catch (Exception $exception) {
-                #echo $options[0]['type'];
-            }
 
 			$url = '';
 
