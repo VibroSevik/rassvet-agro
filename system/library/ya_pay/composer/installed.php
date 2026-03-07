@@ -1,0 +1,41 @@
+<?php return array(
+    'root' => array(
+        'name' => 'yandex-pay/opencart3',
+        'pretty_version' => '1.0.0+no-version-set',
+        'version' => '1.0.0.0',
+        'reference' => null,
+        'type' => 'project',
+        'install_path' => __DIR__ . '/../../../../../',
+        'aliases' => array(),
+        'dev' => false,
+    ),
+    'versions' => array(
+        'yandex-pay/opencart3' => array(
+            'pretty_version' => '1.0.0+no-version-set',
+            'version' => '1.0.0.0',
+            'reference' => null,
+            'type' => 'project',
+            'install_path' => __DIR__ . '/../../../../../',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'yandex_pay_and_split/jwt' => array(
+            'pretty_version' => '1.0.0',
+            'version' => '1.0.0.0',
+            'reference' => '4d859742cc5de6db4ec6392fac5074f439e6279b',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../yandex_pay_and_split/jwt',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'yandex_pay_and_split/opencart' => array(
+            'pretty_version' => '1.0.0',
+            'version' => '1.0.0.0',
+            'reference' => '5fd0db6d2bc7d2506aca14323a3d5497e46ac202',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../yandex_pay_and_split/opencart',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+    ),
+);

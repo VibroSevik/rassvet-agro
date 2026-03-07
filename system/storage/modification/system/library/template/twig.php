@@ -3,12 +3,23 @@ namespace Template;
 final class Twig {
 	private $twig;
 	private $data = array();
+
+            //d_twig_manager.xml
+            private $registry = array();
+            
 	
-	public function __construct() {
+	
+            //d_twig_manager.xml
+            public function __construct($registry) {
+            
 		// include and register Twig auto-loader
 		include_once(DIR_SYSTEM . 'library/template/Twig/Autoloader.php');
 		
 		\Twig_Autoloader::register();
+
+            //d_twig_manager.xml
+            $this->registry = $registry;
+            
 	}
 	
 	public function set($key, $value) {
@@ -36,6 +47,12 @@ final class Twig {
 		}
 
 		$this->twig = new \Twig_Environment($loader, $config);
+
+            //d_twig_manager.xml
+            if (file_exists(DIR_SYSTEM . 'library/template/Twig/Extension/DTwigManager.php')) {
+                $this->twig->addExtension(new \Twig_Extension_DTwigManager($this->registry));
+            }
+            
 		
 		try {
 			// load template

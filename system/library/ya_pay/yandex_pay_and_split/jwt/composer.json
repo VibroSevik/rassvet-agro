@@ -1,0 +1,25 @@
+{
+    "version": "1.0.0",
+    "name": "yandex_pay_and_split/jwt",
+    "authors": [
+        {
+            "name": "YandexPay SMB Team",
+            "email": "yapay@yandex-team.ru"
+        }
+    ],
+    "require": {
+        "php": ">=5.3"
+    },
+    "scripts": {
+        "lint:php": "../../vendor/bin/phpcs -s --standard=PSR2 --extensions=php . --ignore=$(composer config vendor-dir)",
+        "lint:php:fix": "../../vendor/bin/phpcbf --standard=PSR2 --extensions=php . --ignore=$(composer config vendor-dir)",
+        "compat": "../../vendor/bin/phpcs -n -p ./src --standard=PHPCompatibility --runtime-set testVersion 5.3-8.3 --ignore=$(composer config vendor-dir)",
+        "run-tests": "../../vendor/bin/phpunit ./tests"
+    },
+    "autoload": {
+        "classmap": ["./src"],
+        "psr-4": {
+            "YandexPayAndSplit\\JWT\\": "./src"
+        }
+    }
+}
