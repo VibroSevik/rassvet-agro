@@ -1,4 +1,4 @@
-## OpenCart 3.0.3.2 template
+## Rassvet Agro | OpenCart 3.0.3.2 + PHP 7
 
 ## :computer: Installation on local machine
 
@@ -26,9 +26,27 @@ docker compose up -d --build
 
 ## After installation
 
-Go to localhost:8080 and login into dashboard.
+* Install database dump;
+
+As an administrator:
+
+```shell
+docker exec -i opencart-db mysql -u root -p root_password opencart_db < dump.sql
+```
+
+or 
+
+```shell
+docker exec -i <database_container> mysql -u <mysql_user> -p <user_password> <database_name> < /path/to/your/dump.sql
+```
+
+
+* Go to localhost:8080 and login into dashboard.
 
 > [!IMPORTANT]
 > Standard credentials for admin: <br>
 > login: admin <br>
 > password: foo
+
+> [!IMPORTANT]
+> Application works only with database dump.
