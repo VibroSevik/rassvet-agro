@@ -1,0 +1,257 @@
+{{ header }}
+{{ column_left }}
+<div id="content">
+	<div class="page-header">
+		<div class="container-fluid">
+			<div class="pull-right">
+				<button type="submit" form="form-payment" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary">
+					<i class="fa fa-save"></i>
+				</button>
+				<a href="{{ back }}" data-toggle="tooltip" title="{{ button_back }}" class="btn btn-default">
+					<i class="fa fa-reply"></i>
+				</a>
+			</div>
+			<h1>
+				<i class="fa fa-credit-card"></i>
+				{{ heading_title }}</h1>
+			<ul class="breadcrumb">
+				{% for breadcrumb in breadcrumbs %}
+					<li>
+						<a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a>
+					</li>
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+	<div class="container-fluid">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">
+					<i class="fa fa-pencil"></i>
+					{{ text_edit }}</h3>
+			</div>
+			<div class="panel-body">
+				<form id="form-payment" action="{{ save }}" method="post" enctype="multipart/form-data" class="form-horizontal">
+					<ul class="nav nav-tabs">
+						<li class="active">
+							<a href="#tab-general" data-toggle="tab">{{ tab_general }}</a>
+						</li>
+						<li>
+							<a href="#tab-orders" data-toggle="tab">{{ tab_orders }}</a>
+						</li>
+						<li>
+							<a href="#tab-design" data-toggle="tab">{{ tab_design }}</a>
+						</li>
+					</ul>
+					<div class="tab-content">
+						<div id="tab-general" class="tab-pane active">
+							<fieldset>
+								<legend>{{ text_opencart }}</legend>
+								<div class="form-group">
+									<label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
+									<div class="col-sm-10">
+										<select name="payment_ya_pay_status" id="input-status" class="form-control">
+											{% if payment_ya_pay_status %}
+												<option value="1" selected>{{ text_enabled }}</option>
+												<option value="0">{{ text_disabled }}</option>
+											{% else %}
+												<option value="1">{{ text_enabled }}</option>
+												<option value="0" selected>{{ text_disabled }}</option>
+											{% endif %}
+										</select>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label" for="input-sort-order">{{ entry_sort_order }}</label>
+									<div class="col-sm-10">
+										<input type="text" name="payment_ya_pay_sort_order" value="{{ payment_ya_pay_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
+									</div>
+								</div>
+							</fieldset>
+							<fieldset>
+								<legend>{{ text_merchant }}</legend>
+								<div class="form-group required">
+									<label class="col-sm-2 control-label" for="input-merchant-id">{{ entry_merchant_id }}</label>
+									<div class="col-sm-10">
+										<input type="text" name="payment_ya_pay_merchant_id" value="{{ payment_ya_pay_merchant_id }}" placeholder="{{ placeholder_merchant_id }}" id="input-merchant-id" class="form-control"/>
+										{% if errors.merchant_id %}
+											<div class="text-danger">{{ errors.merchant_id }}</div>
+										{% endif %}
+									</div>
+								</div>
+								<div class="form-group required">
+									<label class="col-sm-2 control-label" for="input-api-key">{{ entry_api_key }}</label>
+									<div class="col-sm-10">
+										<input type="text" name="payment_ya_pay_api_key" value="{{ payment_ya_pay_api_key }}" placeholder="{{ placeholder_api_key }}" id="input-api-key" class="form-control"/>
+										{% if errors.api_key %}
+											<div class="text-danger">{{ errors.api_key }}</div>
+										{% endif %}
+									</div>
+								</div>
+								<div class="form-group required">
+									<label class="col-sm-2 control-label">{{ entry_available_payment_methods }}</label>
+									<div class="col-sm-10">
+										<div class="form-control" style="display: flex; column-gap: 8px;">
+											{% for payment_method in payment_ya_pay_payment_methods %}
+												<div class="form-check" style="display: flex; column-gap: 8px;">
+													<input type="checkbox" name="payment_ya_pay_available_payment_methods[]" value="{{ payment_method.value }}" id="input-available_payment_method-{{ payment_method.value }}" class="form-check-input" {% if payment_method.value in payment_ya_pay_available_payment_methods %} checked {% endif %}/>
+													<label for="input-available_payment_method-{{ payment_method.value }}" class="form-check-label">{{ payment_method.name }}</label>
+												</div>
+											{% endfor %}
+										</div>
+										{% if errors.available_payment_methods %}
+											<div class="text-danger">{{ errors.available_payment_methods }}</div>
+										{% endif %}
+									</div>
+								</div>
+							</fieldset>
+							<fieldset>
+								<legend>{{ text_other }}</legend>
+								<div class="form-group">
+									<label class="col-sm-2 control-label" for="input-test-environment">{{ entry_test_environment }}</label>
+									<div class="col-sm-10">
+										<select name="payment_ya_pay_test_environment" id="input-test-environment" class="form-control">
+											{% if payment_ya_pay_test_environment %}
+												<option value="1" selected>{{ text_enabled }}</option>
+												<option value="0">{{ text_disabled }}</option>
+											{% else %}
+												<option value="1">{{ text_enabled }}</option>
+												<option value="0" selected>{{ text_disabled }}</option>
+											{% endif %}
+										</select>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label" for="input-ttl">{{ entry_ttl }}
+									</label>
+									<div class="col-sm-10">
+										<input type="number" name="payment_ya_pay_ttl" value="{{ payment_ya_pay_ttl }}" placeholder="{{ entry_ttl }}" min="180" max="604800" id="input-ttl" class="form-control"/>
+									</div>
+								</div>
+							</fieldset>
+						</div>
+						<div id="tab-orders" class="tab-pane">
+							<fieldset>
+								<legend>{{ text_statuses }}</legend>
+								<div class="form-group">
+									<label class="col-sm-2 control-label" for="input-order-status-id">{{ entry_order_status }}</label>
+									<div class="col-sm-10">
+										<select name="payment_ya_pay_order_status_id" id="input-order-status-id" class="form-control">
+											{% for order_status in order_statuses %}
+												{% if order_status.order_status_id == payment_ya_pay_order_status_id %}
+													<option value="{{ order_status.order_status_id }}" selected>{{ order_status.name }}</option>
+												{% else %}
+													<option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+												{% endif %}
+											{% endfor %}
+										</select>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label" for="input-success-order-status-id">{{ entry_success_order_status }}</label>
+									<div class="col-sm-10">
+										<select name="payment_ya_pay_success_order_status_id" id="input-success-order-status-id" class="form-control">
+											{% for order_status in order_statuses %}
+												{% if order_status.order_status_id == payment_ya_pay_success_order_status_id %}
+													<option value="{{ order_status.order_status_id }}" selected>{{ order_status.name }}</option>
+												{% else %}
+													<option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+												{% endif %}
+											{% endfor %}
+										</select>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label" for="input-error-order-status-id">{{ entry_error_order_status }}</label>
+									<div class="col-sm-10">
+										<select name="payment_ya_pay_error_order_status_id" id="input-error-order-status-id" class="form-control">
+											{% for order_status in order_statuses %}
+												{% if order_status.order_status_id == payment_ya_pay_error_order_status_id %}
+													<option value="{{ order_status.order_status_id }}" selected>{{ order_status.name }}</option>
+												{% else %}
+													<option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+												{% endif %}
+											{% endfor %}
+										</select>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label" for="input-refunded-order-status-id">{{ entry_refunded_order_status }}</label>
+									<div class="col-sm-10">
+										<select name="payment_ya_pay_refunded_order_status_id" id="input-refunded-order-status-id" class="form-control">
+											{% for order_status in order_statuses %}
+												{% if order_status.order_status_id == payment_ya_pay_refunded_order_status_id %}
+													<option value="{{ order_status.order_status_id }}" selected>{{ order_status.name }}</option>
+												{% else %}
+													<option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+												{% endif %}
+											{% endfor %}
+										</select>
+									</div>
+								</div>
+							</fieldset>
+							<fieldset>
+								<legend>{{ text_other }}</legend>
+								<div class="form-group">
+									<label class="col-sm-2 control-label" for="input-purpose">{{ entry_purpose }}
+									</label>
+									<div class="col-sm-10">
+										<input type="text" name="payment_ya_pay_purpose" value="{{ payment_ya_pay_purpose }}" placeholder="{{ entry_purpose }}" id="input-purpose" class="form-control"/>
+									</div>
+								</div>
+							</fieldset>
+						</div>
+						<div id="tab-design" class="tab-pane">
+							<fieldset>
+								<legend>{{ text_button }}</legend>
+								<div class="form-group">
+									<label class="col-sm-2 control-label" for="input-is-pay-button-type">{{ entry_is_pay_button_type }}</label>
+									<div class="col-sm-10">
+										<select name="payment_ya_pay_is_pay_button_type" id="input-is-pay-button-type" class="form-control">
+											{% if payment_ya_pay_is_pay_button_type %}
+												<option value="1" selected>{{ text_enabled }}</option>
+												<option value="0">{{ text_disabled }}</option>
+											{% else %}
+												<option value="1">{{ text_enabled }}</option>
+												<option value="0" selected>{{ text_disabled }}</option>
+											{% endif %}
+										</select>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label" for="input-button-theme">{{ entry_button_theme }}</label>
+									<div class="col-sm-10">
+										<select name="payment_ya_pay_button_theme" id="input-button-theme" class="form-control">
+											{% for button_theme in payment_ya_pay_button_themes %}
+												{% if button_theme.value == payment_ya_pay_button_theme %}
+													<option value="{{ button_theme.value }}" selected>{{ button_theme.name }}</option>
+												{% else %}
+													<option value="{{ button_theme.value }}">{{ button_theme.name }}</option>
+												{% endif %}
+											{% endfor %}
+										</select>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label" for="input-button-width">{{ entry_button_width }}</label>
+									<div class="col-sm-10">
+										<select name="payment_ya_pay_button_width" id="input-button-width" class="form-control">
+											{% for button_width in payment_ya_pay_button_widths %}
+												{% if button_width.value == payment_ya_pay_button_width %}
+													<option value="{{ button_width.value }}" selected>{{ button_width.name }}</option>
+												{% else %}
+													<option value="{{ button_width.value }}">{{ button_width.name }}</option>
+												{% endif %}
+											{% endfor %}
+										</select>
+									</div>
+								</div>
+							</fieldset>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+{{ footer }}

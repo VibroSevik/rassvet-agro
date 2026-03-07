@@ -1,0 +1,241 @@
+
+:root {
+  --rass-primary-color: #4CAF50;    /* Основной (зелёный) */
+  --rass-secondary-color: #FFCA28;  /* Дополнительный (жёлтый) */
+  --rass-text-color: #333;          /* Основной цвет текста */
+  --rass-bg-color: #f9f9f9;         /* Фоновый цвет */
+  --rass-font-family: Arial, sans-serif;
+}
+
+/* 
+   Контейнер (обёртка) для контента каждой отдельной страницы.
+   Пример использования:
+   <div class="rass-container"> ... </div>
+*/
+.rass-container {
+  /*max-width: 1200px;*/
+  margin: 0 auto;
+  padding: 40px 20px;
+  font-family: var(--rass-font-family);
+  background-color: var(--rass-bg-color);
+  color: var(--rass-text-color);
+}
+
+/* 
+   Основной заголовок на странице.
+   Пример использования:
+   <h1 class="rass-title">О нашей компании</h1>
+*/
+.rass-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--rass-primary-color);
+  margin-bottom: 30px;
+  text-transform: uppercase;
+  position: relative;
+}
+
+/* Декоративная линия под заголовком */
+.rass-title::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 4px;
+  background-color: var(--rass-secondary-color);
+  margin-top: 8px;
+}
+
+/* 
+   Разделы (блоки) внутри страницы.
+   Пример использования:
+   <section class="rass-section"> ... </section>
+*/
+.rass-section {
+  margin-bottom: 50px;
+}
+
+/* Заголовок раздела (подзаголовок). 
+   Пример использования: <h2 class="rass-subtitle">...</h2>
+*/
+.rass-subtitle {
+  font-size: 1.7rem;
+  color: var(--rass-primary-color);
+  margin-bottom: 15px;
+  position: relative;
+}
+
+/* Декоративная линия под подзаголовком */
+.rass-subtitle::after {
+  content: "";
+  display: block;
+  width: 40px;
+  height: 3px;
+  background-color: var(--rass-secondary-color);
+  margin-top: 5px;
+}
+
+/* Общие правила для параграфов внутри этих блоков */
+.rass-section p {
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+/* 
+   Ненумерованные списки (если понадобятся).
+   Пример использования:
+   <ul class="rass-list">
+     <li>Пункт 1</li>
+     <li>Пункт 2</li>
+   </ul>
+*/
+.rass-list {
+  list-style: none;
+  margin: 0 0 15px 0;
+  padding: 0;
+}
+
+/* Стилизованные маркеры (точки) */
+.rass-list li {
+  position: relative;
+  padding-left: 25px;
+  margin-bottom: 10px;
+  line-height: 1.6;
+}
+
+.rass-list li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: var(--rass-primary-color);
+  font-weight: bold;
+}
+
+/* 
+   Пример стиля для "гарантийного" или "контактного" блока с зелёной подложкой
+   (используется на странице доставки, "контакты" и т.п.)
+   <section class="rass-contacts-block">
+     ...
+   </section>
+*/
+.rass-contacts-block {
+  background-color: var(--rass-primary-color);
+  color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.rass-contacts-block a {
+  color: var(--rass-secondary-color);
+  text-decoration: underline;
+}
+
+.rass-contacts-block a:hover {
+  text-decoration: none;
+}
+
+/* ========== Пример стилизованных "карточек" (для способов оплаты и т.п.) ========== */
+
+.rass-payment-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  margin-top: 20px;
+}
+
+.rass-payment-option {
+  flex: 1 1 250px;
+  min-width: 250px;
+  background-color: #fff;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+/* Иконка внутри карточки */
+.rass-payment-option i {
+  font-size: 1.8rem; 
+  color: var(--rass-primary-color);
+}
+
+/* Заголовок карточки */
+.rass-payment-option-title {
+  font-weight: bold;
+  color: var(--rass-primary-color);
+  margin: 0;
+}
+
+/* ========== Пример зигзаг-блоков (для "О нас") ========== */
+
+/* Общий контейнер для зигзага */
+.rass-zigzag-block {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  align-items: center;
+  margin-bottom: 40px; /* Отступ между такими блоками */
+}
+
+.rass-zigzag-row {
+  flex-direction: row; /* картинка слева, текст справа */
+}
+
+.rass-zigzag-row-reverse {
+  flex-direction: row-reverse; /* картинка справа, текст слева */
+}
+
+/* Изображение в зигзаг-блоке */
+.rass-img {
+  width: 100%;
+  max-width: 600px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* ========== Пример для иконок со списками (для условий доставки, etc.) ========== */
+/* Если нужно встроить иконки Font Awesome в списках, 
+   используйте подобную структуру внутри HTML:
+   <ul class="rass-list-icon">
+     <li><i class="fas fa-truck rass-icon"></i> Текст</li>
+   </ul>
+*/
+.rass-list-icon {
+  list-style: none;
+  margin: 15px 0;
+  padding: 0;
+}
+.rass-list-icon li {
+  position: relative;
+  margin-bottom: 10px;
+  line-height: 1.6;
+  padding-left: 40px; /* отступ под иконку */
+}
+
+/* Иконка слева */
+.rass-list-icon li i.rass-icon {
+  position: absolute;
+  left: 0;
+  top: 2px;  /* подстройте по вертикали, если нужно */
+  font-size: 1.2rem;
+  color: var(--rass-primary-color);
+}
+
+/* ========== Адаптивность ========== */
+@media (max-width: 768px) {
+  .rass-title {
+    font-size: 1.6rem;
+  }
+
+  /* Карточки или блоки выстраиваются вертикально */
+  .rass-payment-options {
+    flex-direction: column;
+  }
+
+  .rass-zigzag-block {
+    flex-direction: column !important;
+  }
+}
