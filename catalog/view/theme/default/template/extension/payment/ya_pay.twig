@@ -1,0 +1,12 @@
+<div id="yandex-pay-button-container" class="pull-right" style="min-height: 54px; margin-top: 1em;">
+    {% if not payment_ya_pay_is_pay_button_type %}
+        <input type="button" value="{{ button_confirm }}" id="button-confirm" data-loading-text="{{ text_loading }}" class="btn btn-primary" />
+    {% endif %}
+</div>
+<script async>
+	if ({{ payment_ya_pay_is_pay_button_type }}) {
+		window?.YaPayOC?.mountButton('#yandex-pay-button-container');
+	} else {
+        window?.YaPayOC?.addButtonsClickListener('#button-confirm');
+    }
+</script>

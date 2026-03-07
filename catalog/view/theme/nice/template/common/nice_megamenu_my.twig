@@ -1,0 +1,111 @@
+<div class="container">
+  <nav class="main-menu__wrapper">
+    <div class="main-menu__header">
+      <span class="main-menu__title">{{ nice_text_menu_title }}</span>
+      <span role="button" class="main-menu__close main-menu__close--main">&times;</span>
+    </div>
+    <div class="main-menu__container">
+      <div class="main-menu__additional-row">
+        {{ telephone }}
+      </div>
+      <div class="main-menu__additional-row">
+        {{ language }}
+      </div>
+      <div class="main-menu__additional-row">
+        {{ currency }}
+      </div>
+      <ul class="main-menu">
+        
+        {# Menu Top Append . Begin #}
+         {% if menu_top_items is not empty %}
+          <li class="main-menu__item -level-1"><a href="#"><span class="main-menu__label">Головна</span></a></li>
+          <li class="main-menu__item -level-1 -has-children">            
+          <a href="#"><span class="main-menu__label -level-1 -has-children">{{ menu_top_label }}</span><span class="main-menu__open-icon"></span></a>
+          <ul class="main-menu__children-container -level-1 -columns-1">
+            <div class="main-menu__header"><span role="button" class="main-menu__back">&lsaquo;</span><span role="button" class="main-menu__close">&times;</span></div>
+            {% for top_item in menu_top_items %}
+            <li class="main-menu__item -level-2"><a href="{{ top_item.href }}"><span class="main-menu__label -level-2">{{ top_item.title }}</span></a></li>
+            {% endfor %} 
+            </ul>
+          </li>
+        {% endif %}
+        {# Menu Top Append . End #}
+        
+        {% for category in categories_columned %}
+          {# Columns
+            todo...
+            actually there are OpenCart category.column setting...
+          #}
+          
+          {% if category.nice_menu_category_columns %}
+{#            {% set classes = 'several-columns-' ~ category.nice_menu_category_columns %}#}
+            {% set classes = '-several-columns' %}
+          {% else %}
+            {% set classes = '-one-column' %}
+          {% endif %}
+          
+          {% if category.nmm_promo_status %}
+            {% set classes = classes ~ ' -with-promo' %}
+          {% endif %}
+          
+          {% if category.children %}
+            {# Are Children #}
+            <li class="main-menu__item -level-1 -has-children">
+              <a href="{{ category.href }}"><span class="main-menu__label -level-1 -has-children">{{ category.name }}</span><span class="main-menu__open-icon"></span></a>
+              <ul class="main-menu__children-container -level-1 {{ classes }}">
+                <div class="main-menu__header"><span role="button" class="main-menu__back">&lsaquo;</span><span role="button" class="main-menu__close">&times;</span></div>
+                  <div class="main-menu__body">
+                  {% for column_i,column in category.children %}
+                    <div class="main-menu__column -index-{{ column_i }}">
+                    {% for child in column %}                 
+                      {# Are Grandchildren #}
+                      {% if child.grandchildren %}
+                        <li class="main-menu__item -level-2 -has-children">
+                          <a href="{{ child.href }}"><span class="main-menu__label -level-2 -has-children">{{ child.name }}</span><span class="main-menu__open-icon"></span></a>
+                          <ul class="main-menu__children-container -level-2">
+                            <div class="main-menu__header"><span role="button" class="main-menu__back">&lsaquo;</span><span role="button" class="main-menu__close">&times;</span></div>
+                            {% for grandchild in child.grandchildren %}
+                              <li class="main-menu__item -level-3"><a href="{{ grandchild.href }}"><span class="main-menu__label -level-3">{{ grandchild.name }}</span></a></li>
+                            {% endfor %}
+                          </ul>
+                        </li>
+                      {# No Grandchildren #}
+                      {% else %}
+                        <li class="main-menu__item -level-2"><a href="{{ child.href }}"><span class="main-menu__label -level-2">{{ child.name }}</span></a></li>
+                      {% endif %}
+                    {% endfor %}
+                    </div>
+                  {% endfor %}
+
+                  {# Menu Promo . Begin #}
+                  {% if category.nmm_promo_status %} 
+                    <div class="main-menu__column -index-{{ category.nice_menu_category_columns + 1 }} main-menu-promo__column">
+                      {% if category.nmm_image %}
+                        <div class="main-menu-promo__img-container">
+                        {% if category.nmm_link %}<a href="{{ category.nmm_link }}">{% endif %}
+                          <img src="{{ category.nmm_image }}" alt="{{ category.nmm_alt }}" class="main-menu-promo__img img-responsive">
+                        {% if category.nmm_link %}</a>{% endif %}
+                        </div>
+                      {% endif %}
+                      {% if category.nmm_title or category.nmm_text or category.nmm_anchor %}
+                        <div class="main-menu-promo__body">
+                          {% if category.nmm_title %}<p class="main-menu-promo__title">{{ category.nmm_title }}</p>{% endif %}
+                          {% if category.nmm_text %}<div class="main-menu-promo__text">{{ category.nmm_text }}</div>{% endif %}
+                          {% if category.nmm_link and category.nmm_anchor %}<a href="{{ category.nmm_link }}" class="main-menu-promo__link">{{ category.nmm_anchor }}</a>{% endif %}
+                        </div>
+                      {% endif %}
+                    </div>
+                  {% endif %}
+                  {# Menu Promo . End #}                
+                </div>                
+              </ul>
+            </li>            
+          {% else %}
+            {# No Children #}
+            <li class="main-menu__item -level-1"><a href="{{ category.href }}"><span class="main-menu__label -level-1">{{ category.name }}</span></a></li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+    </div>
+  </nav>
+</div>

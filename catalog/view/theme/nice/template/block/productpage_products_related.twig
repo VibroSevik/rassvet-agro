@@ -1,0 +1,51 @@
+{% if products %}
+<div class="section section--productlist">
+  <div class="section__title--wrapped"><p class="section__title">{{ text_related }}</p></div>
+  <div class="row list-row"> {% set i = 0 %}
+  {% for product in products %}
+  <div class="list-item__col {% if nice.productlist_grid_hover_effect %}grid-hover-effect{% endif %} product-grid col-md-2 col-sm-6 {% if '1' == nice.productlist_cols_on_mobile %}col-xs-12{% else %}col-xs-6{% endif %}">
+    <div class="thumb-hover-1 product-thumb transition">
+      <div class="product-thumb__image {% if nice.productlist_image_margins %}-has-margins{% endif %}"><a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive" /></a></div>
+      <div class="product-thumb__info">
+        {% if product.rating %}
+        <div class="product-thumb__rating">
+          {% for i in 1..5 %}
+          {% if product.rating < i %}<span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span> {% else %} <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>{% endif %}
+          {% endfor %}
+        </div>
+        {% endif %}
+        <a class="product-thumb__name {% if 'bold' == nice.productlist_name_font_weight %}-bold-sm{% endif %}" href="{{ product.href }}">{{ product.name }}</a>
+        {% if nice.productlist_description %}<p class="product-thumb__description {% if not nice.productlist_description_on_mobile %}hidden-xs hidden-sm{% endif %}">{{ product.description }}</p>{% endif %}
+        {% if product.price %}
+        <div class="price">
+          {% if not product.special %}
+          <span class="price-value {% if 'bold' == nice.productlist_price_font_weight %}-bold{% endif %}">{{ product.price }}</span>
+          {% else %}
+          <span class="price-old">{{ product.price }}</span><span class="price-new">{{ product.special }}</span>
+          {% endif %}
+          {% if product.tax %}
+          <div  class="price-tax">{{ text_tax }} {{ product.tax }}</div>
+          {% endif %}
+        </div>
+        {% endif %}
+        <div class="product-thumb__hidden-wrapper">
+          <button type="button" class="btn btn-accent product-thumb__button-buy -grid-hover-effect-hidden" onclick="cart.add('{{ product.product_id }}', '{{ product.minimum }}');"><i class="fa fa-shopping-cart"></i> <span class="">{{ button_cart }}</span></button>
+          
+          <!-- <div class="product-thumb__compare" data-toggle="tooltip" title="{{ button_compare }}" onclick="compare.add('{{ product.product_id }}');"><i class="fa fa-exchange"></i></div> (иконка сравнения в карточке)-->
+          
+          <div class="product-thumb__wishlist" data-toggle="tooltip" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product.product_id }}');"><i class="fa fa-heart-o"></i></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% if column_left and column_right and (i + 1) % 2 == 0 %}
+  <div class="clearfix visible-md visible-sm"></div>
+  {% elseif column_left or column_right and (i + 1) % 3 == 0 %}
+  <div class="clearfix visible-md"></div>
+  {% elseif (i + 1) % 4 == 0 %}
+  <div class="clearfix visible-md"></div>
+  {% endif %}
+  {% set i = i + 1 %}
+  {% endfor %} </div>
+</div>
+{% endif %}
