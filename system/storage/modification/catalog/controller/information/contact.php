@@ -1,5 +1,12 @@
 <?php
+
+require_once(DIR_SYSTEM . 'library/decliner/russian_cases_decliner.php');
+require_once(DIR_SYSTEM . 'library/decliner/russian_cases.php');
+
+// @todo: need some refactoring here
+
 class ControllerInformationContact extends Controller {
+
 	private $error = array();
 
 	public function index() {
@@ -91,7 +98,16 @@ class ControllerInformationContact extends Controller {
 			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_account_id'));
 
 			if ($information_info) {
-				$data['text_agree'] = sprintf($this->language->get('text_agree'), $this->url->link('information/information/agree', 'information_id=' . $this->config->get('config_account_id'), true), $information_info['title'], $information_info['title']);
+                $decliner = new Decliner\RussianCasesDecliner();
+
+                $errorText = $decliner->declinePhrase($information_info['title'], \Decliner\RussianCases::ACCUSATIVE);
+
+				$data['text_agree'] = sprintf(
+                    $this->language->get('text_agree'),
+                    $this->url->link('information/information/agree', 'information_id=' . $this->config->get('config_account_id'), true),
+                    $information_info['title'],
+                    $errorText
+                );
 			} else {
 				$data['text_agree'] = '';
 			}
@@ -199,10 +215,12 @@ class ControllerInformationContact extends Controller {
 			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_account_id'));
 
 			if ($information_info && !isset($this->request->post['agree'])) {
-				$this->error['warning'] = sprintf($this->language->get('error_agree'), $information_info['title']);
+                $decliner = new Decliner\RussianCasesDecliner();
+                $errorText = $decliner->declinePhrase($information_info['title'], \Decliner\RussianCases::INSTRUMENTAL);
+				$this->error['warning'] = sprintf($this->language->get('error_agree'), $errorText);
 			}
 		}
-		
+
 		return !$this->error;
 	}
 
