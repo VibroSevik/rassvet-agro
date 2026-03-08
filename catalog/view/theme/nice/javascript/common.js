@@ -380,12 +380,14 @@ $(document).delegate('.agree', 'click', function(e) {
 		type: 'get',
 		dataType: 'html',
 		success: function(data) {
+			const modalTitle = $(element).attr('data-title');
+
 			html  = '<div id="modal-agree" class="modal">';
 			html += '  <div class="modal-dialog">';
 			html += '    <div class="modal-content">';
 			html += '      <div class="modal-header">';
 			html += '        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>';
-			html += '        <h4 class="modal-title">' + $(element).text() + '</h4>';
+			html += '        <h4 class="modal-title">' + modalTitle + '</h4>';
 			html += '      </div>';
 			html += '      <div class="modal-body">' + data + '</div>';
 			html += '    </div>';
