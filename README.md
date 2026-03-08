@@ -31,13 +31,13 @@ docker compose up -d --build
 As an administrator:
 
 ```shell
-docker exec -i opencart-db mysql -u root -p root_password opencart_db < dump.sql
+docker exec -i opencart-db mysql -u root -proot_password opencart_db < dump.sql
 ```
 
 or 
 
 ```shell
-docker exec -i <database_container> mysql -u <mysql_user> -p <user_password> <database_name> < /path/to/your/dump.sql
+docker exec -i <database_container> mysql -u <mysql_user> -p<user_password> <database_name> < /path/to/your/dump.sql
 ```
 
 
