@@ -191,8 +191,16 @@ class ControllerInformationContact extends Controller {
 		}
 
 		if (!filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
-			$this->error['email'] = $this->language->get('error_email');
+            $this->error['email'] = $this->language->get('error_email');
 		}
+
+        if (strpos($this->request->post['email'], '@') === false) {
+            $this->error['email'] = $this->language->get('error_at_email');
+        }
+        
+        if (empty($this->request->post['email'])) {
+            $this->error['email'] = $this->language->get('error_blank_email');
+        }
 
 		if ((utf8_strlen($this->request->post['enquiry']) < 10) || (utf8_strlen($this->request->post['enquiry']) > 3000)) {
 			$this->error['enquiry'] = $this->language->get('error_enquiry');
