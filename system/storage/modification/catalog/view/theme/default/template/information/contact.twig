@@ -7,7 +7,9 @@
   </ul>
 
 		{% if error_warning %}
-		<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
+		    <div class="alert alert-danger alert-dismissible">
+              <i class="fa fa-exclamation-circle"></i> {{ ' ' ~ error_warning }}
+            </div>
 		{% endif %}
 		
   <div class="row">{{ column_left }}
@@ -111,27 +113,27 @@
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-name">{{ entry_name }}</label>
             <div class="col-sm-10">
-              <input type="text" name="name" value="{{ name }}" id="input-name" class="form-control" />
+              <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" />
               {% if error_name %}
-              <div class="text-danger">{{ error_name }}</div>
+                  <div class="text-danger">{{ error_name }}</div>
               {% endif %}
             </div>
           </div>
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-email">{{ entry_email }}</label>
             <div class="col-sm-10">
-              <input type="text" name="email" value="{{ email }}" id="input-email" class="form-control" />
+              <input type="email" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control" />
               {% if error_email %}
-              <div class="text-danger">{{ error_email }}</div>
+                  <div class="text-danger">{{ error_email }}</div>
               {% endif %}
             </div>
           </div>
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-enquiry">{{ entry_enquiry }}</label>
             <div class="col-sm-10">
-              <textarea name="enquiry" rows="10" id="input-enquiry" class="form-control">{{ enquiry }}</textarea>
+              <textarea name="enquiry" rows="10" id="input-enquiry" placeholder="{{ entry_enquiry }}" class="form-control">{{ enquiry }}</textarea>
               {% if error_enquiry %}
-              <div class="text-danger">{{ error_enquiry }}</div>
+                  <div class="text-danger">{{ error_enquiry }}</div>
               {% endif %}
             </div>
           </div>
