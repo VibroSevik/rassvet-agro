@@ -197,19 +197,19 @@
             {{ language }}
             <div class="top-dropdown__wrapper">
               <div class="dropdown top-dropdown">
-                <button class="top-dropdown__toggle padding-r-n-xs" type="button" data-toggle="dropdown" title="{{ text_account }}"><i class="fa fa-user-o"></i> <span class="">{{ nice_text_account }}</span> <i class="fa fa-caret-down"></i></button>
-                <ul class="dropdown-menu dropdown-menu-right">
                   {% if logged %}
-                    <li><a class="top-dropdown__link" href="{{ account }}">{{ text_account }}</a></li>
-                    <li><a class="top-dropdown__link" href="{{ order }}">{{ text_order }}</a></li>
-                    <li><a class="top-dropdown__link" href="{{ transaction }}">{{ text_transaction }}</a></li>
-                    <li><a class="top-dropdown__link" href="{{ download }}">{{ text_download }}</a></li>
-                    <li><a class="top-dropdown__link" href="{{ logout }}">{{ text_logout }}</a></li>
-                    {% else %}
-                    <li><a class="top-dropdown__link" href="{{ register }}">{{ text_register }}</a></li>
-                    <li><a class="top-dropdown__link" href="{{ login }}">{{ text_login }}</a></li>
-                    {% endif %}
-                </ul>
+                      <button class="top-dropdown__toggle padding-r-n-xs" type="button" data-toggle="dropdown" title="{{ text_account }}"><i class="fa fa-user-o"></i> <span class="">{{ nice_text_account }}</span> <i class="fa fa-caret-down"></i></button>
+                      <ul class="dropdown-menu dropdown-menu-right">
+                          <li><a class="top-dropdown__link" href="{{ account }}">{{ text_account }}</a></li>
+                          <li><a class="top-dropdown__link" href="{{ order }}">{{ text_order }}</a></li>
+                          <li><a class="top-dropdown__link" href="{{ transaction }}">{{ text_transaction }}</a></li>
+                          <li><a class="top-dropdown__link" href="{{ download }}">{{ text_download }}</a></li>
+                          <li><a class="top-dropdown__link" href="{{ logout }}">{{ text_logout }}</a></li>
+                      </ul>
+                  {% else %}
+                      <button id="register-button" class="top-dropdown__toggle padding-r-n-xs" type="button" data-toggle="dropdown" title="{{ text_register }}" data-href="{{ register }}"><i class="fa fa-user-plus"></i> <span class="">{{ text_register }}</span></button>
+                      <button id="login-button" class="top-dropdown__toggle padding-r-n-xs" type="button" data-toggle="dropdown" title="{{ text_login }}" data-href="{{ login }}"><i class="fa fa-sign-in"></i> <span class="">{{ text_login }}</span></button>
+                  {% endif %}
               </div>
             </div>      
           </div>
@@ -286,4 +286,17 @@
       </div>  
 
     </header>
+
+<script>
+    const setRedirectionToButton = (buttonId) => {
+        const button = document.getElementById(buttonId);
+        const buttonRedirectionLink = button.dataset.href;
+        button.addEventListener('click', () =>
+            window.location.href = buttonRedirectionLink
+        );
+    }
+
+    setRedirectionToButton('register-button');
+    setRedirectionToButton('login-button');
+</script>
     {{ menu }}
