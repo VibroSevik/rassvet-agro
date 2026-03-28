@@ -1,4 +1,7 @@
 {{ header }}
+
+<script src="{{ asset('catalog/view/theme/default/javascript/checkout/cart.js') }}"></script>
+
 <div id="checkout-cart" class="container">
   <ul class="breadcrumb">
     {% for breadcrumb in breadcrumbs %}
@@ -103,7 +106,7 @@
             {% for total in totals %}
             <tr>
               <td class="text-right"><strong>{{ total.title }}:</strong></td>
-              <td class="text-right">{{ total.text }}</td>
+              <td class="text-right total">{{ total.text }}</td>
             </tr>
             {% endfor %}
           </table>
