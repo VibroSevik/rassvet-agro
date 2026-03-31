@@ -1,7 +1,7 @@
 <?php
 
-require_once(DIR_SYSTEM . 'library/decliner/russian_cases_decliner.php');
-require_once(DIR_SYSTEM . 'library/decliner/russian_cases.php');
+use Decliner\RussianCases;
+use Decliner\RussianCasesDecliner;
 
 // @todo: need some refactoring here
 
@@ -14,6 +14,7 @@ class ControllerAccountRegister extends Controller {
 		}
 
 		$this->load->language('account/register');
+        $this->load->library('decliner/russiancasesdecliner');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -199,9 +200,10 @@ class ControllerAccountRegister extends Controller {
 			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_account_id'));
 
 			if ($information_info) {
-                $decliner = new Decliner\RussianCasesDecliner();
+                /** @var RussianCasesDecliner $serializer */
+                $decliner = $this->registry->get('russiancasesdecliner');
 
-                $errorText = $decliner->declinePhrase($information_info['title'], \Decliner\RussianCases::ACCUSATIVE);
+                $errorText = $decliner->declinePhrase($information_info['title'], RussianCases::ACCUSATIVE);
 
                 $data['text_agree'] = sprintf(
                     $this->language->get('text_agree'),
@@ -307,8 +309,10 @@ class ControllerAccountRegister extends Controller {
 			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_account_id'));
 
 			if ($information_info && !isset($this->request->post['agree'])) {
-                $decliner = new Decliner\RussianCasesDecliner();
-                $errorText = $decliner->declinePhrase($information_info['title'], \Decliner\RussianCases::INSTRUMENTAL);
+                /** @var RussianCasesDecliner $serializer */
+                $decliner = $this->registry->get('russiancasesdecliner');
+
+                $errorText = $decliner->declinePhrase($information_info['title'], RussianCases::INSTRUMENTAL);
                 $this->error['warning'] = sprintf($this->language->get('error_agree'), $errorText);
 			}
 		}
