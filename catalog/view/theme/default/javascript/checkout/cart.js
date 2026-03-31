@@ -1,6 +1,7 @@
 window.addEventListener('load', () => {
     const cartManager = new CartManager();
     cartManager.addProductsIntoReactiveContext();
+    cartManager.addProductsCheckAfterSubmitForm();
 });
 
 class CartManager {
@@ -17,16 +18,28 @@ class CartManager {
         const productNodes = this._cartTemplateBridge.getProductNodes();
 
         productNodes.forEach(productNode => {
-            const { productQuantityInput, productPrice, productTotalPriceElement } = productNode;
+            const { productQuantityInput, productPriceElement, productTotalPriceElement } = productNode;
 
             productQuantityInput.addEventListener('input', (event) =>
                 this._productQuantityInputHandler(
                     event,
-                    productPrice,
+                    this._cartTemplateBridge.getPrice(productPriceElement),
                     productTotalPriceElement,
                     this._cartTemplateBridge.getTotalPrices()
                 )
             );
+        });
+    }
+
+    /**
+     * send check request for all products after form submit e.g. for checking product price
+     */
+    addProductsCheckAfterSubmitForm() {
+        const productContainers = document.getElementsByClassName('product-container');
+
+        const form = document.querySelector('#content > form');
+        form.addEventListener('submit', (event) => {
+            this._productsSubmitButtonHandler(event, [...productContainers])
         });
     }
 
@@ -53,6 +66,24 @@ class CartManager {
         totalPriceElements[0].innerText = newTotalPrice + currencyFormat;
         totalPriceElements[totalPriceElements.length - 1].innerText = newTotalPrice + currencyFormat;
     }
+
+    _productsSubmitButtonHandler(event, productContainers) {
+        const formData = new FormData();
+
+        const requestBody = productContainers.map(productContainer => {
+            return {
+                'id': productContainer.id,
+                'price': this._cartTemplateBridge.getPrice(productContainer.children[4])
+            };
+        });
+
+        formData.append('products', JSON.stringify(requestBody));
+
+        fetch('/cart', {
+            method: 'post',
+            body: formData
+        });
+    }
 }
 
 class CartTemplateBridge {
@@ -67,7 +98,7 @@ class CartTemplateBridge {
             const productTotalPriceElement = productPriceElement.nextElementSibling;
             return new ProductNode(
                 quantityInput,
-                this.getPrice(productPriceElement),
+                productPriceElement,
                 productTotalPriceElement
             );
         });
@@ -152,12 +183,12 @@ class CartTemplateBridge {
 
 class ProductNode {
     _productQuantityInput = null;
-    _productPrice = null;
+    _productPriceElement = null;
     _productTotalPriceElement = null;
 
-    constructor(productQuantityInput, productPrice, productTotalPriceElement) {
+    constructor(productQuantityInput, productPriceElement, productTotalPriceElement) {
         this._productQuantityInput = productQuantityInput;
-        this._productPrice = productPrice;
+        this._productPriceElement = productPriceElement;
         this._productTotalPriceElement = productTotalPriceElement;
     }
 
@@ -165,8 +196,8 @@ class ProductNode {
         return this._productQuantityInput;
     }
 
-    get productPrice() {
-        return this._productPrice;
+    get productPriceElement() {
+        return this._productPriceElement;
     }
 
     get productTotalPriceElement() {
