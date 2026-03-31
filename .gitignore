@@ -6,3 +6,5 @@
 /system/storage/logs/
 /system/storage/download/
 /system/storage/upload/
+
+/vendor

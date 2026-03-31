@@ -28,3 +28,5 @@ define('DB_PASSWORD', 'user_password');
 define('DB_DATABASE', 'opencart_db');
 define('DB_PORT', '3306');
 define('DB_PREFIX', 'oc_');
+
+require_once(DIR_SYSTEM . '../vendor/autoload.php');
