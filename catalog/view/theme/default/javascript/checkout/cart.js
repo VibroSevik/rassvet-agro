@@ -49,9 +49,9 @@ class CartManager {
 
         productTotalPriceElement.innerText = newProductTotalPrice + currencyFormat;
 
-        totalPriceElements.forEach(totalPriceElement => {
-            totalPriceElement.innerText = newTotalPrice + currencyFormat;
-        });
+        // оказывается в середине может быть стоимость доставки, ее не трогать
+        totalPriceElements[0].innerText = newTotalPrice + currencyFormat;
+        totalPriceElements[totalPriceElements.length - 1].innerText = newTotalPrice + currencyFormat;
     }
 }
 
