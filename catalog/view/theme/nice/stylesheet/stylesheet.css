@@ -38,6 +38,8 @@
   
   --color-menu-icon: #525a5d;
   --color-menu-icon-text: #3b3f41;
+
+  --color-title-contrasty: #F8F6EB;
 }
 
 
@@ -3281,6 +3283,20 @@ footer h5 {
   color: #fff;
 }
 
+/**
+ * Class for light contrasty background because black text and dark main theme are similar.
+ */
+.contrasty {
+  background-color: var(--color-title-contrasty);
+}
+
+/**
+ * Styles for pagination in category.twig
+ */
+.pagination__wrapper {} /* for template semantic */
+.pagination__item {
+  display: inline-block;
+}
 
 /* Nice Custom CSS . Begin */
 /* Warning!
