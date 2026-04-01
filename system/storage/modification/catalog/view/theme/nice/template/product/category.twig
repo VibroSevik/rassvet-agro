@@ -108,45 +108,45 @@
               <a class="product-thumb__name {% if 'bold' == nice.productlist_name_font_weight %}-bold-sm{% endif %}" href="{{ product.href }}">{{ product.name }}</a>
               {% if nice.productlist_description %}<p class="product-thumb__description {% if not nice.productlist_description_on_mobile %}hidden-xs hidden-sm{% endif %}">{{ product.description }}</p>{% endif %}
 
-			<div class="options">
-			   {% if (product['options']) %} 
-			   <div id="option_{{ product['product_id'] }}">
-			      {% for option in product['options'] %} 
-			      {% if (option['type'] == 'select') %} 
-			      <div id="option-{{ option['product_option_id'] }}" class="option">
-			         {% if (option['required']) %}*{% endif %} <label>{{ option['name'] }}:</label><br />
-			         <select name="option[{{ option['product_option_id'] }}]" onchange="recalc({{ product['product_id'] }});" class="form-control">
-			            <option value="" price_prefix="" price="">{{ text_select }}</option>
-			            {% for option_value in option['product_option_value'] %} 
-			            <option value="{{ option_value['product_option_value_id'] }}" price_prefix="{{ option_value['price_prefix'] }}" price="{{ option_value['price'] }}">{{ option_value['name'] }} {% if (option_value['price']) %}({{ option_value['price_prefix'] }}{{ option_value['price'] }}){% endif %}</option>
-			            {% endfor %} 
-			         </select>
-			      </div>
-			      {% endif %} 
-			      {% if (option['type'] == 'radio') %} 
-			      <div id="option-{{ option['product_option_id'] }}" class="option">
-			         {% if (option['required']) %}*{% endif %} <label>{{ option['name'] }}:</label><br />
-			         {% for option_value in option['product_option_value'] %}
-			         <input type="radio" price_prefix="{{ option_value['price_prefix'] }}" price="{{ option_value['price'] }}" onchange="recalc({{ product['product_id'] }});" name="option[{{ option['product_option_id'] }}]" value="{{ option_value['product_option_value_id'] }}" id="option-value-{{ option_value['product_option_value_id'] }}" />
-                     <label for="option-value-{{ option_value['product_option_value_id'] }}">
-                         {{ option_value['name'] }}
-                     </label><br />
-			         {% endfor %}
-			      </div>
-			      {% endif %} 
-			      {% if (option['type'] == 'checkbox') %} 
-			      <div id="option-{{ option['product_option_id'] }}" class="option">
-			         {% if (option['required']) %}*{% endif %} <label>{{ option['name'] }}:</label><br />
-			         {% for option_value in option['product_option_value'] %} 
-			         <input type="checkbox" price_prefix="{{ option_value['price_prefix'] }}" price="{{ option_value['price'] }}" onchange="recalc({{ product['product_id'] }});" name="option[{{ option['product_option_id'] }}][]" value="{{ option_value['product_option_value_id'] }}" id="option-value-{{ option_value['product_option_value_id'] }}" />
-			         <label for="option-value-{{ option_value['product_option_value_id'] }}">{{ option_value['name'] }} {% if (option_value['price']) %}({{ option_value['price_prefix'] }}{{ option_value['price'] }}){% endif %}</label><br />
-			         {% endfor %} 
-			      </div>
-			      {% endif %} 
-			      {% endfor %} 
-			   </div>
-			   {% endif %} 
-			</div>
+            {% if (product['options']) %}
+                <div class="options">
+                  <div id="option_{{ product['product_id'] }}">
+                    {% for option in product['options'] %}
+                      {% if (option['type'] == 'select') %}
+                        <div id="option-{{ option['product_option_id'] }}" class="option">
+                          {% if (option['required']) %}*{% endif %} <label>{{ option['name'] }}:</label><br />
+                          <select name="option[{{ option['product_option_id'] }}]" onchange="recalc({{ product['product_id'] }});" class="form-control">
+                            <option value="" price_prefix="" price="">{{ text_select }}</option>
+                            {% for option_value in option['product_option_value'] %}
+                              <option value="{{ option_value['product_option_value_id'] }}" price_prefix="{{ option_value['price_prefix'] }}" price="{{ option_value['price'] }}">{{ option_value['name'] }} {% if (option_value['price']) %}({{ option_value['price_prefix'] }}{{ option_value['price'] }}){% endif %}</option>
+                            {% endfor %}
+                          </select>
+                        </div>
+                      {% endif %}
+                      {% if (option['type'] == 'radio') %}
+                        <div id="option-{{ option['product_option_id'] }}" class="option">
+                          {% if (option['required']) %}*{% endif %} <label>{{ option['name'] }}:</label><br />
+                          {% for option_value in option['product_option_value'] %}
+                            <input type="radio" price_prefix="{{ option_value['price_prefix'] }}" price="{{ option_value['price'] }}" onchange="recalc({{ product['product_id'] }});" name="option[{{ option['product_option_id'] }}]" value="{{ option_value['product_option_value_id'] }}" id="option-value-{{ option_value['product_option_value_id'] }}" />
+                            <label for="option-value-{{ option_value['product_option_value_id'] }}">
+                              {{ option_value['name'] }}
+                            </label><br />
+                          {% endfor %}
+                        </div>
+                      {% endif %}
+                      {% if (option['type'] == 'checkbox') %}
+                        <div id="option-{{ option['product_option_id'] }}" class="option">
+                          {% if (option['required']) %}*{% endif %} <label>{{ option['name'] }}:</label><br />
+                          {% for option_value in option['product_option_value'] %}
+                            <input type="checkbox" price_prefix="{{ option_value['price_prefix'] }}" price="{{ option_value['price'] }}" onchange="recalc({{ product['product_id'] }});" name="option[{{ option['product_option_id'] }}][]" value="{{ option_value['product_option_value_id'] }}" id="option-value-{{ option_value['product_option_value_id'] }}" />
+                            <label for="option-value-{{ option_value['product_option_value_id'] }}">{{ option_value['name'] }} {% if (option_value['price']) %}({{ option_value['price_prefix'] }}{{ option_value['price'] }}){% endif %}</label><br />
+                          {% endfor %}
+                        </div>
+                      {% endif %}
+                    {% endfor %}
+                  </div>
+                </div>
+            {% endif %}
 			
               {% if product.price %}
               <div class="price">
