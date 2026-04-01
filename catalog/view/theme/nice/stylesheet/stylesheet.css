@@ -2198,9 +2198,6 @@ html[dir=rtl] .breadcrumb > li::after {
   font-size: 12px;
 }
 
-
-.product-thumb__name, .product-thumb__name a { color: #373737; }
-.product-thumb__name:hover, .product-thumb__name a:hover { color: #373737; }
 a.product-thumb__name { display: block; }
 
 .product-thumb__name {
@@ -3317,6 +3314,6 @@ footer h5 {
  * Not remove these comments!
  * It is neccessary for corect saving of Custom CSS from admin part */
 a.product-thumb__name {
-min-height: 90px;
+min-height: 50px;
 }
 /* Nice Custom CSS . End */
