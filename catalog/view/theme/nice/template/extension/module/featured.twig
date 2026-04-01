@@ -1,5 +1,7 @@
 <div class="section section--productlist">
-  <div class="section__title--wrapped"><p class="section__title">{{ heading_title }}</p></div>
+  <div class="section__title--wrapped">
+    <p class="section__title contrasty">{{ heading_title }}</p>
+  </div>
   <div class="row list-row">
     {% for product in products %}
     <div class="list-item__col {% if nice.productlist_grid_hover_effect %}grid-hover-effect{% endif %} product-grid col-md-3 col-sm-6 {% if '1' == nice.productlist_cols_on_mobile %}col-xs-12{% else %}col-xs-6{% endif %}">
