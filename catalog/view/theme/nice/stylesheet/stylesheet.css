@@ -3298,6 +3298,20 @@ footer h5 {
   display: inline-block;
 }
 
+.product-category__title {
+  text-align: center;
+  font-weight: bold;
+  font-size: 50px;
+  color: var(--color-primary);
+}
+
+.product-category__description p {
+  color: #595959 !important;
+  text-align: center;
+  font-family: Inter, sans-serif, 'Microsoft Sans Serif' !important;
+  margin-bottom: var(--space-2x) !important;
+}
+
 /* Nice Custom CSS . Begin */
 /* Warning!
  * Not remove these comments!
