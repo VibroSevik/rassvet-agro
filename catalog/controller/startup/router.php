@@ -1,4 +1,7 @@
 <?php
+
+use RouteConverter\RouteConverter;
+
 class ControllerStartupRouter extends Controller {
 	public function index() {
 		// Route
@@ -7,7 +10,13 @@ class ControllerStartupRouter extends Controller {
 		} else {
 			$route = $this->config->get('action_default');
 		}
-		
+
+        $this->load->library('routeconverter/routeconverter');
+
+        /** @var RouteConverter $routeConverter */
+        $routeConverter = $this->registry->get('routeconverter');
+        $route = $routeConverter->convert($route);
+
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
 		
