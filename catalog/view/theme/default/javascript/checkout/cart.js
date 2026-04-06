@@ -369,7 +369,8 @@ class CartTemplateService {
     /**
      * Запрещает ввод пробела, нечисловых значений, точки и запятой с нампада (она странно работает). <br>
      * Также запрещает копирование текста через ctrl+v и через ПКМ на мыши вставить. <br>
-     * Вместо ввода запрещённого символа вводится пустая строка.
+     * Вместо ввода запрещённого символа вводится пустая строка. <br>
+     * Максимальное количество товара ограничивается трёхзначным числом.
      * @param productQuantityInput
      * @private
      */
@@ -395,6 +396,7 @@ class CartTemplateService {
 
         productQuantityInput.addEventListener('input', (event) => {
             productQuantityInput.value = productQuantityInput.value.replace(/[^0-9.,]/g, '');
+            productQuantityInput.value = productQuantityInput.value.slice(0, 3);
         });
     }
 
