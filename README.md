@@ -23,6 +23,14 @@ httpd.exe -k start
 docker compose up -d --build
 ```
 
+```shell
+docker compose exec webserver bash
+```
+
+```shell
+composer i
+```
+
 
 ## After installation
 
