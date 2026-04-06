@@ -1088,34 +1088,25 @@ header {
   margin-right: 12px;
 }
 
-.cart-icon {
-  font-size: 27px;
- 
-}
-
 #cart-quantity {
   position: absolute;
   display: inline-block;
+  left: 23px;
   top: -8px;
   right: -15px;
-  width: 20px;
-  height: 20px;
+  width: 30px;
   border-radius: 15px;
   text-align: center;
   font-size: 12px;
   line-height: 1.5;
   font-weight: bold;
   color: #f3f3f3;
+  background-color: #3c9869;
 }
 
 .cart-icon {
-  /*color: var(--color-accent);*/
+  font-size: 27px;
   color: #3c9869;
-}
-
-#cart-quantity {
-  /*background: var(--color-accent);*/
-    background: #3c9869;
 }
 
 .cart-button:hover .cart-icon {
