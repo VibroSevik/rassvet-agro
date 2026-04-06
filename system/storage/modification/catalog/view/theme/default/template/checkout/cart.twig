@@ -63,11 +63,17 @@
                 {% if product.recurring %} <br />
                   <span class="label label-info">{{ text_recurring_item }}</span> <small>{{ product.recurring }}</small> {% endif %}</td>
               <td class="text-left">{{ product.model }}</td>
-              <td class="text-left"><div class="input-group btn-block" style="max-width: 200px;">
+              <td class="text-left">
+                <div class="input-group btn-block" style="max-width: 200px;">
                   <input type="text" name="quantity[{{ product.cart_id }}]" value="{{ product.quantity }}" size="1" class="form-control" />
                   <span class="input-group-btn">
-                  <button type="button" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger" onclick="cart.remove('{{ product.cart_id }}');"><i class="fa fa-times-circle"></i></button>
-                  </span></div></td>
+                    <button type="button" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger" onclick="cart.remove('{{ product.cart_id }}');"><i class="fa fa-times-circle"></i></button>
+                  </span>
+                </div>
+                <small class="form-control-helper">
+                  <i class="fa fa-info-circle"></i> Максимум 3 символа
+                </small>
+              </td>
               <td class="text-right">{{ product.price }}</td>
               <td class="text-right">{{ product.total }}</td>
             </tr>

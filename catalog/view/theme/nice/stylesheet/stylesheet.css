@@ -3272,6 +3272,13 @@ footer h5 {
   color: #fff;
 }
 
+.form-control-helper {
+  color: rgb(59, 63, 65);
+  display: block;
+  margin-top: 5px;
+  font-size: 12px;
+  padding-left: 5px;
+}
 
 /* Nice Custom CSS . Begin */
 /* Warning!
