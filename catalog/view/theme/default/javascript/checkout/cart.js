@@ -395,8 +395,11 @@ class CartTemplateService {
         });
 
         productQuantityInput.addEventListener('input', (event) => {
-            productQuantityInput.value = productQuantityInput.value.replace(/[^0-9.,]/g, '');
-            productQuantityInput.value = productQuantityInput.value.slice(0, 3);
+            productQuantityInput.value = productQuantityInput.value
+                .replace(/[^0-9.]/g, '') // только цифры и точка
+                .replace(/^\./, '')      // точка не первый символ
+                .replace(/\.{2,}/g, '.') // только одна точка подряд
+                .slice(0, 3);            // максимум 3 символа
         });
     }
 
