@@ -1,12 +1,5 @@
 <?php
-
-require_once(DIR_SYSTEM . 'library/decliner/russian_cases_decliner.php');
-require_once(DIR_SYSTEM . 'library/decliner/russian_cases.php');
-
-// @todo: need some refactoring here
-
 class ControllerInformationContact extends Controller {
-
 	private $error = array();
 
 	public function index() {
@@ -98,16 +91,7 @@ class ControllerInformationContact extends Controller {
 			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_account_id'));
 
 			if ($information_info) {
-                $decliner = new Decliner\RussianCasesDecliner();
-
-                $errorText = $decliner->declinePhrase($information_info['title'], \Decliner\RussianCases::ACCUSATIVE);
-
-				$data['text_agree'] = sprintf(
-                    $this->language->get('text_agree'),
-                    $this->url->link('information/information/agree', 'information_id=' . $this->config->get('config_account_id'), true),
-                    $information_info['title'],
-                    $errorText
-                );
+				$data['text_agree'] = sprintf($this->language->get('text_agree'), $this->url->link('information/information/agree', 'information_id=' . $this->config->get('config_account_id'), true), $information_info['title'], $information_info['title']);
 			} else {
 				$data['text_agree'] = '';
 			}
@@ -186,21 +170,13 @@ class ControllerInformationContact extends Controller {
 	}
 
 	protected function validate() {
-		if ((utf8_strlen($this->request->post['name']) < 2) || (utf8_strlen($this->request->post['name']) > 32)) {
+		if ((utf8_strlen($this->request->post['name']) < 3) || (utf8_strlen($this->request->post['name']) > 32)) {
 			$this->error['name'] = $this->language->get('error_name');
 		}
 
 		if (!filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
-            $this->error['email'] = $this->language->get('error_email');
+			$this->error['email'] = $this->language->get('error_email');
 		}
-
-        if (strpos($this->request->post['email'], '@') === false) {
-            $this->error['email'] = $this->language->get('error_at_email');
-        }
-        
-        if (empty($this->request->post['email'])) {
-            $this->error['email'] = $this->language->get('error_blank_email');
-        }
 
 		if ((utf8_strlen($this->request->post['enquiry']) < 10) || (utf8_strlen($this->request->post['enquiry']) > 3000)) {
 			$this->error['enquiry'] = $this->language->get('error_enquiry');
@@ -223,12 +199,10 @@ class ControllerInformationContact extends Controller {
 			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_account_id'));
 
 			if ($information_info && !isset($this->request->post['agree'])) {
-                $decliner = new Decliner\RussianCasesDecliner();
-                $errorText = $decliner->declinePhrase($information_info['title'], \Decliner\RussianCases::INSTRUMENTAL);
-				$this->error['warning'] = sprintf($this->language->get('error_agree'), $errorText);
+				$this->error['warning'] = sprintf($this->language->get('error_agree'), $information_info['title']);
 			}
 		}
-
+		
 		return !$this->error;
 	}
 
