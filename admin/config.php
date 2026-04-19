@@ -34,3 +34,5 @@ define('DB_PREFIX', 'oc_');
 
 // OpenCart API
 define('OPENCART_SERVER', 'https://www.opencart.com/');
+
+require_once(DIR_SYSTEM . '../vendor/autoload.php');
