@@ -1,67 +1,45 @@
 <?php
 namespace Template;
 final class Twig {
-	private $twig;
-	private $data = array();
+    private $data = array();
 
-            //d_twig_manager.xml
-            private $registry = array();
-            
-	
-	
-            //d_twig_manager.xml
-            public function __construct($registry) {
-            
-		// include and register Twig auto-loader
-		include_once(DIR_SYSTEM . 'library/template/Twig/Autoloader.php');
-		
-		\Twig_Autoloader::register();
+    public function set($key, $value) {
+        $this->data[$key] = $value;
+    }
 
-            //d_twig_manager.xml
-            $this->registry = $registry;
-            
-	}
-	
-	public function set($key, $value) {
-		$this->data[$key] = $value;
-	}
-	
-	public function render($template, $cache = false) {
-		// specify where to look for templates
-				
-		$loader = new \Twig_Loader_Filesystem();
-		
-		if (defined('DIR_CATALOG') && is_dir(DIR_MODIFICATION . 'admin/view/template/')) {	
-			$loader->addPath(DIR_MODIFICATION . 'admin/view/template/');
-		} elseif (is_dir(DIR_MODIFICATION . 'catalog/view/theme/')) {
-			$loader->addPath(DIR_MODIFICATION . 'catalog/view/theme/');
-		}
-		
-		$loader->addPath(DIR_TEMPLATE);
+    public function render($filename, $code = '') {
+        if (!$code) {
+            $file = DIR_TEMPLATE . $filename . '.twig';
 
-		// initialize Twig environment
-		$config = array('autoescape' => false);
-
-		if ($cache) {
-			$config['cache'] = DIR_CACHE;
-		}
-
-		$this->twig = new \Twig_Environment($loader, $config);
-
-            //d_twig_manager.xml
-            if (file_exists(DIR_SYSTEM . 'library/template/Twig/Extension/DTwigManager.php')) {
-                $this->twig->addExtension(new \Twig_Extension_DTwigManager($this->registry));
+            if (defined('DIR_CATALOG') && is_file(DIR_MODIFICATION . 'admin/view/template/' . $filename . '.twig')) {
+                $code = file_get_contents(DIR_MODIFICATION . 'admin/view/template/' . $filename . '.twig');
+            } elseif (is_file(DIR_MODIFICATION . 'catalog/view/theme/' . $filename . '.twig')) {
+                $code = file_get_contents(DIR_MODIFICATION . 'catalog/view/theme/' . $filename . '.twig');
+            } elseif (is_file($file)) {
+                $code = file_get_contents($file);
+            } else {
+                throw new \Exception('Error: Could not load template ' . $file . '!');
+                exit();
             }
-            
-		
-		try {
-			// load template
-			$template = $this->twig->loadTemplate($template . '.twig');
-			
-			return $template->render($this->data);
-		} catch (Exception $e) {
-			trigger_error('Error: Could not load template ' . $template . '!');
-			exit();	
-		}	
-	}	
+        }
+
+        // initialize Twig environment
+        $config = array(
+            'autoescape'  => false,
+            'debug'       => false,
+            'auto_reload' => true,
+            'cache'       => DIR_CACHE . 'template/'
+        );
+
+        try {
+            $loader = new \Twig\Loader\ArrayLoader(array($filename . '.twig' => $code));
+
+            $twig = new \Twig\Environment($loader, $config);
+
+            return $twig->render($filename . '.twig', $this->data);
+        } catch (\Exception $e) {
+            trigger_error('Error: Could not load template ' . $filename . '!');
+            exit();
+        }
+    }
 }

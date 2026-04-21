@@ -5,11 +5,11 @@
  * @copyright	Copyright (c) 2005 - 2017, OpenCart, Ltd. (https://www.opencart.com/)
  * @license		https://opensource.org/licenses/GPL-3.0
  * @link		https://www.opencart.com
-*/
+ */
 
 /**
-* Loader class
-*/
+ * Loader class
+ */
 final class Loader {
 	protected $registry;
 
@@ -17,7 +17,7 @@ final class Loader {
 	 * Constructor
 	 *
 	 * @param	object	$registry
- 	*/
+ 	 */
 	public function __construct($registry) {
 		$this->registry = $registry;
 	}
@@ -29,7 +29,7 @@ final class Loader {
 	 * @param	array	$data
 	 *
 	 * @return	mixed
- 	*/	
+ 	 */
 	public function controller($route, $data = array()) {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
@@ -64,7 +64,7 @@ final class Loader {
 	 * 
 	 *
 	 * @param	string	$route
- 	*/	
+ 	 */
 	public function model($route) {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
@@ -91,41 +91,38 @@ final class Loader {
 		}
 	}
 
-	/**
-	 * 
-	 *
-	 * @param	string	$route
-	 * @param	array	$data
-	 *
-	 * @return	string
- 	*/
-	public function view($route, $data = array()) {
-		// Sanitize the call
-		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
-		
-		// Keep the original trigger
-		$trigger = $route;
-		
-		// Template contents. Not the output!
-		$template = '';
-		
-		// Trigger the pre events
-		$result = $this->registry->get('event')->trigger('view/' . $trigger . '/before', array(&$route, &$data, &$template));
-		
-		// Make sure its only the last event that returns an output if required.
-		if ($result && !$result instanceof Exception) {
-			$output = $result;
-		} else {
-			
-            //d_twig_manager.xml
-            $template = new Template($this->registry->get('config')->get('template_engine'), $this->registry);
-            
-				
-			foreach ($data as $key => $value) {
-				$template->set($key, $value);
-			}
+    /**
+     *
+     *
+     * @param	string	$route
+     * @param	array	$data
+     *
+     * @return	string
+     */
+    public function view($route, $data = array()) {
+        // Sanitize the call
+        $route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
 
-			$output = $template->render($this->registry->get('config')->get('template_directory') . $route, $this->registry->get('config')->get('template_cache'));		
+        // Keep the original trigger
+        $trigger = $route;
+
+        // Template contents. Not the output!
+        $code = '';
+
+        // Trigger the pre events
+        $result = $this->registry->get('event')->trigger('view/' . $trigger . '/before', array(&$route, &$data, &$code));
+
+        // Make sure its only the last event that returns an output if required.
+        if ($result && !$result instanceof Exception) {
+            $output = $result;
+        } else {
+            $template = new Template($this->registry->get('config')->get('template_engine'));
+
+            foreach ($data as $key => $value) {
+                $template->set($key, $value);
+            }
+
+			$output = $template->render($this->registry->get('config')->get('template_directory') . $route, $code);
 		}
 		
 		// Trigger the post events
@@ -142,7 +139,7 @@ final class Loader {
 	 * 
 	 *
 	 * @param	string	$route
- 	*/
+ 	 */
 	public function library($route) {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
@@ -163,7 +160,7 @@ final class Loader {
 	 * 
 	 *
 	 * @param	string	$route
- 	*/	
+ 	 */
 	public function helper($route) {
 		$file = DIR_SYSTEM . 'helper/' . preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route) . '.php';
 
@@ -178,7 +175,7 @@ final class Loader {
 	 * 
 	 *
 	 * @param	string	$route
- 	*/	
+ 	 */
 	public function config($route) {
 		$this->registry->get('event')->trigger('config/' . $route . '/before', array(&$route));
 		
@@ -194,7 +191,7 @@ final class Loader {
 	 * @param	string	$key
 	 *
 	 * @return	array
- 	*/
+ 	v*/
 	public function language($route, $key = '') {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
