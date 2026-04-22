@@ -62,15 +62,6 @@
 <file path="admin/view/template/catalog/product_form.twig">
 	<operation>
 		<search><![CDATA[
-			<label class="col-sm-2 control-label" for="input-sku"><span data-toggle="tooltip" title="{{ help_sku }}">{{ entry_sku }}</span></label>
-		]]></search>
-		<add position="replace" offset="-2"><![CDATA[
-			   <label class="col-sm-2 control-label" for="input-sku"><span data-toggle="tooltip" title="{{ help_sku }}">{{ entry_sku }}</span></label>
-		]]></add>
-	</operation>
-	
-	<operation>
-		<search><![CDATA[
         <label class="col-sm-2 control-label" for="input-sku">
 		]]></search>
 		<add position="before"><![CDATA[
@@ -109,7 +100,6 @@
 		]]></search>
 		<add position="replace"><![CDATA[ ]]></add>
 	</operation>
-	
 </file>
 
 
