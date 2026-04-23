@@ -20,7 +20,7 @@ class ControllerCommonDashboard extends Controller {
 		);
 		
 		// Check install directory exists
-		if (is_dir(DIR_APPLICATION . 'install')) {
+        if (is_dir(DIR_CATALOG . '../install')) {
 			$data['error_install'] = $this->language->get('error_install');
 		} else {
 			$data['error_install'] = '';
@@ -76,6 +76,10 @@ class ControllerCommonDashboard extends Controller {
 			}
 		}
 
+        if (!empty($column)) {
+            $data['rows'][] = $column;
+        }
+
 		if (DIR_STORAGE == DIR_SYSTEM . 'storage/') {
 			$data['security'] = $this->load->controller('common/security');
 		} else {
@@ -86,12 +90,12 @@ class ControllerCommonDashboard extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		// Run currency update
-		if ($this->config->get('config_currency_auto')) {
-			$this->load->model('localisation/currency');
-
-			$this->model_localisation_currency->refresh();
-		}
+        if ($this->config->get('config_currency_auto')) {
+            $config_currency_engine = $this->config->get('config_currency_engine');
+            if ($config_currency_engine) {
+                $this->load->controller('extension/currency/'.$config_currency_engine.'/currency');
+            }
+        }
 
 		$this->response->setOutput($this->load->view('common/dashboard', $data));
 	}

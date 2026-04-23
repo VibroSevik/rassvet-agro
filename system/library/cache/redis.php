@@ -13,18 +13,21 @@ class Redis {
 
     public function get($key) {
         $data = $this->cache->get(CACHE_PREFIX . $key);
+
         return json_decode($data, true);
     }
 
-    public function set($key,$value) {
+    public function set($key, $value) {
         $status = $this->cache->set(CACHE_PREFIX . $key, json_encode($value));
-        if($status){
-            $this->cache->setTimeout(CACHE_PREFIX . $key, $this->expire);
+
+        if ($status) {
+            $this->cache->expire(CACHE_PREFIX . $key, $this->expire);
         }
+
         return $status;
     }
 
     public function delete($key) {
-        $this->cache->delete(CACHE_PREFIX . $key);
+        $this->cache->del(CACHE_PREFIX . $key);
     }
 }

@@ -50,7 +50,7 @@
               
 			{% if license.value == filter_license %}<a href="{{ license.href }}" class="btn btn-default active">{{ license.text }}</a>{% else %}<a href="{{ license.href }}" class="btn btn-default">{{ license.text }}</a>{% endif %}
 			{% endfor %}
-			<a href="https://www.opencart.ru/modules" target="_blank" class="btn btn-default">Модули для OpenCart</a>
+            <a href="https://shop.opencart-russia.ru/" target="_blank" class="btn btn-default">Расширения c opencart-russia.ru</a>
 			</div>
 			
           </div>
@@ -58,44 +58,20 @@
             <div class="input-group pull-right">
               <div class="input-group-addon"><i class="fa fa-sort-amount-asc"></i></div>
               <select onchange="location = this.value;" class="form-control">
-                
-              
-            
-              
                   {% for sorts in sorts %}
-                  {% if sorts.value == sort %}
-                
-              
-            
-              
-                <option value="{{ sorts.href }}" selected="selected">{{ sorts.text }}</option>
-                
-              
-            
-              
-                  {% else %}
-                
-              
-            
-              
-                <option value="{{ sorts.href }}">{{ sorts.text }}</option>
-                
-              
-            
-              
-                  {% endif %}
+                    {% if sorts.value == sort %}
+                      <option value="{{ sorts.href }}" selected="selected">{{ sorts.text }}</option>
+                    {% else %}
+                      <option value="{{ sorts.href }}">{{ sorts.text }}</option>
+                    {% endif %}
                   {% endfor %}
-              
-            
-          
-            
               </select>
             </div>
           </div>
         </div>
         <br />
         <div id="extension-list">{% if promotions %}
-          <h3>Featured</h3>
+          <h3>{{ text_featured }}</h3>
           <div class="row">{% for extension in promotions %}
             {% if extension %}
             <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
@@ -206,4 +182,4 @@ $('input[name="filter_search"]').keydown(function(e) {
 	}
 });
 //--></script></div>
-{{ footer }} 
+{{ footer }}

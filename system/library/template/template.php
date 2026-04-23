@@ -1,5 +1,7 @@
 <?php
+
 namespace Template;
+
 final class Template {
 	private $data = array();
 		

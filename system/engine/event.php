@@ -5,15 +5,15 @@
  * @copyright	Copyright (c) 2005 - 2017, OpenCart, Ltd. (https://www.opencart.com/)
  * @license		https://opensource.org/licenses/GPL-3.0
  * @link		https://www.opencart.com
-*/
+ */
 
 /**
-* Event class
-*
-* Event System Userguide
-* 
-* https://github.com/opencart/opencart/wiki/Events-(script-notifications)-2.2.x.x
-*/
+ * Event class
+ *
+ * Event System Userguide
+ *
+ * https://github.com/opencart/opencart/wiki/Events-(script-notifications)-2.2.x.x
+ */
 class Event {
 	protected $registry;
 	protected $data = array();
@@ -22,7 +22,7 @@ class Event {
 	 * Constructor
 	 *
 	 * @param	object	$route
- 	*/
+ 	 */
 	public function __construct($registry) {
 		$this->registry = $registry;
 	}
@@ -33,7 +33,7 @@ class Event {
 	 * @param	string	$trigger
 	 * @param	object	$action
 	 * @param	int		$priority
- 	*/	
+ 	 */
 	public function register($trigger, Action $action, $priority = 0) {
 		$this->data[] = array(
 			'trigger'  => $trigger,
@@ -55,7 +55,7 @@ class Event {
 	 *
 	 * @param	string	$event
 	 * @param	array	$args
- 	*/		
+ 	 */
 	public function trigger($event, array $args = array()) {
 		foreach ($this->data as $value) {
 			if (preg_match('/^' . str_replace(array('\*', '\?'), array('.*', '.'), preg_quote($value['trigger'], '/')) . '/', $event)) {
@@ -73,7 +73,7 @@ class Event {
 	 *
 	 * @param	string	$trigger
 	 * @param	string	$route
- 	*/	
+ 	 */
 	public function unregister($trigger, $route) {
 		foreach ($this->data as $key => $value) {
 			if ($trigger == $value['trigger'] && $value['action']->getId() == $route) {
@@ -86,7 +86,7 @@ class Event {
 	 * 
 	 *
 	 * @param	string	$trigger
- 	*/		
+ 	 */
 	public function clear($trigger) {
 		foreach ($this->data as $key => $value) {
 			if ($trigger == $value['trigger']) {
