@@ -31,28 +31,28 @@
 <!-- Добавляем ссылки на сайт, документацию, форум -->	
 	<operation>
 		<search><![CDATA[
-		<li><a href="http://www.opencart.com" target="_blank"><i class="fa fa-opencart fa-fw"></i> {{ text_homepage }}</a></li>
+		<li><a href="https://www.opencart.com" target="_blank"><i class="fa fa-opencart fa-fw"></i> {{ text_homepage }}</a></li>
 		]]></search>
 		<add position="replace"><![CDATA[
-		<li><a href="https://opencart.ru/" target="_blank"><i class="fa fa-opencart fa-fw"></i> {{ text_homepage }}</a></li>
+		<li><a href="https://opencart-russia.ru/" target="_blank"><i class="fa fa-opencart fa-fw"></i> {{ text_homepage }}</a></li>
 		]]></add>
 	</operation>
 	
 	<operation>
 		<search><![CDATA[
-		<li><a href="http://docs.opencart.com" target="_blank"><i class="fa fa-file-text-o fa-fw"></i> {{ text_documentation }}</a></li>
+		<li><a href="https://docs.opencart.com" target="_blank"><i class="fa fa-file-text-o fa-fw"></i> {{ text_documentation }}</a></li>
 		]]></search>
 		<add position="replace"><![CDATA[
-		<li><a href="https://www.opencart.ru/documentation" target="_blank"><i class="fa fa-file-text-o fa-fw"></i> {{ text_documentation }}</a></li>
+		<li><a href="http://forum.opencart-russia.ru/threads/soderzhanie.6030/" target="_blank"><i class="fa fa-file-text-o fa-fw"></i> {{ text_documentation }}</a></li>
 		]]></add>
 	</operation>
 	
 	<operation>
 		<search><![CDATA[
-		<li><a href="http://forum.opencart.com" target="_blank"><i class="fa fa-comments-o fa-fw"></i> {{ text_support }}</a></li>
+		<li><a href="https://forum.opencart.com" target="_blank"><i class="fa fa-comments-o fa-fw"></i> {{ text_support }}</a></li>
 		]]></search>
 		<add position="replace"><![CDATA[
-		<li><a href="https://www.opencart.ru/support target="_blank"><i class="fa fa-comments-o fa-fw"></i> {{ text_support }}</a></li>
+		<li><a href="http://forum.opencart-russia.ru" target="_blank"><i class="fa fa-comments-o fa-fw"></i> {{ text_support }}</a></li>
 		]]></add>
 	</operation>
 	
