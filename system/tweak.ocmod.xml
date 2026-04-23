@@ -278,6 +278,25 @@
 </file>
 
 
+<!-- Предупреждение о Варезе  -->
+<file path="admin/view/template/marketplace/installer.twig">
+
+	<operation>
+		<search><![CDATA[
+			<legend>{{ text_upload }}</legend>
+		]]></search>
+		<add position="after"><![CDATA[
+		<div class="alert alert-info">
+		<i class="fa fa-info-circle"></i> Перед установкой расширения, рекомендуется прочесть важную информацию в статье
+		<a href="https://shop.opencart-russia.ru/o-warez-virus" class="alert-link" target="_blank">о Варезе и Вирусах</a>!
+		</div>
+
+		]]></add>
+	</operation>
+
+</file>
+
+
 <!-- Приводим немного сайт к 152 ФЗ	 -->   
 <file path="catalog/controller/information/contact.php">
 
