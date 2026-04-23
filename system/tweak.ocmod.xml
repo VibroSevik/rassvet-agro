@@ -270,7 +270,7 @@
 		<add position="replace" offset="1"><![CDATA[
 			{% if license.value == filter_license %}<a href="{{ license.href }}" class="btn btn-default active">{{ license.text }}</a>{% else %}<a href="{{ license.href }}" class="btn btn-default">{{ license.text }}</a>{% endif %}
 			{% endfor %}
-			<a href="https://www.opencart.ru/modules" target="_blank" class="btn btn-default">Модули для OpenCart</a>
+			<a href="https://shop.opencart-russia.ru/" target="_blank" class="btn btn-default">Расширения c opencart-russia.ru</a>
 			</div>
 			]]></add>
 	</operation>
