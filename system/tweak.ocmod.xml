@@ -8,6 +8,512 @@
 <link>https://opencart.ru</link>
 
 
+<file path="catalog/controller/extension/d_quickcheckout/confirm.php">
+	<operation>
+		<search><![CDATA[
+        $json['cofirm_order'] = true;
+		]]></search>
+		<add position="replace"><![CDATA[$json['confirm_order'] = true;]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[
+		$json['order_id'] = $this->session->data['order_id'] = $this->updateOrder();
+		]]></search>
+		<add position="before"><![CDATA[		if ($this->session->data['payment_method']['code'] == 'robokassa') {
+            $json['redirect'] = $this->url->link('extension/payment/robokassa');
+            $this->response->addHeader('Content-Type: application/json');
+            $this->response->setOutput(json_encode($json));
+            return;
+        }
+		]]></add>
+	</operation>
+</file>
+
+
+<file path="catalog/controller/account/register.php">
+	<operation>
+		<search><![CDATA[
+    <?php
+		]]></search>
+		<add position="after"><![CDATA[
+require_once(DIR_SYSTEM . 'library/decliner/russian_cases_decliner.php');
+require_once(DIR_SYSTEM . 'library/decliner/russian_cases.php');
+
+// @todo: need some refactoring here
+]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[
+
+				$data['text_agree'] = sprintf($this->language->get('text_agree'), $this->url->link('information/information/agree', 'information_id=' . $this->config->get('config_account_id'), true), $information_info['title'], $information_info['title']);
+		]]></search>
+		<add position="replace"><![CDATA[$decliner = new Decliner\RussianCasesDecliner();
+
+        		$errorText = $decliner->declinePhrase($information_info['title'], \Decliner\RussianCases::ACCUSATIVE);
+
+        		$data['text_agree'] = sprintf(
+            		$this->language->get('text_agree'),
+            		$this->url->link('information/information/agree', 'information_id=' . $this->config->get('config_account_id'), true),
+            		$information_info['title'],
+            		$errorText
+        		);]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[if ((utf8_strlen($this->request->post['email']) > 96) || !filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
+		]]></search>
+		<add position="replace"><![CDATA[if (!filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[if ($this->model_account_customer->getTotalCustomersByEmail($this->request->post['email'])) {]]></search>
+		<add position="before"><![CDATA[		if (strpos($this->request->post['email'], '@') === false) {
+			$this->error['email'] = $this->language->get('error_at_email');
+		}
+
+		if (empty($this->request->post['email'])) {
+			$this->error['email'] = $this->language->get('error_blank_email');
+		}
+		]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[
+				$this->error['warning'] = sprintf($this->language->get('error_agree'), $information_info['title']);
+		]]></search>
+		<add position="replace"><![CDATA[$decliner = new Decliner\RussianCasesDecliner();
+        		$errorText = $decliner->declinePhrase($information_info['title'], \Decliner\RussianCases::INSTRUMENTAL);
+        		$this->error['warning'] = sprintf($this->language->get('error_agree'), $errorText);]]></add>
+	</operation>
+</file>
+
+
+<file path="catalog/language/ru-ru/account/register.php">
+	<operation>
+		<search><![CDATA[
+		$_['text_agree']           = 'Я прочитал <a href="%s" class="agree"><b>%s</b></a> и согласен с <br /> условиями безопасности и обработки персональных данных';
+		]]></search>
+		<add position="replace"><![CDATA[
+$_['text_agree']           = 'Я прочитал <a href="%1$s" class="agree" data-title="%2$s"><b>%3$s</b></a> и согласен с <br /> условиями безопасности и обработки персональных данных ';
+		]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[
+		$_['error_email']          = 'E-Mail введен неправильно!';
+		]]></search>
+		<add position="after"><![CDATA[
+$_['error_blank_email']    = 'E-mail адрес не может быть пустым!';
+		]]></add>
+	</operation>
+</file>
+
+
+<file path="catalog/language/ru-ru/common/header.php">
+	<operation>
+		<search><![CDATA[
+		$_['text_all']           = 'Смотреть Все';
+		]]></search>
+		<add position="replace"><![CDATA[
+
+$_['text_contact']       = 'Контакты';
+		]]></add>
+	</operation>
+</file>
+
+
+<file path="catalog/language/ru-ru/information/contact.php">
+	<operation>
+		<search><![CDATA[
+		$_['error_name']     = 'Имя должно быть от 2 до 32 символов!';
+		$_['error_email']    = 'E-mail адрес введен неверно!';
+		]]></search>
+		<add position="replace"><![CDATA[
+		$_['error_name']        = 'Имя должно быть от 2 до 32 символов!';
+		$_['error_email']       = 'E-mail адрес введен неверно!';
+		]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[
+		$_['error_at_email'] = 'E-mail адрес обязан содержать \'@\'';
+		$_['error_enquiry']  = 'Длина текста должна быть от 10 до 3000 символов!';
+		$_['error_agree']    = ' Вы должны прочитать и согласится с %s!';
+		]]></search>
+		<add position="replace"><![CDATA[
+		$_['error_enquiry']     = 'Длина текста должна быть от 10 до 3000 символов!';
+		$_['error_agree']       = 'Вы должны прочитать и согласится с %s!';
+		]]></add>
+	</operation>
+</file>
+
+
+<file path="catalog/view/theme/nice/javascript/common.js">
+	<operation>
+		<search><![CDATA[
+		html  = '<div id="modal-agree" class="modal">';
+		]]></search>
+		<add position="before"><![CDATA[			const modalTitle = $(element).attr('data-title');
+		]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[
+		html += '        <h4 class="modal-title">' + $(element).text() + '</h4>';
+		]]></search>
+		<add position="replace"><![CDATA[html += '        <h4 class="modal-title">' + modalTitle + '</h4>';]]></add>
+	</operation>
+</file>
+
+
+<file path="catalog/view/theme/nice/stylesheet/stylesheet.css">
+	<operation>
+		<search><![CDATA[
+		.product-category__title {
+  		  text-align: center;
+  		  font-weight: bold;
+  		  font-size: 50px;
+  		  color: var(--color-primary);
+		}
+		]]></search>
+		<add position="replace"><![CDATA[
+		/**
+ 		 * Class for light contrasty background because black text and dark main theme are similar.
+ 		 */
+		.contrasty {
+  		  background-color: var(--color-title-contrasty);
+		}
+
+		/**
+ 		 * Styles for pagination in category.twig
+ 		 */
+		.pagination__wrapper {} /* for template semantic */
+		.pagination__item {
+  		  display: inline-block;
+		}
+
+		.product-category__title {
+  		  text-align: center;
+  		  font-weight: bold;
+  		  font-size: 50px;
+  		  color: var(--color-primary);
+		}
+
+		.product-category__description p {
+  		  color: #595959 !important;
+  		  text-align: center;
+  		  font-family: Inter, sans-serif, 'Microsoft Sans Serif' !important;
+  		  margin-bottom: var(--space-2x) !important;
+		}
+
+		]]></add>
+	</operation>
+</file>
+
+
+<file path="catalog/view/theme/nice/template/extension/module/carousel.twig">
+	<operation>
+		<search><![CDATA[
+		<div class="section__title--wrapped"><p class="section__title">Нам доверяют:</p></div>
+		]]></search>
+		<add position="replace"><![CDATA[<div class="section__title--wrapped">
+  <p class="section__title contrasty">Нам доверяют:</p>
+</div>]]></add>
+	</operation>
+</file>
+
+
+<file path="catalog/view/theme/nice/template/extension/module/featured.twig">
+	<operation>
+		<search><![CDATA[
+		<div class="section__title--wrapped"><p class="section__title">{{ heading_title }}</p></div>
+		]]></search>
+		<add position="replace"><![CDATA[<div class="section__title--wrapped">
+    <p class="section__title contrasty">{{ heading_title }}</p>
+  </div>]]></add>
+	</operation>
+</file>
+
+
+<file path="catalog/view/theme/*/template/account/login.twig">
+	<operation>
+		<search><![CDATA[
+		{{ header }}
+		]]></search>
+		<add position="after"><![CDATA[]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[
+		<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
+		]]></search>
+		<add position="replace"><![CDATA[	<div class="alert alert-danger alert-dismissible">
+      <i class="fa fa-exclamation-circle"></i> {{ ' ' ~ error_warning }}
+    </div>]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[
+		<input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control" />
+		]]></search>
+		<add position="replace"><![CDATA[<input type="email" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control" />]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[
+		{{ footer }}
+		]]></search>
+		<add position="before"><![CDATA[]]></add>
+	</operation>
+</file>
+
+
+<file path="catalog/view/theme/*/template/account/register.twig">
+	<operation>
+		<search><![CDATA[
+		{{ header }}
+		]]></search>
+		<add position="after"><![CDATA[]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[
+		<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
+		]]></search>
+		<add position="replace"><![CDATA[  <div class="alert alert-danger alert-dismissible">
+      <i class="fa fa-exclamation-circle"></i> {{ ' ' ~ error_warning }}
+    </div>]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[
+		{{ footer }}
+		]]></search>
+		<add position="before"><![CDATA[]]></add>
+	</operation>
+</file>
+
+
+<file path="catalog/view/theme/*/template/common/header.twig">
+	<operation>
+		<search><![CDATA[
+		<span class="header-icon-label">{{ telephone }}</span>
+		]]></search>
+		<add position="after" offset="146"><![CDATA[
+		<<script>
+		const setRedirectionToButton = (buttonId) => {
+			const button = document.getElementById(buttonId);
+			const buttonRedirectionLink = button.dataset.href;
+			button.addEventListener('click', () =>
+				window.location.href = buttonRedirectionLink
+			);
+		}
+
+		setRedirectionToButton('register-button');
+		setRedirectionToButton('login-button');
+	</script>
+]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[
+		<span class="header-icon-label">{{ telephone }}</span>
+		]]></search>
+		<add position="replace"><![CDATA[<span class="header-icon-label">{{ text_contact }}</span>]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[
+		<div class="dropdown top-dropdown">
+          <button class="top-dropdown__toggle padding-r-n-xs" type="button" data-toggle="dropdown" title="{{ text_account }}"><i class="fa fa-user-o"></i> <span class="">{{ nice_text_account }}</span> <i class="fa fa-caret-down"></i></button>
+          <ul class="dropdown-menu dropdown-menu-right">
+            {% if logged %}
+              <li><a class="top-dropdown__link" href="{{ account }}">{{ text_account }}</a></li>
+              <li><a class="top-dropdown__link" href="{{ order }}">{{ text_order }}</a></li>
+              <li><a class="top-dropdown__link" href="{{ transaction }}">{{ text_transaction }}</a></li>
+              <li><a class="top-dropdown__link" href="{{ download }}">{{ text_download }}</a></li>
+              <li><a class="top-dropdown__link" href="{{ logout }}">{{ text_logout }}</a></li>
+              {% else %}
+              <li><a class="top-dropdown__link" href="{{ register }}">{{ text_register }}</a></li>
+              <li><a class="top-dropdown__link" href="{{ login }}">{{ text_login }}</a></li>
+              {% endif %}
+          </ul>
+        </div>
+		]]></search>
+		<add position="replace"><![CDATA[
+		<div class="dropdown top-dropdown">
+            {% if logged %}
+                <button class="top-dropdown__toggle padding-r-n-xs" type="button" data-toggle="dropdown" title="{{ text_account }}"><i class="fa fa-user-o"></i> <span class="">{{ nice_text_account }}</span> <i class="fa fa-caret-down"></i></button>
+                <ul class="dropdown-menu dropdown-menu-right">
+                    <li><a class="top-dropdown__link" href="{{ account }}">{{ text_account }}</a></li>
+                    <li><a class="top-dropdown__link" href="{{ order }}">{{ text_order }}</a></li>
+                    <li><a class="top-dropdown__link" href="{{ transaction }}">{{ text_transaction }}</a></li>
+                    <li><a class="top-dropdown__link" href="{{ download }}">{{ text_download }}</a></li>
+                    <li><a class="top-dropdown__link" href="{{ logout }}">{{ text_logout }}</a></li>
+                </ul>
+            {% else %}
+                <button id="register-button" class="top-dropdown__toggle padding-r-n-xs" type="button" data-toggle="dropdown" title="{{ text_register }}" data-href="{{ register }}"><i class="fa fa-user-plus"></i> <span class="">{{ text_register }}</span></button>
+                <button id="login-button" class="top-dropdown__toggle padding-r-n-xs" type="button" data-toggle="dropdown" title="{{ text_login }}" data-href="{{ login }}"><i class="fa fa-sign-in"></i> <span class="">{{ text_login }}</span></button>
+            {% endif %}
+        </div>
+		]]></add>
+	</operation>
+</file>
+
+
+<file path="catalog/view/theme/default/template/product/category.twig">
+	<operation>
+		<search><![CDATA[
+		<label for="option-value-{{ option_value['product_option_value_id'] }}">{{ option_value['name'] }} {% if (option_value['price']) %}({{ option_value['price_prefix'] }}{{ option_value['price'] }}){% endif %}</label><br />
+		]]></search>
+		<add position="replace"><![CDATA[
+		<label for="option-value-{{ option_value['product_option_value_id'] }}">
+            {{ option_value['name'] }}
+        </label><br />
+		]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[
+		<h1>{{ heading_title }}</h1>
+		]]></search>
+		<add position="replace"><![CDATA[
+      	<h1 class="product-category__title">{{ heading_title }}</h1>
+
+      	<div class="row">
+          {% if thumb %}
+            <div class="col-sm-2"><img src="{{ thumb }}" alt="{{ heading_title }}" title="{{ heading_title }}" class="img-thumbnail" /></div>
+          {% endif %}
+          {% if description %}
+            <div class="col-sm-10 col-sm-offset-1 product-category__description">
+                {{ description }}
+          	</div>
+          {% endif %}
+        </div>
+
+		]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[
+		{% if thumb or description %}
+      	<hr>
+      	<div class="row"> {% if thumb %}
+          <div class="col-sm-2"><img src="{{ thumb }}" alt="{{ heading_title }}" title="{{ heading_title }}" class="img-thumbnail" /></div>
+          {% endif %}
+          {% if description %}
+          <div class="col-sm-10">{{ description }}</div>
+          {% endif %}</div>
+
+        {% endif %}
+		]]></search>
+		<add position="replace"><![CDATA[
+
+		]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[
+		<div class="col-sm-6 text-right">{{ results }}</div>
+		]]></search>
+		<add position="replace"><![CDATA[
+		<div class="col-sm-6 text-right pagination__wrapper">
+            <p class="pagination__item contrasty">
+                {{ results }}
+            </p>
+        </div>
+		]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[
+		<div class="options">
+		   {% if (product['options']) %}
+		   <div id="option_{{ product['product_id'] }}">
+			  {% for option in product['options'] %}
+			  {% if (option['type'] == 'select') %}
+			  <div id="option-{{ option['product_option_id'] }}" class="option">
+			     {% if (option['required']) %}*{% endif %} <label>{{ option['name'] }}:</label><br />
+			     <select name="option[{{ option['product_option_id'] }}]" onchange="recalc({{ product['product_id'] }});" class="form-control">
+			        <option value="" price_prefix="" price="">{{ text_select }}</option>
+			        {% for option_value in option['product_option_value'] %}
+			        <option value="{{ option_value['product_option_value_id'] }}" price_prefix="{{ option_value['price_prefix'] }}" price="{{ option_value['price'] }}">{{ option_value['name'] }} {% if (option_value['price']) %}({{ option_value['price_prefix'] }}{{ option_value['price'] }}){% endif %}</option>
+			        {% endfor %}
+			     </select>
+			  </div>
+			  {% endif %}
+			  {% if (option['type'] == 'radio') %}
+			  <div id="option-{{ option['product_option_id'] }}" class="option">
+			     {% if (option['required']) %}*{% endif %} <label>{{ option['name'] }}:</label><br />
+			     {% for option_value in option['product_option_value'] %}
+			     <input type="radio" price_prefix="{{ option_value['price_prefix'] }}" price="{{ option_value['price'] }}" onchange="recalc({{ product['product_id'] }});" name="option[{{ option['product_option_id'] }}]" value="{{ option_value['product_option_value_id'] }}" id="option-value-{{ option_value['product_option_value_id'] }}" />
+                 <label for="option-value-{{ option_value['product_option_value_id'] }}">
+                     {{ option_value['name'] }}
+                 </label><br />
+			     {% endfor %}
+			  </div>
+			  {% endif %}
+			  {% if (option['type'] == 'checkbox') %}
+			  <div id="option-{{ option['product_option_id'] }}" class="option">
+			     {% if (option['required']) %}*{% endif %} <label>{{ option['name'] }}:</label><br />
+			     {% for option_value in option['product_option_value'] %}
+			     <input type="checkbox" price_prefix="{{ option_value['price_prefix'] }}" price="{{ option_value['price'] }}" onchange="recalc({{ product['product_id'] }});" name="option[{{ option['product_option_id'] }}][]" value="{{ option_value['product_option_value_id'] }}" id="option-value-{{ option_value['product_option_value_id'] }}" />
+			     <label for="option-value-{{ option_value['product_option_value_id'] }}">{{ option_value['name'] }} {% if (option_value['price']) %}({{ option_value['price_prefix'] }}{{ option_value['price'] }}){% endif %}</label><br />
+			     {% endfor %}
+			  </div>
+			  {% endif %}
+			  {% endfor %}
+		   </div>
+		   {% endif %}
+		</div>
+		]]></search>
+		<add position="replace"><![CDATA[
+		 {% if (product['options']) %}
+             <div class="options">
+               <div id="option_{{ product['product_id'] }}">
+                 {% for option in product['options'] %}
+                   {% if (option['type'] == 'select') %}
+                     <div id="option-{{ option['product_option_id'] }}" class="option">
+                       {% if (option['required']) %}*{% endif %} <label>{{ option['name'] }}:</label><br />
+                         <select name="option[{{ option['product_option_id'] }}]" onchange="recalc({{ product['product_id'] }});" class="form-control">
+                           <option value="" price_prefix="" price="">{{ text_select }}</option>
+                           {% for option_value in option['product_option_value'] %}
+                             <option value="{{ option_value['product_option_value_id'] }}" price_prefix="{{ option_value['price_prefix'] }}" price="{{ option_value['price'] }}">{{ option_value['name'] }} {% if (option_value['price']) %}({{ option_value['price_prefix'] }}{{ option_value['price'] }}){% endif %}</option>
+                           {% endfor %}
+                         </select>
+                     </div>
+                   {% endif %}
+                   {% if (option['type'] == 'radio') %}
+                     <div id="option-{{ option['product_option_id'] }}" class="option">
+                       {% if (option['required']) %}*{% endif %} <label>{{ option['name'] }}:</label><br />
+                       {% for option_value in option['product_option_value'] %}
+                         <input type="radio" price_prefix="{{ option_value['price_prefix'] }}" price="{{ option_value['price'] }}" onchange="recalc({{ product['product_id'] }});" name="option[{{ option['product_option_id'] }}]" value="{{ option_value['product_option_value_id'] }}" id="option-value-{{ option_value['product_option_value_id'] }}" />
+                         <label for="option-value-{{ option_value['product_option_value_id'] }}">
+                           {{ option_value['name'] }}
+                         </label><br />
+                       {% endfor %}
+                     </div>
+                   {% endif %}
+                   {% if (option['type'] == 'checkbox') %}
+                     <div id="option-{{ option['product_option_id'] }}" class="option">
+                       {% if (option['required']) %}*{% endif %} <label>{{ option['name'] }}:</label><br />
+                       {% for option_value in option['product_option_value'] %}
+                         <input type="checkbox" price_prefix="{{ option_value['price_prefix'] }}" price="{{ option_value['price'] }}" onchange="recalc({{ product['product_id'] }});" name="option[{{ option['product_option_id'] }}][]" value="{{ option_value['product_option_value_id'] }}" id="option-value-{{ option_value['product_option_value_id'] }}" />
+                         <label for="option-value-{{ option_value['product_option_value_id'] }}">{{ option_value['name'] }} {% if (option_value['price']) %}({{ option_value['price_prefix'] }}{{ option_value['price'] }}){% endif %}</label><br />
+                       {% endfor %}
+                     </div>
+                   {% endif %}
+                 {% endfor %}
+               </div>
+             </div>
+         {% endif %}
+		]]></add>
+	</operation>
+</file>
+
+
 <file path="admin/view/template/common/header.twig">
 <!-- Расширяем колонку меню для русских слов и подключаем translit.js-->
 	<operation>
@@ -290,6 +796,38 @@
 
 <!-- Приводим немного сайт к 152 ФЗ	 -->   
 <file path="catalog/controller/information/contact.php">
+	<operation>
+		<search><![CDATA[
+<?php
+		]]></search>
+		<add position="after"><![CDATA[
+require_once(DIR_SYSTEM . 'library/decliner/russian_cases_decliner.php');
+require_once(DIR_SYSTEM . 'library/decliner/russian_cases.php');
+
+// @todo: need some refactoring here
+]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[
+		if ((utf8_strlen($this->request->post['enquiry']) < 10) || (utf8_strlen($this->request->post['enquiry']) > 3000)) {
+		]]></search>
+		<add position="before"><![CDATA[		if (strpos($this->request->post['email'], '@') === false) {
+            $this->error['email'] = $this->language->get('error_at_email');
+        }
+
+        if (empty($this->request->post['email'])) {
+            $this->error['email'] = $this->language->get('error_blank_email');
+        }
+		]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[
+			if ((utf8_strlen($this->request->post['name']) < 3) || (utf8_strlen($this->request->post['name']) > 32)) {
+		]]></search>
+		<add position="replace"><![CDATA[if ((utf8_strlen($this->request->post['name']) < 2) || (utf8_strlen($this->request->post['name']) > 32)) {]]></add>
+	</operation>
 
 	<operation>
 		<search><![CDATA[
@@ -315,7 +853,16 @@
 			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_account_id'));
 
 			if ($information_info) {
-				$data['text_agree'] = sprintf($this->language->get('text_agree'), $this->url->link('information/information/agree', 'information_id=' . $this->config->get('config_account_id'), true), $information_info['title'], $information_info['title']);
+				$decliner = new Decliner\RussianCasesDecliner();
+
+                $errorText = $decliner->declinePhrase($information_info['title'], \Decliner\RussianCases::ACCUSATIVE);
+
+				$data['text_agree'] = sprintf(
+                    $this->language->get('text_agree'),
+                    $this->url->link('information/information/agree', 'information_id=' . $this->config->get('config_account_id'), true),
+                    $information_info['title'],
+                    $errorText
+                );
 			} else {
 				$data['text_agree'] = '';
 			}
@@ -343,7 +890,9 @@
 			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_account_id'));
 
 			if ($information_info && !isset($this->request->post['agree'])) {
-				$this->error['warning'] = sprintf($this->language->get('error_agree'), $information_info['title']);
+				$decliner = new Decliner\RussianCasesDecliner();
+                $errorText = $decliner->declinePhrase($information_info['title'], \Decliner\RussianCases::INSTRUMENTAL);
+				$this->error['warning'] = sprintf($this->language->get('error_agree'), $errorText);
 			}
 		}
 		]]></add>
@@ -355,13 +904,34 @@
 
 	<operation>
 		<search><![CDATA[
-			<div class="row">{{ column_left }}
+		<div class="row">{{ column_left }}
 		]]></search>
-		<add position="before"><![CDATA[
-		{% if error_warning %}
-		<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
-		{% endif %}
-		]]></add>
+		<add position="before"><![CDATA[  {% if error_warning %}
+	<div class="alert alert-danger alert-dismissible">
+      <i class="fa fa-exclamation-circle"></i> {{ ' ' ~ error_warning }}
+    </div>
+  {% endif %}]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[
+        <input type="text" name="name" value="{{ name }}" id="input-name" class="form-control" />
+		]]></search>
+		<add position="replace"><![CDATA[<input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" />]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[
+		<input type="text" name="email" value="{{ email }}" id="input-email" class="form-control" />
+		]]></search>
+		<add position="replace"><![CDATA[<input type="email" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control" />]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[
+		<textarea name="enquiry" rows="10" id="input-enquiry" class="form-control">{{ enquiry }}</textarea>
+		]]></search>
+		<add position="replace"><![CDATA[<textarea name="enquiry" rows="10" id="input-enquiry" placeholder="{{ entry_enquiry }}" class="form-control">{{ enquiry }}</textarea>]]></add>
 	</operation>
 
 	<operation>
