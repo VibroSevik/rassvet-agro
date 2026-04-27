@@ -3,9 +3,9 @@
 <name>Tweak for OpenCart 3x</name>
 <code>Tweak for OpenCart 3x</code>
 <version>3.0.3.2-1</version>
-<date>11.03.2019</date>
-<author>Romans</author>
-<link>https://opencart.ru</link>
+<date>27.04.2026</date>
+<author>VibroSevik</author>
+<link>https://github.com/VibroSevik</link>
 
 
 <file path="catalog/controller/extension/d_quickcheckout/confirm.php">
