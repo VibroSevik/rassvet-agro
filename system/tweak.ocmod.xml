@@ -1470,7 +1470,7 @@ $_['error_agree']    = 'Вы должны прочитать и согласит
 </file>
 
 
-<file path="catalog/view/theme/*/template/account/login.twig">
+<file path="catalog/view/theme/default/template/account/login.twig">
 	<operation>
 		<search><![CDATA[
 		{{ header }}
@@ -1503,7 +1503,7 @@ $_['error_agree']    = 'Вы должны прочитать и согласит
 </file>
 
 
-<file path="catalog/view/theme/*/template/account/register.twig">
+<file path="catalog/view/theme/default/template/account/register.twig">
 	<operation>
 		<search><![CDATA[
 		{{ header }}
@@ -1529,7 +1529,7 @@ $_['error_agree']    = 'Вы должны прочитать и согласит
 </file>
 
 
-<file path="catalog/view/theme/*/template/common/header.twig">
+<file path="catalog/view/theme/nice/template/common/header.twig">
 	<operation>
 		<search><![CDATA[
 		<script src="//code.jivo.ru/widget/QJzfSBpTk4" async></script>
