@@ -166,15 +166,8 @@ class ControllerExtensionDQuickcheckoutConfirm extends Controller
         }
         $this->load->model('extension/d_quickcheckout/method');
         if ($this->model_extension_d_quickcheckout_method->getPaymentPopup($this->session->data['payment_method']['code'])) {
-            $json['confirm_order'] = true;
+            $json['cofirm_order'] = true;
             $json = $this->load->controller('extension/d_quickcheckout/payment/prepare', $json);
-        }
-
-        if ($this->session->data['payment_method']['code'] == 'robokassa') {
-            $json['redirect'] = $this->url->link('extension/payment/robokassa');
-            $this->response->addHeader('Content-Type: application/json');
-            $this->response->setOutput(json_encode($json));
-            return;
         }
 
         $json['order_id'] = $this->session->data['order_id'] = $this->updateOrder();

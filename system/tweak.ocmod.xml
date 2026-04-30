@@ -3,9 +3,2211 @@
 <name>Tweak for OpenCart 3x</name>
 <code>Tweak for OpenCart 3x</code>
 <version>3.0.3.2-1</version>
-<date>11.03.2019</date>
-<author>Romans</author>
-<link>https://opencart.ru</link>
+<date>30.04.2026</date>
+<author>VibroSevik</author>
+<link>https://github.com/VibroSevik</link>
+
+
+<file path="admin/controller/common/column_left.php">
+	<operation>
+		<search><![CDATA[// Catalog]]></search>
+		<add position="before"><![CDATA[			// Nice . Begin
+            $this->load->language('extension/theme/nice');
+
+            $data['menus'][] = array(
+                'id'			 => 'nice-theme',
+                'icon'		 => 'fa-paint-brush ', // fa-wrenc // fa-plug
+                'name'		 => $this->language->get('menu_title'),
+                'href'		 => $this->url->link('extension/theme/nice', 'user_token=' . $this->session->data['user_token'] . '&store_id=0', true),
+                'children' => array(),
+            );
+            // Nice . End
+]]></add>
+	</operation>
+</file>
+
+
+<file path="admin/controller/marketplace/install.php">
+	<operation>
+		<search><![CDATA[if ($safe) {]]></search>
+		<add position="before"><![CDATA[					$safe = true;
+]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[if (is_dir($file) && !is_dir($path)) {]]></search>
+		<add position="before"><![CDATA[						if ($path == '') {
+    							$app_root = explode('/',DIR_APPLICATION);
+        						unset($app_root[count($app_root)-2]);
+        						$app_root = implode('/',$app_root);
+        						$path = $app_root . $destination;
+        				}]]></add>
+	</operation>
+</file>
+
+
+<file path="catalog/controller/extension/d_quickcheckout/confirm.php">
+	<operation>
+		<search><![CDATA[
+        $json['cofirm_order'] = true;
+		]]></search>
+		<add position="replace"><![CDATA[$json['confirm_order'] = true;]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[
+		$json['order_id'] = $this->session->data['order_id'] = $this->updateOrder();
+		]]></search>
+		<add position="before"><![CDATA[		if ($this->session->data['payment_method']['code'] == 'robokassa') {
+            $json['redirect'] = $this->url->link('extension/payment/robokassa');
+            $this->response->addHeader('Content-Type: application/json');
+            $this->response->setOutput(json_encode($json));
+            return;
+        }
+		]]></add>
+	</operation>
+</file>
+
+
+<file path="catalog/controller/extension/module/bestseller.php">
+	<operation>
+		<search><![CDATA[$data['products'][] = array(]]></search>
+		<add position="before"><![CDATA[				// >>>>>> Nice Theme . Begin
+                $data['nice']['productlist_image_margins'] = $this->config->get('theme_nice_productlist_image_margins');
+                $data['nice']['productlist_description'] = $this->config->get('theme_nice_productlist_description');
+                $data['nice']['productlist_description_on_mobile'] = $this->config->get('theme_nice_productlist_description_on_mobile');
+                $data['nice']['productlist_name_font_weight'] = $this->config->get('theme_nice_productlist_name_font_weight');
+                $data['nice']['productlist_price_font_weight'] = $this->config->get('theme_nice_productlist_price_font_weight');
+                $data['nice']['productlist_grid_hover_effect'] = $this->config->get('theme_nice_productlist_grid_hover_effect');
+                $data['nice']['productlist_cols_on_mobile'] = $this->config->get('theme_nice_productlist_cols_on_mobile');
+                // <<<<<< Nice Theme . End
+]]></add>
+	</operation>
+</file>
+
+
+<file path="catalog/controller/extension/module/featured.php">
+	<operation>
+		<search><![CDATA[$data['products'][] = array(]]></search>
+		<add position="before"><![CDATA[					// >>>>>> Nice Theme . Begin
+                    $data['nice']['productlist_image_margins'] = $this->config->get('theme_nice_productlist_image_margins');
+                    $data['nice']['productlist_description'] = $this->config->get('theme_nice_productlist_description');
+                    $data['nice']['productlist_description_on_mobile'] = $this->config->get('theme_nice_productlist_description_on_mobile');
+                    $data['nice']['productlist_name_font_weight'] = $this->config->get('theme_nice_productlist_name_font_weight');
+                    $data['nice']['productlist_price_font_weight'] = $this->config->get('theme_nice_productlist_price_font_weight');
+                    $data['nice']['productlist_grid_hover_effect'] = $this->config->get('theme_nice_productlist_grid_hover_effect');
+                    $data['nice']['productlist_cols_on_mobile'] = $this->config->get('theme_nice_productlist_cols_on_mobile');
+                    // <<<<<< Nice Theme . End
+]]></add>
+	</operation>
+</file>
+
+
+<file path="catalog/controller/extension/module/latest.php">
+	<operation>
+			<search><![CDATA[$data['products'][] = array(]]></search>
+			<add position="before"><![CDATA[				// >>>>>> Nice Theme . Begin
+                $data['nice']['productlist_image_margins'] = $this->config->get('theme_nice_productlist_image_margins');
+                $data['nice']['productlist_description'] = $this->config->get('theme_nice_productlist_description');
+                $data['nice']['productlist_description_on_mobile'] = $this->config->get('theme_nice_productlist_description_on_mobile');
+                $data['nice']['productlist_name_font_weight'] = $this->config->get('theme_nice_productlist_name_font_weight');
+                $data['nice']['productlist_price_font_weight'] = $this->config->get('theme_nice_productlist_price_font_weight');
+                $data['nice']['productlist_grid_hover_effect'] = $this->config->get('theme_nice_productlist_grid_hover_effect');
+                $data['nice']['productlist_cols_on_mobile'] = $this->config->get('theme_nice_productlist_cols_on_mobile');
+                // <<<<<< Nice Theme . End
+]]></add>
+	</operation>
+</file>
+
+
+<file path="catalog/controller/extension/module/special.php">
+	<operation>
+		<search><![CDATA[$data['products'][] = array(]]></search>
+		<add position="before"><![CDATA[				// >>>>>> Nice Theme . Begin
+                $data['nice']['productlist_image_margins'] = $this->config->get('theme_nice_productlist_image_margins');
+                $data['nice']['productlist_description'] = $this->config->get('theme_nice_productlist_description');
+                $data['nice']['productlist_description_on_mobile'] = $this->config->get('theme_nice_productlist_description_on_mobile');
+                $data['nice']['productlist_name_font_weight'] = $this->config->get('theme_nice_productlist_name_font_weight');
+                $data['nice']['productlist_price_font_weight'] = $this->config->get('theme_nice_productlist_price_font_weight');
+                $data['nice']['productlist_grid_hover_effect'] = $this->config->get('theme_nice_productlist_grid_hover_effect');
+                $data['nice']['productlist_cols_on_mobile'] = $this->config->get('theme_nice_productlist_cols_on_mobile');
+                // <<<<<< Nice Theme . End
+]]></add>
+	</operation>
+</file>
+
+
+<file path="catalog/controller/account/register.php">
+	<operation>
+		<search><![CDATA[
+    <?php
+		]]></search>
+		<add position="after"><![CDATA[
+require_once(DIR_SYSTEM . 'library/decliner/russian_cases_decliner.php');
+require_once(DIR_SYSTEM . 'library/decliner/russian_cases.php');
+
+// @todo: need some refactoring here
+]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[
+
+				$data['text_agree'] = sprintf($this->language->get('text_agree'), $this->url->link('information/information/agree', 'information_id=' . $this->config->get('config_account_id'), true), $information_info['title'], $information_info['title']);
+		]]></search>
+		<add position="replace"><![CDATA[$decliner = new Decliner\RussianCasesDecliner();
+
+        		$errorText = $decliner->declinePhrase($information_info['title'], \Decliner\RussianCases::ACCUSATIVE);
+
+        		$data['text_agree'] = sprintf(
+            		$this->language->get('text_agree'),
+            		$this->url->link('information/information/agree', 'information_id=' . $this->config->get('config_account_id'), true),
+            		$information_info['title'],
+            		$errorText
+        		);]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[if ((utf8_strlen($this->request->post['email']) > 96) || !filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
+		]]></search>
+		<add position="replace"><![CDATA[if (!filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[if ($this->model_account_customer->getTotalCustomersByEmail($this->request->post['email'])) {]]></search>
+		<add position="before"><![CDATA[		if (strpos($this->request->post['email'], '@') === false) {
+			$this->error['email'] = $this->language->get('error_at_email');
+		}
+
+		if (empty($this->request->post['email'])) {
+			$this->error['email'] = $this->language->get('error_blank_email');
+		}
+		]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[
+				$this->error['warning'] = sprintf($this->language->get('error_agree'), $information_info['title']);
+		]]></search>
+		<add position="replace"><![CDATA[$decliner = new Decliner\RussianCasesDecliner();
+        		$errorText = $decliner->declinePhrase($information_info['title'], \Decliner\RussianCases::INSTRUMENTAL);
+        		$this->error['warning'] = sprintf($this->language->get('error_agree'), $errorText);]]></add>
+	</operation>
+</file>
+
+
+<file path="catalog/controller/account/wishlist.php">
+	<operation>
+		<search><![CDATA[$this->load->language('account/wishlist');]]></search>
+		<add position="after"><![CDATA[        $this->load->language('extension/theme/nice'); // Nice Theme]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[$json['total'] = sprintf($this->language->get('text_wishlist'), $this->model_account_wishlist->getTotalWishlist());]]></search>
+		<add position="after"><![CDATA[
+				// >>>>>> Nice Theme . Begin
+                $json['is_logged'] = 1;
+                $json['nice_text_modal_wishlist_title'] = $this->language->get('nice_text_modal_wishlist_title');
+                // <<<<<< Nice Theme . End]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[$json['total'] = sprintf($this->language->get('text_wishlist'), (isset($this->session->data['wishlist']) ? count($this->session->data['wishlist']) : 0));]]></search>
+		<add position="after"><![CDATA[
+				// >>>>>> Nice Theme . Begin
+                $json['is_logged'] = 0;
+                $json['nice_text_modal_wishlist_title'] = $this->language->get('nice_text_modal_wishlist_title');
+                $json['nice_text_modal_button_to_create_account'] = $this->language->get('nice_text_modal_button_to_create_account');
+                $json['wishlist_create_account_link'] = $this->url->link('account/register', '', true);
+                // <<<<<< Nice Theme . End]]></add>
+	</operation>
+</file>
+
+
+<file path="catalog/controller/checkout/cart.php">
+	<operation>
+		<search><![CDATA[$this->load->language('checkout/cart');]]></search>
+		<add position="after"><![CDATA[        $this->load->language('extension/theme/nice'); // Nice Theme]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[$json['total'] = sprintf($this->language->get('text_items'), $this->cart->countProducts() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0), $this->currency->format($total, $this->session->data['currency']));]]></search>
+		<add position="replace"><![CDATA[// >>>>>> Nice Theme . Begin
+                $json['button_to_cart_link'] = $this->url->link('checkout/cart');
+
+                $json['nice_text_modal_add_to_cart_title'] = $this->language->get('nice_text_modal_add_to_cart_title');
+                $json['nice_text_modal_button_to_cart'] = $this->language->get('nice_text_modal_button_to_cart');
+                $json['nice_text_modal_button_to_continue'] = $this->language->get('nice_text_modal_button_to_continue');
+                // <<<<<< Nice Theme . End
+
+                //$json['total'] = sprintf($this->language->get('text_items'), $this->cart->countProducts() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0), $this->currency->format($total, $this->session->data['currency']));
+
+                $json['quantity'] = $this->cart->countProducts() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0); // Nice Theme
+                $json['total'] = $this->currency->format($total, $this->session->data['currency']); // Nice Theme]]></add>
+	</operation>
+</file>
+
+
+<file path="catalog/controller/checkout/checkout.php">
+	<operation>
+		<search><![CDATA[$data['footer'] = $this->load->controller('common/footer');]]></search>
+		<add position="after"><![CDATA[
+		if($this->config->get('d_quickcheckout_status')){
+            $data['d_quickcheckout'] = $this->load->controller('extension/module/d_quickcheckout');
+        }
+]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[$this->response->setOutput($this->load->view('checkout/checkout', $data));]]></search>
+		<add position="replace"><![CDATA[// a_vqmod_d_quickcheckout.xml
+        if($this->config->get('d_quickcheckout_status')){
+            $template = 'd_quickcheckout';
+        }else{
+            $template = 'checkout';
+        }
+
+        $this->response->setOutput($this->load->view('checkout/'.$template, $data));]]></add>
+	</operation>
+</file>
+
+
+<file path="catalog/controller/checkout/success.php">
+	<operation>
+		<search><![CDATA[if (isset($this->session->data['order_id'])) {]]></search>
+		<add position="after"><![CDATA[            $data['metrica_order_id'] = $this->session->data['order_id'];
+            $data['currency_code'] = $this->session->data['currency'];
+            $this->load->model('account/order');
+            $this->load->model('catalog/category');
+            $this->load->model('catalog/product');
+            $this->load->model('setting/setting');
+            $this->load->model('extension/module/yandex_metrica');
+
+            $order_info = $this->model_extension_module_yandex_metrica->getOrder($data['metrica_order_id']);
+            $order_products = $this->model_account_order->getOrderProducts($data['metrica_order_id']);
+
+            $data['metrica_total'] = $this->currency->format($order_info['total'], $this->session->data['currency'], '', false);
+            $data['currency_code'] =  $order_info['currency_code'];
+
+            if (isset($this->session->data['coupon'])) {
+                $data['metrica_coupon'] = $this->session->data['coupon'];
+            }
+
+            if (empty($this->session->data['order_id']) && $order_products) {
+                $log_status = $this->model_setting_setting->getSettingValue('analytics_yandex_metrica_log');
+                $log_ym = new Log('log_yandex_metrica.log');
+                if ($log_status) {
+                    $log_ym->write('Required parameters not found (Purchase)', true);
+                }
+            }
+
+            foreach($order_products as $order_product) {
+                $product_info = $this->model_catalog_product->getProduct($order_product["product_id"]);
+                $categories_product = $this->model_catalog_product->getCategories($order_product["product_id"]);
+                if($product_info) {
+                    $metrica_product_category = "";
+                    if(count($categories_product) > 0) {
+                        $category = array_pop($categories_product);
+                        $category_info = $this->model_catalog_category->getCategory($category['category_id']);
+                        if ($category_info)
+                            $metrica_product_category = $category_info['name'];
+                    }
+
+                    $price = $this->currency->format($this->tax->calculate($order_product["price"], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'], '', false);
+
+                    $data['metrica_order_products'][] = array(
+                        "metrica_product_id" => $order_product["product_id"],
+                        "metrica_product_name" => $order_product["name"],
+                        "metrica_product_price" => $price,
+                        "metrica_product_quantity" => $order_product["quantity"],
+                        "metrica_product_manufacturer" => $product_info['manufacturer'],
+                        "metrica_product_category" => $metrica_product_category,
+                    );
+                }
+            }
+]]></add>
+	</operation>
+</file>
+
+
+<file path="catalog/controller/common/cart.php">
+	<operation>
+		<search><![CDATA[public function index() {]]></search>
+		<add position="after" offset="1"><![CDATA[        $this->load->language('extension/theme/nice'); // Nice Theme]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[	$data['text_items'] = sprintf($this->language->get('text_items'), $this->cart->countProducts() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0), $this->currency->format($total, $this->session->data['currency']));]]></search>
+		<add position="replace"><![CDATA[//$data['text_items'] = sprintf($this->language->get('text_items'), $this->cart->countProducts() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0), $this->currency->format($total, $this->session->data['currency']));
+
+        $data['quantity'] = $this->cart->countProducts() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0); // Nice Theme
+        $data['total'] = $this->currency->format($total, $this->session->data['currency']); // Nice Theme]]></add>
+	</operation>
+</file>
+
+
+<file path="catalog/controller/common/home.php">
+	<operation>
+		<search><![CDATA[$data['column_left'] = $this->load->controller('common/column_left');]]></search>
+		<add position="before"><![CDATA[		$data['block_home_top'] = $this->load->controller('common/block_home_top'); // Nice Theme]]></add>
+	</operation>
+</file>
+
+
+<file path="catalog/controller/common/header.php">
+	<operation>
+		<search><![CDATA[$data['name'] = $this->config->get('config_name');]]></search>
+		<add position="replace"><![CDATA[//$data['name'] = $this->config->get('config_name');
+        $data['name'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'); // Nice Theme -- for text logo tags
+
+        $data['route'] = (isset($this->request->get['route'])) ? $this->request->get['route'] : 'common/home'; // Nice Theme -- Page type detect]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[$this->load->language('common/header');]]></search>
+		<add position="before"><![CDATA[		// >>>>>> Nice Theme . Begin
+        $data['mobile_logo_center'] = $this->config->get('theme_nice_mobile_logo_center');
+
+        // Multilang Logo
+        if ($this->config->get('theme_nice_multilang_logo_status')) {
+            if ('image' == $this->config->get('theme_nice_multilang_logo_type')) {
+
+                if (is_file(DIR_IMAGE . $this->config->get('theme_nice_multilang_logo_image')[$this->config->get('config_language_id')])) {
+                    $data['logo'] = $server . 'image/' . $this->config->get('theme_nice_multilang_logo_image')[$this->config->get('config_language_id')];
+                } else {
+                    $data['logo'] = '';
+                    $data['name'] = $this->config->get('theme_nice_multilang_logo_text')[$this->config->get('config_language_id')]; // for text logo tags
+                }
+            } else {
+                $data['logo'] = '';
+                $data['logo_icon'] = html_entity_decode($this->config->get('theme_nice_multilang_logo_text_icon'), ENT_QUOTES, 'UTF-8'); // for text logo tags
+                $data['name'] = html_entity_decode($this->config->get('theme_nice_multilang_logo_text')[$this->config->get('config_language_id')], ENT_QUOTES, 'UTF-8'); // for text logo tags
+            }
+        }
+        // <<<<<< Nice Theme . End
+]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[$this->load->language('common/header');]]></search>
+		<add position="after"><![CDATA[        $this->load->language('extension/theme/nice'); // Nice Theme]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[$data['wishlist'] = $this->url->link('account/wishlist', '', true);]]></search>
+		<add position="after"><![CDATA[        $data['compare'] = $this->url->link('product/compare', '', true); // Nice Theme]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[$data['menu'] = $this->load->controller('common/menu');]]></search>
+		<add position="after"><![CDATA[        $data['menu_top'] = $this->load->controller('common/menu_top'); // Nice Theme
+
+
+        $data['cms_version'] = mb_substr(VERSION, 0, 3);
+        $opencart_major_version = mb_substr(VERSION, 0, 1);
+        if ($opencart_major_version == 2) {
+            $data['yandex_metrics'] = $this->config->get('yandex_metrica_codes');
+            $data['yandex_metrica_status'] = $this->config->get('yandex_metrica_status');
+        } elseif ($opencart_major_version == 3) {
+            $data['yandex_metrics'] = $this->config->get('analytics_yandex_metrica_codes');
+            $data['yandex_metrica_status'] = $this->config->get('analytics_yandex_metrica_status');
+        }
+        if (!empty($data['yandex_metrica_status']) && $data['yandex_metrica_status'] === '1') {
+            if (!empty($data['yandex_metrics'])) {
+                foreach ($data['yandex_metrics'] as $key => $value) {
+                    if (!empty($value['ya_metrica_webvizor']) && $value['ya_metrica_webvizor'] == true) {
+                        $data['yandex_metrics'][$key]['ya_metrica_webvizor'] = 'true';
+                    } else {
+                        $data['yandex_metrics'][$key]['ya_metrica_webvizor'] = 'false';
+                    }
+                }
+            }
+       }]]></add>
+	</operation>
+</file>
+
+
+<file path="catalog/controller/common/footer.php">
+	<operation>
+		<search><![CDATA[$this->load->language('common/footer');]]></search>
+		<add position="after"><![CDATA[        $this->load->language('extension/theme/nice'); // Nice Theme]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[$data['powered'] = sprintf($this->language->get('text_powered'), $this->config->get('config_name'), date('Y', time()));]]></search>
+		<add position="replace"><![CDATA[//$data['powered'] = sprintf($this->language->get('text_powered'), $this->config->get('config_name'), date('Y', time()));
+        $data['powered'] = sprintf($this->language->get('nice_text_powered'), $this->config->get('config_name'), date('Y', time())); // Nice Theme]]></add>
+	</operation>
+</file>
+
+
+<file path="catalog/controller/common/search.php">
+	<operation>
+		<search><![CDATA[return $this->load->view('common/search', $data);]]></search>
+		<add position="before"><![CDATA[		// >>>>>> Nice Theme . Begin
+        $data['categories_status'] = $this->config->get('theme_nice_search_categories_status');
+
+        if (!$data['categories_status']) {
+            goto search_categories_end;
+        }
+
+        $this->load->language('extension/theme/nice');
+
+        $this->load->model('catalog/category');
+
+        $data['categories'] = array();
+
+        $data['categories'] = $this->cache->get('nice_search.' . (int)$this->config->get('config_language_id') . '.' . (int)$this->config->get('config_store_id'));
+
+        if ($data['categories']) {
+            goto search_categories_end;
+        }
+
+        $categories = $this->model_catalog_category->getCategories(0);
+
+        foreach ($categories as $category) {
+            $children_data = array();
+
+            $children = $this->model_catalog_category->getCategories($category['category_id']);
+
+            foreach ($children as $child) {
+                $grandchildren_data = array();
+
+                $grandchildren = $this->model_catalog_category->getCategories($child['category_id']);
+
+                foreach ($grandchildren as $grandchild) {
+                    $grandchildren_data[] = array(
+                        'name'  => $grandchild['name'],
+                        'category_id' => $grandchild['category_id'],
+                    );
+                }
+
+                $children_data[] = array(
+                    'name'  => $child['name'],
+                    'grandchildren' => $grandchildren_data,
+                    'category_id' => $child['category_id'],
+                );
+            }
+
+            $data['categories'][] = array(
+                'name' => $category['name'],
+                'category_id' => $category['category_id'],
+                'children' => $children_data,
+            );
+        }
+
+        $this->cache->set('nice_search.' . (int)$this->config->get('config_language_id') . '.' . (int)$this->config->get('config_store_id'), $data['categories']);
+
+        search_categories_end:
+
+        $data['selected_category_id'] = $this->request->get['category_id'] ?? 0;
+        // <<<<<< Nice Theme . End
+]]></add>
+	</operation>
+</file>
+
+
+<file path="catalog/controller/event/theme.php">
+	<operation>
+		<search><![CDATA[return $twig->createTemplate($template)->render($args);]]></search>
+		<add position="before"><![CDATA[			//d_twig_manager.xml
+            if (file_exists(DIR_SYSTEM . 'library/template/Twig/Extension/DTwigManager.php')) {
+                $twig->addExtension(new Twig_Extension_DTwigManager($this->registry));
+            }
+]]></add>
+	</operation>
+</file>
+
+
+<file path="catalog/controller/product/category.php">
+	<operation>
+		<search><![CDATA[$data['products'][] = array(]]></search>
+		<add position="before"><![CDATA[				// >>>>>> Nice Theme . Begin
+                $data['nice']['productlist_image_margins'] = $this->config->get('theme_nice_productlist_image_margins');
+                $data['nice']['productlist_description'] = $this->config->get('theme_nice_productlist_description');
+                $data['nice']['productlist_description_on_mobile'] = $this->config->get('theme_nice_productlist_description_on_mobile');
+                $data['nice']['productlist_name_font_weight'] = $this->config->get('theme_nice_productlist_name_font_weight');
+                $data['nice']['productlist_price_font_weight'] = $this->config->get('theme_nice_productlist_price_font_weight');
+                $data['nice']['productlist_grid_hover_effect'] = $this->config->get('theme_nice_productlist_grid_hover_effect');
+                $data['nice']['productlist_cols_on_mobile'] = $this->config->get('theme_nice_productlist_cols_on_mobile');
+                // <<<<<< Nice Theme . End
+
+
+                $var_currency = array();
+                $var_currency['value'] = $this->currency->getValue($this->session->data['currency']);
+                $var_currency['symbol_left'] = $this->currency->getSymbolLeft($this->session->data['currency']);
+                $var_currency['symbol_right'] = $this->currency->getSymbolRight($this->session->data['currency']);
+                $var_currency['decimals'] = $this->currency->getDecimalPlace($this->session->data['currency']);
+                $var_currency['decimal_point'] = $this->language->get('decimal_point');
+                $var_currency['thousand_point'] = $this->language->get('thousand_point');
+                $data['currency'] = $var_currency;
+                $options = $this->model_catalog_product->getProductOptions($result['product_id']);
+
+                $this->document->addScript('catalog/view/javascript/opt_in_cat.js');
+]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[$data['products'][] = array(]]></search>
+		<add position="after"><![CDATA[                    'options' => $options,
+                    'price_no_format' => $result['price'],
+                    'special_no_format' => $result['special'],]]></add>
+		</operation>
+	</file>
+
+
+<file path="catalog/controller/product/compare.php">
+	<operation>
+		<search><![CDATA[$this->load->language('product/compare');]]></search>
+		<add position="after"><![CDATA[        $this->load->language('extension/theme/nice'); // Nice Theme]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[$json['total'] = sprintf($this->language->get('text_compare'), (isset($this->session->data['compare']) ? count($this->session->data['compare']) : 0));]]></search>
+		<add position="after"><![CDATA[
+			// >>>>>> Nice Theme . Begin
+            $json['nice_text_modal_compare_title'] = $this->language->get('nice_text_modal_compare_title');
+            $json['nice_text_modal_button_to_continue'] = $this->language->get('nice_text_modal_button_to_continue');
+            // <<<<<< Nice Theme . End]]></add>
+	</operation>
+</file>
+
+
+<file path="catalog/controller/product/manufacturer.php">
+	<operation>
+		<search><![CDATA[$data['products'][] = array(]]></search>
+		<add position="before"><![CDATA[				// >>>>>> Nice Theme . Begin
+                $data['nice']['productlist_image_margins'] = $this->config->get('theme_nice_productlist_image_margins');
+                $data['nice']['productlist_description'] = $this->config->get('theme_nice_productlist_description');
+                $data['nice']['productlist_description_on_mobile'] = $this->config->get('theme_nice_productlist_description_on_mobile');
+                $data['nice']['productlist_name_font_weight'] = $this->config->get('theme_nice_productlist_name_font_weight');
+                $data['nice']['productlist_price_font_weight'] = $this->config->get('theme_nice_productlist_price_font_weight');
+                $data['nice']['productlist_grid_hover_effect'] = $this->config->get('theme_nice_productlist_grid_hover_effect');
+                $data['nice']['productlist_cols_on_mobile'] = $this->config->get('theme_nice_productlist_cols_on_mobile');
+                // <<<<<< Nice Theme . End
+]]></add>
+	</operation>
+</file>
+
+
+<file path="catalog/controller/product/product.php">
+	<operation>
+		<search><![CDATA[$this->load->language('product/product');]]></search>
+		<add position="after"><![CDATA[        $this->load->language('extension/theme/nice'); // Nice Theme]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[foreach ($option['product_option_value'] as $option_value) {]]></search>
+		<add position="after"><![CDATA[                    // show total amount
+                    if($this->config->get('module_live_options_status') && !$this->config->get('module_live_options_show_options_type') && $option_value['price'] > 0){
+                        if ($option_value['price_prefix'] == '-' && $option_value['price']) {
+                            $option_value['price'] = (($product_info['special'] ? ($product_info['special'] - $option_value['price']) : ($product_info['price']) - $option_value['price']));
+                        } elseif ($option_value['price_prefix'] == '+' && $option_value['price']) {
+                            $option_value['price'] = (($product_info['special'] ? ($product_info['special'] + $option_value['price']) : ($product_info['price']) + $option_value['price']));
+                        }
+                        $option_value['price_prefix'] = '';
+                    }
+]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[if ((($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) && (float)$option_value['price']) {]]></search>
+		<add position="after"><![CDATA[                            $currency_code = $this->session->data['currency'];
+
+                            // show total amount
+                            if($this->config->get('module_live_options_status') && !$this->config->get('module_live_options_show_options_type')){
+                                $price = $this->currency->format($this->tax->calculate($option_value['price'], $product_info['tax_class_id'], $this->config->get('config_tax')), $currency_code);
+                            } else]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[$data['products'] = array();]]></search>
+		<add position="before"><![CDATA[			// Ajax Live Options
+            if($this->config->get('module_live_options_status')){
+                $data['live_options'] = array(
+                    'module_live_options_container' => substr($this->config->get('module_live_options_container'), 1),
+                    'module_live_options_special_container' => substr($this->config->get('module_live_options_special_container'), 1),
+                    'module_live_options_price_container' => substr($this->config->get('module_live_options_price_container'), 1),
+                    'module_live_options_tax_container' => substr($this->config->get('module_live_options_tax_container'), 1),
+                    'module_live_options_points_container' => substr($this->config->get('module_live_options_points_container'), 1),
+                    'module_live_options_reward_container' => substr($this->config->get('module_live_options_reward_container'), 1),
+                );
+            }
+]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[$data['products'][] = array(]]></search>
+		<add position="before"><![CDATA[				// >>>>>> Nice Theme . Begin
+                $data['nice']['productlist_image_margins'] = $this->config->get('theme_nice_productlist_image_margins');
+                $data['nice']['productlist_description'] = $this->config->get('theme_nice_productlist_description');
+                $data['nice']['productlist_description_on_mobile'] = $this->config->get('theme_nice_productlist_description_on_mobile');
+                $data['nice']['productlist_name_font_weight'] = $this->config->get('theme_nice_productlist_name_font_weight');
+                $data['nice']['productlist_price_font_weight'] = $this->config->get('theme_nice_productlist_price_font_weight');
+                $data['nice']['productlist_grid_hover_effect'] = $this->config->get('theme_nice_productlist_grid_hover_effect');
+                $data['nice']['productlist_cols_on_mobile'] = $this->config->get('theme_nice_productlist_cols_on_mobile');
+                // <<<<<< Nice Theme . End
+]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[$this->model_catalog_product->updateViewed($this->request->get['product_id']);]]></search>
+		<add position="after"><![CDATA[//$data['column_left'] = $this->load->controller('common/column_left');// Nice Theme]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[//$data['column_left'] = $this->load->controller('common/column_left');// Nice Theme]]></search>
+		<add position="replace" offset="3"><![CDATA[			//$data['column_left'] = $this->load->controller('common/column_left');// Nice Theme
+			//$data['column_right'] = $this->load->controller('common/column_right');// Nice Theme]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[$this->model_catalog_product->updateViewed($this->request->get['product_id']);]]></search>
+		<add position="after"><![CDATA[
+			$data['currency_code'] = $this->session->data['currency'];
+            if (isset($data['product_id']) || isset($product_info['name'])) {
+                $data['metrica_product_id'] = $data['product_id'];
+                $data['metrica_product_name'] = $product_info['name'];
+                if ((float)$product_info['special']) {
+                    $data['metrica_product_price'] = $this->currency->format($this->tax->calculate($product_info['special'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'], '', false);
+                } else {
+                    $data['metrica_product_price'] = $this->currency->format($this->tax->calculate($product_info['price'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'], '', false);
+                }
+                $data['metrica_product_manufacturer'] = $product_info['manufacturer'];
+                $data['metrica_product_category'] = "";
+
+                $product_categories = $this->model_catalog_product->getCategories($product_info["product_id"]);
+
+                if (count($product_categories) > 0) {
+                    $category = array_pop($product_categories);
+                    $category_info = $this->model_catalog_category->getCategory($category['category_id']);
+                    if ($category_info) {
+                        $data['metrica_product_category'] = $category_info['name'];
+                    } else {
+                        $data['metrica_product_category'] = "";
+                    }
+                } else {
+                    $data['metrica_product_category'] = "";
+                }
+            } else {
+                $this->load->model('setting/setting');
+                $log_status = $this->model_setting_setting->getSettingValue('analytics_yandex_metrica_log');
+                if ($log_status) {
+                    $log_ym = new Log('log_yandex_metrica.log');
+                    $log_ym->write('Required parameters not found (name and ID)', true);
+                }
+            }
+]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[$this->response->setOutput($this->load->view('product/product', $data));]]></search>
+		<add position="before"><![CDATA[			// >>>>>> Nice Theme . Begin
+            $data['block_image'] = $this->load->controller('block/productpage_image', $data);
+            $data['block_conversion'] = $this->load->controller('block/productpage_conversion', $data); // it contains options - A!!
+            $data['block_review_form'] = $this->load->controller('block/productpage_review_form', $data);
+            $data['block_review_form_modal'] = $this->load->controller('block/productpage_review_form_modal', $data);
+            $data['block_products_related'] = $this->load->controller('block/productpage_products_related', $data);
+            // <<<<<< Nice Theme . End
+]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[public function review() {]]></search>
+		<add position="before"><![CDATA[	public function getProductDataForYandexMetrica() {
+        $this->load->model('catalog/category');
+        $this->load->model('catalog/product');
+
+        if (isset($this->request->post['event'])) {
+            $event = $this->request->post['event'];
+        } else {
+            $event = 'add';
+        }
+
+        if (isset($this->request->post['id_type']) && $this->request->post['id_type'] == 'key') {
+            $this->load->model('extension/module/yandex_metrica');
+            $product_data_from_cart = $this->model_extension_module_yandex_metrica->getProductFromCart($this->request->post['id']);
+            $product_id = $product_data_from_cart['product_id'];
+        } elseif (isset($this->request->post['id'])) {
+            $product_id = (int)$this->request->post['id'];
+        } else {
+            $product_id = 0;
+        }
+
+        if (isset($this->request->post['quantity']) && $this->request->post['quantity'] === 'null' && $this->request->post['id_type'] === 'key') {
+            $quantity = $product_data_from_cart['quantity'];
+        } elseif (isset($this->request->post['quantity']) && $this->request->post['quantity'] === 'null' && $this->request->post['id_type'] === 'product_id' && $event === 'add') {
+            $quantity = 1;
+        } else {
+            $quantity = (int)$this->request->post['quantity'];
+        }
+
+        if ($product_id === 0) {
+            $this->load->model('setting/setting');
+            $log_status = $this->model_setting_setting->getSettingValue('analytics_yandex_metrica_log');
+            if ($log_status) {
+                $log_ym = new Log('log_yandex_metrica.log');
+                $log_ym->write('Required parameters not found (ID)', true);
+            }
+        }
+
+        $product_info = $this->model_catalog_product->getProduct($product_id);
+        $product_categories = $this->model_catalog_product->getCategories($product_id);
+
+        if(count($product_categories) > 0) {
+            $category = array_pop($product_categories);
+            $category_info = $this->model_catalog_category->getCategory($category['category_id']);
+            if ($category_info) {
+                $product_category = $category_info['name'];
+            } else {
+                $product_category = "";
+            }
+        } else {
+            $product_category = "";
+        }
+
+        $json = [];
+
+        if ($event == 'add') {
+            $json = [
+                'currency_code' => $this->session->data['currency'],
+                'product' => [
+                    'id' => $product_info['product_id'],
+                    'name' => $product_info['name'],
+                    'price' => $this->currency->format($this->tax->calculate($product_info['price'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'], '', false),
+                    'brand' => $product_info['manufacturer'],
+                    'category' => $product_category,
+                    'quantity' => $quantity,
+                ],
+            ];
+        } elseif ($event == 'remove') {
+            $json = [
+                'currency_code' => $this->session->data['currency'],
+                'product' => [
+                    'id' => $product_info['product_id'],
+                    'name' => $product_info['name'],
+                    'category' => $product_category,
+                    'quantity' => $quantity,
+                ],
+            ];
+        }
+
+        $this->response->addHeader('Content-Type: application/json');
+        $this->response->setOutput(json_encode($json));
+    }
+]]></add>
+	</operation>
+</file>
+
+
+<file path="catalog/controller/product/search.php">
+	<operation>
+		<search><![CDATA[$data['products'][] = array(]]></search>
+		<add position="before"><![CDATA[				// >>>>>> Nice Theme . Begin
+        		$data['nice']['productlist_image_margins'] = $this->config->get('theme_nice_productlist_image_margins');
+        		$data['nice']['productlist_description'] = $this->config->get('theme_nice_productlist_description');
+        		$data['nice']['productlist_description_on_mobile'] = $this->config->get('theme_nice_productlist_description_on_mobile');
+        		$data['nice']['productlist_name_font_weight'] = $this->config->get('theme_nice_productlist_name_font_weight');
+        		$data['nice']['productlist_price_font_weight'] = $this->config->get('theme_nice_productlist_price_font_weight');
+        		$data['nice']['productlist_grid_hover_effect'] = $this->config->get('theme_nice_productlist_grid_hover_effect');
+        		$data['nice']['productlist_cols_on_mobile'] = $this->config->get('theme_nice_productlist_cols_on_mobile');
+        		// <<<<<< Nice Theme . End
+]]></add>
+	</operation>
+</file>
+
+
+<file path="catalog/controller/product/special.php">
+	<operation>
+		<search><![CDATA[$data['products'][] = array(]]></search>
+		<add position="before"><![CDATA[			// >>>>>> Nice Theme . Begin
+            $data['nice']['productlist_image_margins'] = $this->config->get('theme_nice_productlist_image_margins');
+            $data['nice']['productlist_description'] = $this->config->get('theme_nice_productlist_description');
+            $data['nice']['productlist_description_on_mobile'] = $this->config->get('theme_nice_productlist_description_on_mobile');
+            $data['nice']['productlist_name_font_weight'] = $this->config->get('theme_nice_productlist_name_font_weight');
+            $data['nice']['productlist_price_font_weight'] = $this->config->get('theme_nice_productlist_price_font_weight');
+            $data['nice']['productlist_grid_hover_effect'] = $this->config->get('theme_nice_productlist_grid_hover_effect');
+            $data['nice']['productlist_cols_on_mobile'] = $this->config->get('theme_nice_productlist_cols_on_mobile');
+            // <<<<<< Nice Theme . End
+]]></add>
+	</operation>
+</file>
+
+
+<file path="catalog/controller/startup/seo_url.php">
+	<operation>
+		<search><![CDATA[} elseif ($key == 'path') {]]></search>
+		<add position="before"><![CDATA[				} elseif ($key == 'route') {
+                    $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "seo_url WHERE `query` = '" . $this->db->escape($value) . "' AND store_id = '" . (int)$this->config->get('config_store_id') . "' AND language_id = '" . (int)$this->config->get('config_language_id') . "'");
+                    if ($query->num_rows && $query->row['keyword']) {
+                        $url .= '/' . $query->row['keyword'];
+                        unset($data[$key]);
+                    } else if ($data['route'] == "common/home") {
+                        $url .= '/';
+                    }]]></add>
+	</operation>
+</file>
+
+
+<file path="catalog/language/ru-ru/account/register.php">
+	<operation>
+		<search><![CDATA[
+		$_['text_agree']           = 'Я прочитал <a href="%s" class="agree"><b>%s</b></a> и согласен с <br /> условиями безопасности и обработки персональных данных';
+		]]></search>
+		<add position="replace"><![CDATA[$_['text_agree']           = 'Я прочитал <a href="%1$s" class="agree" data-title="%2$s"><b>%3$s</b></a> и согласен с <br /> условиями безопасности и обработки персональных данных ';]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[
+		$_['error_email']          = 'E-Mail введен неправильно!';
+		]]></search>
+		<add position="after"><![CDATA[$_['error_blank_email']    = 'E-mail адрес не может быть пустым!';]]></add>
+	</operation>
+</file>
+
+
+<file path="catalog/language/ru-ru/common/header.php">
+	<operation>
+		<search><![CDATA[
+		$_['text_all']           = 'Смотреть Все';
+		]]></search>
+		<add position="after"><![CDATA[$_['text_contact']       = 'Контакты';]]></add>
+	</operation>
+</file>
+
+
+<file path="catalog/language/ru-ru/information/contact.php">
+	<operation>
+		<search><![CDATA[
+		$_['error_name']     = 'Имя должно быть от 3 до 32 символов!';
+		]]></search>
+		<add position="replace"><![CDATA[$_['error_name']        = 'Имя должно быть от 2 до 32 символов!';]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[
+		$_['error_email']    = 'E-mail адрес введен неверно!';
+		]]></search>
+		<add position="replace"><![CDATA[$_['error_email']       = 'E-mail адрес введен неверно!';
+$_['error_blank_email'] = 'E-mail адрес не может быть пустым!';]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[
+		$_['error_enquiry']  = 'Длина текста должна быть от 10 до 3000 символов!';
+		]]></search>
+		<add position="replace"><![CDATA[$_['error_enquiry']     = 'Длина текста должна быть от 10 до 3000 символов!';]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[
+$_['error_agree']    = 'Вы должны прочитать и согласится с %s!';
+		]]></search>
+		<add position="replace"><![CDATA[$_['error_agree']       = 'Вы должны прочитать и согласится с %s!';]]></add>
+	</operation>
+</file>
+
+
+<file path="catalog/model/catalog/product.php">
+	<operation>
+		<search><![CDATA['price_prefix'            => $product_option_value['price_prefix'],]]></search>
+		<add position="after"><![CDATA[                    'points'        => $product_option_value['points'],
+                    'points_prefix' => $product_option_value['points_prefix'],]]></add>
+	</operation>
+</file>
+
+
+<file path="catalog/view/theme/default/template/checkout/cart.twig">
+	<operation>
+		<search><![CDATA[{{ footer }}]]></search>
+		<add position="before"><![CDATA[
+<script type="text/javascript">
+	let form = document.querySelector('#content > form');
+	form.onsubmit = function(evt) {
+	evt.preventDefault();
+	let quantity_old;
+	let quantity_new;
+	let key;
+
+	$('#content > form').find('input').each(function() {
+		quantity_new = $(this).val();
+		quantity_old = $(this).attr('value');
+		key = $(this).attr('name').match(/\d+/g)[0];
+
+		var difference_in_quantity = quantity_old - quantity_new;
+
+		if (difference_in_quantity < 0) {
+	    	sendDataForEcommerceYandexMetrica({
+	  	  	  id: key,
+	  	  	  event: 'add',
+	  	  	  id_type: 'key',
+	  	  	  quantity: Math.abs(difference_in_quantity),
+	  	  	  async: false
+			});
+			setTimeout(function() {
+	    		form.submit();
+			}, 1000);
+		} else if (difference_in_quantity > 0) {
+			sendDataForEcommerceYandexMetrica({
+		  	  id: key,
+		  	  event: 'remove',
+		  	  id_type: 'key',
+		  	  quantity: Math.abs(difference_in_quantity),
+		  	  async: false
+			});
+			setTimeout(function() {
+				form.submit();
+			}, 1000);
+		}
+	});
+};
+</script>
+]]></add>
+	</operation>
+</file>
+
+
+<file path="catalog/view/theme/default/template/common/footer.twig">
+	<operation>
+		<search><![CDATA[</body></html>]]></search>
+		<add position="before"><![CDATA[
+<script type="text/javascript">
+    function sendDataForEcommerceYandexMetrica(options) {
+    	let id = options.id; // required
+    	let event = options.event; // required
+    	let id_type = (typeof(options.id_type) != 'undefined' ? options.id_type : 'product_id');
+    	let quantity = (typeof(options.quantity) != 'undefined' ? options.quantity : 'null');
+    	let async = (typeof(options.async) != 'undefined' ? options.async : true);
+
+    	$.ajax({
+            url: 'index.php?route=product/product/getProductDataForYandexMetrica',
+      	    async: (typeof(async) != 'undefined' ? async : true),
+      		type: 'post',
+      		data: 'id=' + id + '&event=' + event + '&id_type=' + id_type + '&quantity=' + quantity,
+      		dataType: 'json',
+      		success: function(json) {
+        	    if (event == 'add') {
+          			dataLayer.push({"ecommerce": {"currencyCode": json['currency_code'], "add": {"products": [json['product']]}}});
+        		} else if (event == 'remove') {
+          			dataLayer.push({"ecommerce": {"currencyCode": json['currency_code'], "remove": {"products": [json['product']]}}});
+        		}
+      		},
+      		error: function(xhr, ajaxOptions, thrownError) {
+        		alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+      		}
+    	});
+  	}
+
+  	cart['add_original'] = cart['add'];
+  	cart['add'] = function(product_id, quantity) {
+    	sendDataForEcommerceYandexMetrica({
+      		id: product_id,
+      		event: 'add',
+      		id_type: 'product_id',
+      		quantity: quantity
+    	});
+    	cart.add_original(product_id, quantity);
+  	};
+
+  	cart['remove_original'] = cart['remove'];
+  	cart['remove'] = function(key) {
+    	sendDataForEcommerceYandexMetrica({
+      		id: key,
+      		event: 'remove',
+      		id_type: 'key',
+      		async: false
+    	});
+    	setTimeout(function() {
+      		cart.remove_original(key);
+    	}, 500);
+  	};
+</script>
+]]></add>
+	</operation>
+</file>
+
+
+<file path="catalog/view/theme/default/template/common/header.twig">
+	<operation>
+		<search><![CDATA[</head>]]></search>
+		<add position="before"><![CDATA[
+{% if (yandex_metrica_status is not empty) and (yandex_metrica_status == 1) %}
+    <!-- Yandex.Metrica counters -->
+    {% if yandex_metrics is not empty %}
+      <script type="text/javascript">
+        window.dataLayer = window.dataLayer || [];
+      </script>
+      <script type="text/javascript">
+        (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+          m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+        (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+        {% for metrica in yandex_metrics %}
+        ym({{ metrica.code }}, "init", {
+          clickmap:true,
+          trackLinks:true,
+          accurateTrackBounce:true,
+          webvisor:{{ metrica.ya_metrica_webvizor }},
+          ecommerce:"dataLayer",
+          params: { __ym: {"ymCmsPlugin": { "cms": "opencart", "cmsVersion":"{{ cms_version }}", "pluginVersion":"1.1.8"}}}
+        });
+        {% endfor %}
+      </script>
+      <noscript>
+        <div>
+          {% for metrica in yandex_metrics %}
+            <img src="https://mc.yandex.ru/watch/{{ metrica.code }}" style="position:absolute; left:-9999px;" alt="" />
+          {% endfor %}
+        </div>
+      </noscript>
+    {% endif %}
+    <!-- /Yandex.Metrica counters -->
+  {% endif %}
+]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[<body>]]></search>
+		<add position="after"><![CDATA[
+<!-- PRELOADER START -->
+<style>
+    /* Стили для перекрытия всего экрана */
+    #page-preloader {
+        position: fixed;
+    	left: 0;
+    	top: 0;
+    	right: 0;
+    	bottom: 0;
+    	background: #ffffff; /* Белый фон, перекрывающий сайт */
+    	z-index: 100500; /* Очень высокий слой, чтобы быть поверх всего */
+    	display: flex;
+    	justify-content: center;
+    	align-items: center;
+    	transition: opacity 0.5s ease-out, visibility 0.5s;
+  	}
+
+  	/* Когда добавляем класс .done, прелоадер исчезает */
+  	#page-preloader.done {
+    	opacity: 0;
+    	visibility: hidden;
+  	}
+
+  	/* Контейнер анимации */
+  	.loader-wrapper {
+    	position: relative;
+    	width: 150px;
+    	height: 150px;
+    	display: flex;
+    	justify-content: center;
+    	align-items: center;
+  	}
+
+  	/* Логотип */
+  	.loader-logo {
+    	width: 90px;
+    	height: auto;
+    	position: relative;
+    	z-index: 2;
+    	animation: agro-pulse 2s infinite ease-in-out;
+  	}
+
+  	/* Вращающееся кольцо */
+  	.loader-ring {
+    	position: absolute;
+    	top: 0;
+    	left: 0;
+    	width: 100%;
+    	height: 100%;
+    	border-radius: 50%;
+    	border: 4px solid rgba(0, 0, 0, 0.05);
+    	border-top-color: #2c3e50; /* Основной цвет */
+    	animation: agro-spin 1s linear infinite;
+  	}
+
+	/* Внутреннее кольцо */
+  	.loader-ring-inner {
+    	position: absolute;
+    	top: 15px;
+    	left: 15px;
+    	right: 15px;
+    	bottom: 15px;
+    	border-radius: 50%;
+    	border: 2px solid transparent;
+    	border-bottom-color: #27ae60; /* Зеленый акцент */
+    	animation: agro-spin-reverse 1.5s linear infinite;
+  	}
+
+  	/* Анимации */
+  	@keyframes agro-spin {
+    	0% { transform: rotate(0deg); }
+    	100% { transform: rotate(360deg); }
+  	}
+  	@keyframes agro-spin-reverse {
+    	0% { transform: rotate(0deg); }
+    	100% { transform: rotate(-360deg); }
+  	}
+  	@keyframes agro-pulse {
+    	0% { transform: scale(0.95); opacity: 0.9; }
+    	50% { transform: scale(1.05); opacity: 1; }
+    	100% { transform: scale(0.95); opacity: 0.9; }
+  	}
+</style>
+
+<div id="page-preloader">
+  	<div class="loader-wrapper">
+    	<div class="loader-ring"></div>
+    	<div class="loader-ring-inner"></div>
+    	<!-- Путь к картинке. Убедитесь, что файл загружен в image/catalog/ -->
+    	<img src="image/catalog/logo_agrofirmarassvet.png" class="loader-logo" alt="Загрузка...">
+ 	</div>
+</div>
+
+<script>
+  	// Скрипт скрытия прелоадера после полной загрузки страницы
+  	window.addEventListener('load', function() {
+    	var preloader = document.getElementById('page-preloader');
+    	// Небольшая задержка (200мс) для плавности, чтобы не мигало, если сайт загрузился мгновенно
+    	setTimeout(function() {
+      		if(preloader) {
+        		preloader.classList.add('done');
+      		}
+    	}, 200);
+  	});
+</script>
+<!-- PRELOADER END -->
+]]></add>
+	</operation>
+</file>
+
+
+<file path="catalog/view/theme/default/template/common/success.twig">
+	<operation>
+		<search><![CDATA[{{ footer }}]]></search>
+		<add position="before"><![CDATA[
+{% if (metrica_order_id is defined and metrica_order_id) %}
+  <script type="text/javascript">
+    dataLayer.push({
+      "ecommerce": {
+        "currencyCode": "{{ currency_code }}",
+        "purchase": {
+          "actionField": {
+            "id" : "{{ metrica_order_id }}",
+            {% if metrica_coupon is defined and metrica_coupon %}
+            "coupon": "{{ metrica_coupon }}",
+            {% endif %}
+            "revenue": "{{ metrica_total }}"
+          },
+          "products": [
+            {% for product in metrica_order_products %}
+            {
+              "id": "{{ product["metrica_product_id"] }}",
+              "name": "{{ product["metrica_product_name"] }}",
+              "price": {{ product["metrica_product_price"] }},
+              "brand": "{{ product["metrica_product_manufacturer"] }}",
+              "category": "{{ product["metrica_product_category"] }}",
+              "quantity": {{ product["metrica_product_quantity"] }}
+            },
+            {% endfor %}
+          ]
+        }
+      }
+    });
+  </script>
+{% endif %}
+]]></add>
+	</operation>
+</file>
+
+
+<file path="catalog/view/theme/default/template/product/category.twig">
+	<operation>
+		<search><![CDATA[{{ footer }} ]]></search>
+		<add position="before"><![CDATA[
+<script>
+	function price_format(n){
+		c = {{ currency['decimals'] is empty ? "0" : currency['decimals'] }};
+		d = '{{ currency['decimal_point'] }}';
+		t = '{{ currency['thousand_point'] }}';
+		s_left = '{{ currency['symbol_left'] }}';
+		s_right = '{{ currency['symbol_right'] }}';
+		n = n * {{ currency['value'] }};
+		i = parseInt(n = Math.abs(n).toFixed(c)) + '';
+		j = ((j = i.length) > 3) ? j % 3 : 0;
+		return s_left + (j ? i.substr(0, j) + t : '') + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : '') + s_right;
+	}
+</script>
+<style>.options {min-height:54px;}</style>
+]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[<p>{{ product.description }}</p>]]></search>
+		<add position="after"><![CDATA[
+		            <div class="options">
+                      {% if (product['options']) %}
+                        <div id="option_{{ product['product_id'] }}">
+                          {% for option in product['options'] %}
+                            {% if (option['type'] == 'select') %}
+                              <div id="option-{{ option['product_option_id'] }}" class="option">
+                                {% if (option['required']) %}*{% endif %} <label>{{ option['name'] }}:</label><br />
+                                <select name="option[{{ option['product_option_id'] }}]" onchange="recalc({{ product['product_id'] }});" class="form-control">
+                                  <option value="" price_prefix="" price="">{{ text_select }}</option>
+                                  {% for option_value in option['product_option_value'] %}
+                                    <option value="{{ option_value['product_option_value_id'] }}" price_prefix="{{ option_value['price_prefix'] }}" price="{{ option_value['price'] }}">{{ option_value['name'] }} {% if (option_value['price']) %}({{ option_value['price_prefix'] }}{{ option_value['price'] }}){% endif %}</option>
+                                  {% endfor %}
+                                </select>
+                              </div>
+                            {% endif %}
+                            {% if (option['type'] == 'radio') %}
+                              <div id="option-{{ option['product_option_id'] }}" class="option">
+                                {% if (option['required']) %}*{% endif %} <label>{{ option['name'] }}:</label><br />
+                                {% for option_value in option['product_option_value'] %}
+                                  <input type="radio" price_prefix="{{ option_value['price_prefix'] }}" price="{{ option_value['price'] }}" onchange="recalc({{ product['product_id'] }});" name="option[{{ option['product_option_id'] }}]" value="{{ option_value['product_option_value_id'] }}" id="option-value-{{ option_value['product_option_value_id'] }}" />
+                                  <label for="option-value-{{ option_value['product_option_value_id'] }}">{{ option_value['name'] }} {% if (option_value['price']) %}({{ option_value['price_prefix'] }}{{ option_value['price'] }}){% endif %}</label><br />
+                                {% endfor %}
+                              </div>
+                            {% endif %}
+                            {% if (option['type'] == 'checkbox') %}
+                              <div id="option-{{ option['product_option_id'] }}" class="option">
+                                {% if (option['required']) %}*{% endif %} <label>{{ option['name'] }}:</label><br />
+                                {% for option_value in option['product_option_value'] %}
+                                  <input type="checkbox" price_prefix="{{ option_value['price_prefix'] }}" price="{{ option_value['price'] }}" onchange="recalc({{ product['product_id'] }});" name="option[{{ option['product_option_id'] }}][]" value="{{ option_value['product_option_value_id'] }}" id="option-value-{{ option_value['product_option_value_id'] }}" />
+                                  <label for="option-value-{{ option_value['product_option_value_id'] }}">{{ option_value['name'] }} {% if (option_value['price']) %}({{ option_value['price_prefix'] }}{{ option_value['price'] }}){% endif %}</label><br />
+                                {% endfor %}
+                              </div>
+                            {% endif %}
+                          {% endfor %}
+                        </div>
+                      {% endif %}
+                    </div>
+		]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[{{ product.price }}]]></search>
+		<add position="replace"><![CDATA[<span class="price_no_format{{ product.product_id }}" price="{{ product.price_no_format }}">{{ product.price }}</span>]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[{% else %} <span class="price-new">{{ product.special }}</span> <span class="price-old">{{ product.price }}</span> {% endif %}]]></search>
+		<add position="replace"><![CDATA[{% else %} <span class="price-new"><span class="special_no_format{{ product.product_id }}" price="{{ product.special_no_format }}">{{ product.special }}</span></span> <span class="price-old"><span class="price_no_format{{ product.product_id }}" price="{{ product.price_no_format }}">{{ product.price }}</span> </span> {% endif %}]]></add>
+	</operation>
+</file>
+
+
+<file path="catalog/view/theme/default/template/product/product.twig">
+	<operation>
+		<search><![CDATA[<button type="button" data-toggle="tooltip" class="btn btn-default" title="{{ button_compare }}" onclick="compare.add('{{ product_id }}');"><i class="fa fa-exchange"></i></button>]]></search>
+		<add position="replace"><![CDATA[<!--<button type="button" data-toggle="tooltip" class="btn btn-default" title="{{ button_compare }}" onclick="compare.add('{{ product_id }}');"><i class="fa fa-exchange"></i></button>-->]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[<li>{{ text_reward }} {{ reward }}</li>]]></search>
+		<add position="replace"><![CDATA[<li>{{ text_reward }}
+				<span class="{{ live_options['module_live_options_reward_container'] }}">{{ reward }}</span>
+			</li>]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[<h2>{{ price }}</h2>]]></search>
+		<add position="replace"><![CDATA[<h2>
+				  <span class="{{ live_options['module_live_options_price_container'] }}">{{ price }}</span>
+			  </h2>]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[<li><span style="text-decoration: line-through;">{{ price }}</span></li>]]></search>
+		<add position="replace"><![CDATA[<li><span style="text-decoration: line-through;">
+            	<span class="{{ live_options['module_live_options_price_container'] }}">{{ price }}</span>
+        	</span></li>]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[<h2>{{ special }}</h2>]]></search>
+		<add position="replace"><![CDATA[<h2>
+				  <span class="{{ live_options['module_live_options_special_container'] }}">{{ special }}</span>
+			  </h2>]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[<li>{{ text_tax }} {{ tax }}</li>]]></search>
+		<add position="replace"><![CDATA[<li>{{ text_tax }}
+				<span class="{{ live_options['module_live_options_tax_container'] }}">{{ tax }}</span>
+			</li>]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[<li>{{ text_points }} {{ points }}</li>]]></search>
+		<add position="replace"><![CDATA[<li>{{ text_points }}
+				<span class="{{ live_options['module_live_options_points_container'] }}">{{ points }}</span>
+			</li>]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[<button type="button" data-toggle="tooltip" title="{{ button_compare }}" onclick="compare.add('{{ product.product_id }}');"><i class="fa fa-exchange"></i></button>]]></search>
+		<add position="replace"><![CDATA[<!--<button type="button" data-toggle="tooltip" title="{{ button_compare }}" onclick="compare.add('{{ product.product_id }}');"><i class="fa fa-exchange"></i></button>-->]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[$('html, body').animate({ scrollTop: 0 }, 'slow');]]></search>
+		<add position="after"><![CDATA[
+				product_id = +$("input[name*='product_id']").val();
+                product_quantity = +$("input[name*='quantity']").val();
+                sendDataForEcommerceYandexMetrica({
+                    id: product_id,
+                    event: 'add',
+                    id_type: 'product_id',
+                    quantity: product_quantity
+                });
+]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[{{ footer }}]]></search>
+		<add position="before"><![CDATA[
+<script type="text/javascript" src="index.php?route=product/live_options/js&product_id={{ product_id }}"></script>
+
+<script type="text/javascript"><!--
+    dataLayer.push({
+        "ecommerce": {
+            "currencyCode": "{{ currency_code }}",
+            "detail": {
+                "products": [
+                    {
+                        "id": "{{ metrica_product_id }}",
+                        "name" : "{{ metrica_product_name }}",
+                        "price": {{ metrica_product_price }},
+                        "brand": "{{ metrica_product_manufacturer }}",
+                        "category": "{{ metrica_product_category }}"
+                    }
+                ]
+            }
+        }
+    });
+//--></script>
+]]></add>
+	</operation>
+</file>
+
+
+<file path="catalog/view/theme/nice/template/extension/module/carousel.twig">
+	<operation>
+		<search><![CDATA[
+		<div class="section__title--wrapped"><p class="section__title">Нам доверяют:</p></div>
+		]]></search>
+		<add position="replace"><![CDATA[<div class="section__title--wrapped">
+  <p class="section__title contrasty">Нам доверяют:</p>
+</div>]]></add>
+	</operation>
+</file>
+
+
+<file path="catalog/view/theme/nice/template/extension/module/featured.twig">
+	<operation>
+		<search><![CDATA[
+		<div class="section__title--wrapped"><p class="section__title">{{ heading_title }}</p></div>
+		]]></search>
+		<add position="replace"><![CDATA[<div class="section__title--wrapped">
+    <p class="section__title contrasty">{{ heading_title }}</p>
+  </div>]]></add>
+	</operation>
+</file>
+
+
+<file path="catalog/view/theme/default/template/account/login.twig">
+	<operation>
+		<search><![CDATA[
+		{{ header }}
+		]]></search>
+		<add position="after"><![CDATA[]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[
+		<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
+		]]></search>
+		<add position="replace"><![CDATA[	<div class="alert alert-danger alert-dismissible">
+      <i class="fa fa-exclamation-circle"></i> {{ ' ' ~ error_warning }}
+    </div>]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[
+		<input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control" />
+		]]></search>
+		<add position="replace"><![CDATA[<input type="email" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control" />]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[
+		{{ footer }}
+		]]></search>
+		<add position="before"><![CDATA[]]></add>
+	</operation>
+</file>
+
+
+<file path="catalog/view/theme/default/template/account/register.twig">
+	<operation>
+		<search><![CDATA[
+		{{ header }}
+		]]></search>
+		<add position="after"><![CDATA[]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[
+		<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
+		]]></search>
+		<add position="replace"><![CDATA[  <div class="alert alert-danger alert-dismissible">
+      <i class="fa fa-exclamation-circle"></i> {{ ' ' ~ error_warning }}
+    </div>]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[
+		{{ footer }}
+		]]></search>
+		<add position="before"><![CDATA[]]></add>
+	</operation>
+</file>
+
+
+<file path="catalog/view/theme/nice/template/common/header.twig">
+	<operation>
+		<search><![CDATA[<link href="catalog/view/theme/nice/stylesheet/stylesheet.css" rel="stylesheet">]]></search>
+		<add position="after"><![CDATA[	   <link href="catalog/view/theme/nice/stylesheet/overrided_stylesheet.css" rel="stylesheet">]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[<script src="catalog/view/theme/nice/javascript/common.js" type="text/javascript"></script>]]></search>
+		<add position="after"><![CDATA[    <script src="catalog/view/theme/nice/javascript/overrided_common.js" type="text/javascript"></script>]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[
+		<script src="//code.jivo.ru/widget/QJzfSBpTk4" async></script>
+		]]></search>
+		<add position="after"><![CDATA[
+	{% if (yandex_metrica_status is not empty) and (yandex_metrica_status == 1) %}
+		<!-- Yandex.Metrica counters -->
+    	{% if yandex_metrics is not empty %}
+    		<script type="text/javascript">
+            	window.dataLayer = window.dataLayer || [];
+        	</script>
+        	<script type="text/javascript">
+            	(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+            	m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+            	(window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+            	{% for metrica in yandex_metrics %}
+                	ym({{ metrica.code }}, "init", {
+                  		clickmap:true,
+                  		trackLinks:true,
+              	  		accurateTrackBounce:true,
+              	  		webvisor:{{ metrica.ya_metrica_webvizor }},
+              	  		ecommerce:"dataLayer",
+              	  		params: { __ym: {"ymCmsPlugin": { "cms": "opencart", "cmsVersion":"{{ cms_version }}", "pluginVersion":"1.1.8"}}}
+           	 		});
+            	{% endfor %}
+        	</script>
+        	<noscript>
+            	<div>
+                	{% for metrica in yandex_metrics %}
+                		<img src="https://mc.yandex.ru/watch/{{ metrica.code }}" style="position:absolute; left:-9999px;" alt="" />
+              		{% endfor %}
+            	</div>
+        	</noscript>
+    	{% endif %}
+   		<!-- /Yandex.Metrica counters -->
+	{% endif %}]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[
+		<body>
+		]]></search>
+		<add position="after"><![CDATA[
+<!-- PRELOADER START -->
+<style>
+    /* Стили для перекрытия всего экрана */
+    #page-preloader {
+        position: fixed;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        background: #ffffff; /* Белый фон, перекрывающий сайт */
+        z-index: 100500; /* Очень высокий слой, чтобы быть поверх всего */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: opacity 0.5s ease-out, visibility 0.5s;
+    }
+
+    /* Когда добавляем класс .done, прелоадер исчезает */
+    #page-preloader.done {
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    /* Контейнер анимации */
+    .loader-wrapper {
+        position: relative;
+        width: 150px;
+        height: 150px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* Логотип */
+    .loader-logo {
+        width: 90px;
+        height: auto;
+        position: relative;
+        z-index: 2;
+        animation: agro-pulse 2s infinite ease-in-out;
+    }
+
+    /* Вращающееся кольцо */
+    .loader-ring {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        border: 4px solid rgba(0, 0, 0, 0.05);
+        border-top-color: #2c3e50; /* Основной цвет */
+        animation: agro-spin 1s linear infinite;
+    }
+
+    /* Внутреннее кольцо */
+    .loader-ring-inner {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        right: 15px;
+        bottom: 15px;
+        border-radius: 50%;
+        border: 2px solid transparent;
+        border-bottom-color: #27ae60; /* Зеленый акцент */
+        animation: agro-spin-reverse 1.5s linear infinite;
+    }
+
+    /* Анимации */
+    @keyframes agro-spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    @keyframes agro-spin-reverse {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(-360deg); }
+    }
+    @keyframes agro-pulse {
+        0% { transform: scale(0.95); opacity: 0.9; }
+        50% { transform: scale(1.05); opacity: 1; }
+        100% { transform: scale(0.95); opacity: 0.9; }
+    }
+</style>
+
+<div id="page-preloader">
+    <div class="loader-wrapper">
+        <div class="loader-ring"></div>
+        <div class="loader-ring-inner"></div>
+        <!-- Путь к картинке. Убедитесь, что файл загружен в image/catalog/ -->
+        <img src="image/catalog/logo_agrofirmarassvet.png" class="loader-logo" alt="Загрузка...">
+    </div>
+</div>
+
+<script>
+    // Скрипт скрытия прелоадера после полной загрузки страницы
+    window.addEventListener('load', function() {
+        var preloader = document.getElementById('page-preloader');
+        // Небольшая задержка (200мс) для плавности, чтобы не мигало, если сайт загрузился мгновенно
+        setTimeout(function() {
+            if(preloader) {
+                preloader.classList.add('done');
+            }
+        }, 200);
+    });
+</script>
+<!-- PRELOADER END -->
+]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[
+		<span class="header-icon-label">{{ telephone }}</span>
+		]]></search>
+		<add position="after" offset="146"><![CDATA[
+	<script>
+		const setRedirectionToButton = (buttonId) => {
+			const button = document.getElementById(buttonId);
+			const buttonRedirectionLink = button.dataset.href;
+			button.addEventListener('click', () =>
+				window.location.href = buttonRedirectionLink
+			);
+		}
+
+		setRedirectionToButton('register-button');
+		setRedirectionToButton('login-button');
+	</script>
+]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[
+		<span class="header-icon-label">{{ telephone }}</span>
+		]]></search>
+		<add position="replace"><![CDATA[<span class="header-icon-label">{{ text_contact }}</span>]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[<div class="dropdown top-dropdown">]]></search>
+		<add position="replace" offset="14"><![CDATA[<div class="dropdown top-dropdown">
+            	{% if logged %}
+                  <button class="top-dropdown__toggle padding-r-n-xs" type="button" data-toggle="dropdown" title="{{ text_account }}"><i class="fa fa-user-o"></i> <span class="">{{ nice_text_account }}</span> <i class="fa fa-caret-down"></i></button>
+                  <ul class="dropdown-menu dropdown-menu-right">
+                    <li><a class="top-dropdown__link" href="{{ account }}">{{ text_account }}</a></li>
+                    <li><a class="top-dropdown__link" href="{{ order }}">{{ text_order }}</a></li>
+                    <li><a class="top-dropdown__link" href="{{ transaction }}">{{ text_transaction }}</a></li>
+                    <li><a class="top-dropdown__link" href="{{ download }}">{{ text_download }}</a></li>
+                    <li><a class="top-dropdown__link" href="{{ logout }}">{{ text_logout }}</a></li>
+                  </ul>
+                {% else %}
+                  <button id="register-button" class="top-dropdown__toggle padding-r-n-xs" type="button" data-toggle="dropdown" title="{{ text_register }}" data-href="{{ register }}"><i class="fa fa-user-plus"></i> <span class="">{{ text_register }}</span></button>
+                  <button id="login-button" class="top-dropdown__toggle padding-r-n-xs" type="button" data-toggle="dropdown" title="{{ text_login }}" data-href="{{ login }}"><i class="fa fa-sign-in"></i> <span class="">{{ text_login }}</span></button>
+                {% endif %}
+              </div>]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[
+		<div class="dropdown top-dropdown">
+          <button class="top-dropdown__toggle padding-r-n-xs" type="button" data-toggle="dropdown" title="{{ text_account }}"><i class="fa fa-user-o"></i> <span class="">{{ nice_text_account }}</span> <i class="fa fa-caret-down"></i></button>
+          <ul class="dropdown-menu dropdown-menu-right">
+            {% if logged %}
+              <li><a class="top-dropdown__link" href="{{ account }}">{{ text_account }}</a></li>
+              <li><a class="top-dropdown__link" href="{{ order }}">{{ text_order }}</a></li>
+              <li><a class="top-dropdown__link" href="{{ transaction }}">{{ text_transaction }}</a></li>
+              <li><a class="top-dropdown__link" href="{{ download }}">{{ text_download }}</a></li>
+              <li><a class="top-dropdown__link" href="{{ logout }}">{{ text_logout }}</a></li>
+              {% else %}
+              <li><a class="top-dropdown__link" href="{{ register }}">{{ text_register }}</a></li>
+              <li><a class="top-dropdown__link" href="{{ login }}">{{ text_login }}</a></li>
+              {% endif %}
+          </ul>
+        </div>
+		]]></search>
+		<add position="replace"><![CDATA[
+		<div class="dropdown top-dropdown">
+            {% if logged %}
+                <button class="top-dropdown__toggle padding-r-n-xs" type="button" data-toggle="dropdown" title="{{ text_account }}"><i class="fa fa-user-o"></i> <span class="">{{ nice_text_account }}</span> <i class="fa fa-caret-down"></i></button>
+                <ul class="dropdown-menu dropdown-menu-right">
+                    <li><a class="top-dropdown__link" href="{{ account }}">{{ text_account }}</a></li>
+                    <li><a class="top-dropdown__link" href="{{ order }}">{{ text_order }}</a></li>
+                    <li><a class="top-dropdown__link" href="{{ transaction }}">{{ text_transaction }}</a></li>
+                    <li><a class="top-dropdown__link" href="{{ download }}">{{ text_download }}</a></li>
+                    <li><a class="top-dropdown__link" href="{{ logout }}">{{ text_logout }}</a></li>
+                </ul>
+            {% else %}
+                <button id="register-button" class="top-dropdown__toggle padding-r-n-xs" type="button" data-toggle="dropdown" title="{{ text_register }}" data-href="{{ register }}"><i class="fa fa-user-plus"></i> <span class="">{{ text_register }}</span></button>
+                <button id="login-button" class="top-dropdown__toggle padding-r-n-xs" type="button" data-toggle="dropdown" title="{{ text_login }}" data-href="{{ login }}"><i class="fa fa-sign-in"></i> <span class="">{{ text_login }}</span></button>
+            {% endif %}
+        </div>
+		]]></add>
+	</operation>
+</file>
+
+
+<file path="catalog/view/theme/nice/template/common/footer.twig">
+	<operation>
+		<search><![CDATA[</body></html>]]></search>
+		<add position="before"><![CDATA[
+<script type="text/javascript">
+	function sendDataForEcommerceYandexMetrica(options) {
+    	let id = options.id; // required
+    	let event = options.event; // required
+    	let id_type = (typeof(options.id_type) != 'undefined' ? options.id_type : 'product_id');
+    	let quantity = (typeof(options.quantity) != 'undefined' ? options.quantity : 'null');
+    	let async = (typeof(options.async) != 'undefined' ? options.async : true);
+
+    	$.ajax({
+      		url: 'index.php?route=product/product/getProductDataForYandexMetrica',
+      		async: (typeof(async) != 'undefined' ? async : true),
+      		type: 'post',
+      		data: 'id=' + id + '&event=' + event + '&id_type=' + id_type + '&quantity=' + quantity,
+      		dataType: 'json',
+      		success: function(json) {
+        		if (event == 'add') {
+          			dataLayer.push({"ecommerce": {"currencyCode": json['currency_code'], "add": {"products": [json['product']]}}});
+       	 		} else if (event == 'remove') {
+          			dataLayer.push({"ecommerce": {"currencyCode": json['currency_code'], "remove": {"products": [json['product']]}}});
+        		}
+      		},
+      		error: function(xhr, ajaxOptions, thrownError) {
+        		alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+      		}
+    	});
+  	}
+
+  	cart['add_original'] = cart['add'];
+  	cart['add'] = function(product_id, quantity) {
+    	sendDataForEcommerceYandexMetrica({
+      		id: product_id,
+      		event: 'add',
+      		id_type: 'product_id',
+      		quantity: quantity
+    	});
+    	cart.add_original(product_id, quantity);
+  	};
+
+  	cart['remove_original'] = cart['remove'];
+  	cart['remove'] = function(key) {
+    	sendDataForEcommerceYandexMetrica({
+      		id: key,
+      		event: 'remove',
+      		id_type: 'key',
+      		async: false
+    	});
+    	setTimeout(function() {
+      		cart.remove_original(key);
+    	}, 500);
+  	};
+</script>
+]]></add>
+	</operation>
+</file>
+
+
+<file path="catalog/view/theme/nice/template/common/success.twig">
+	<operation>
+		<search><![CDATA[{{ footer }}]]></search>
+		<add position="before"><![CDATA[
+{% if (metrica_order_id is defined and metrica_order_id) %}
+  <script type="text/javascript">
+    dataLayer.push({
+      "ecommerce": {
+        "currencyCode": "{{ currency_code }}",
+        "purchase": {
+          "actionField": {
+            "id" : "{{ metrica_order_id }}",
+            {% if metrica_coupon is defined and metrica_coupon %}
+            "coupon": "{{ metrica_coupon }}",
+            {% endif %}
+            "revenue": "{{ metrica_total }}"
+          },
+          "products": [
+            {% for product in metrica_order_products %}
+            {
+              "id": "{{ product["metrica_product_id"] }}",
+              "name": "{{ product["metrica_product_name"] }}",
+              "price": {{ product["metrica_product_price"] }},
+              "brand": "{{ product["metrica_product_manufacturer"] }}",
+              "category": "{{ product["metrica_product_category"] }}",
+              "quantity": {{ product["metrica_product_quantity"] }}
+            },
+            {% endfor %}
+          ]
+        }
+      }
+    });
+  </script>
+{% endif %}
+]]></add>
+	</operation>
+</file>
+
+
+<file path="catalog/view/theme/nice/template/product/category.twig">
+    <operation once="true">
+		<search regex="true" position="replace"><![CDATA[/^[\s\S]*/]]></search>
+		<add position="replace"><![CDATA[{{ header }}
+<div id="product-category" class="container">
+	<ul class="breadcrumb">
+		{% for breadcrumb in breadcrumbs %}
+		<li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+		{% endfor %}
+	</ul>
+	<div class="row">{{ column_left }}
+		{% if column_left and column_right %}
+		{% set class = 'col-sm-6' %}
+		{% elseif column_left or column_right %}
+		{% set class = 'col-sm-9' %}
+		{% else %}
+		{% set class = 'col-sm-12' %}
+		{% endif %}
+		<div id="content" class="{{ class }}">{{ content_top }}
+			<h1 class="product-category__title">{{ heading_title }}</h1>
+
+			<div class="row">
+			    {% if thumb %}
+				    <div class="col-sm-2"><img src="{{ thumb }}" alt="{{ heading_title }}" title="{{ heading_title }}" class="img-thumbnail" /></div>
+			    {% endif %}
+			    {% if description %}
+				    <div class="col-sm-10 col-sm-offset-1 product-category__description">
+  				        {{ description }}
+				    </div>
+			    {% endif %}
+			</div>
+
+			{% if categories %}
+			<p class="h4">{{ text_refine }}</p>
+			{% if categories|length <= 5 %}
+			<div class="row">
+				<div class="col-sm-3">
+					<ul>
+						{% for category in categories %}
+						<li><a href="{{ category.href }}">{{ category.name }}</a></li>
+						{% endfor %}
+					</ul>
+				</div>
+			</div>
+			{% else %}
+			<div class="row">{% for category in categories|batch((categories|length / 4)|round(1, 'ceil')) %}
+				<div class="col-sm-3">
+					<ul>
+						{% for child in category %}
+						<li><a href="{{ child.href }}">{{ child.name }}</a></li>
+						{% endfor %}
+					</ul>
+				</div>
+				{% endfor %}</div>
+			<br/>
+			{% endif %}
+			{% endif %}
+			{% if products %}
+			<div class="row">
+				<div class="col-md-2 col-sm-6 hidden-xs">
+					<div class="btn-group btn-group-sm">
+						<button type="button" id="list-view" class="btn btn-default" data-toggle="tooltip" title="{{ button_list }}"><i class="fa fa-th-list"></i></button>
+						<button type="button" id="grid-view" class="btn btn-default" data-toggle="tooltip" title="{{ button_grid }}"><i class="fa fa-th"></i></button>
+					</div>
+				</div>
+				<div class="col-md-4 col-sm-6">
+					<div class="form-group"><a href="{{ compare }}" id="compare-total" class="btn btn-link">{{ text_compare }}</a></div>
+				</div>
+				<div class="col-md-3 col-xs-6">
+					<div class="form-group input-group input-group-md">
+						<label class="input-group-addon" for="input-sort">{{ text_sort }}</label>
+						<select id="input-sort" class="form-control" onchange="location = this.value;">
+							{% for sorts in sorts %}
+							{% if sorts.value == '%s-%s'|format(sort, order) %}
+							<option value="{{ sorts.href }}" selected="selected">{{ sorts.text }}</option>
+							{% else %}
+							<option value="{{ sorts.href }}">{{ sorts.text }}</option>
+							{% endif %}
+							{% endfor %}
+						</select>
+					</div>
+				</div>
+				<div class="col-md-3 col-xs-6">
+					<div class="form-group input-group input-group-md">
+						<label class="input-group-addon" for="input-limit">{{ text_limit }}</label>
+						<select id="input-limit" class="form-control" onchange="location = this.value;">
+							{% for limits in limits %}
+							{% if limits.value == limit %}
+							<option value="{{ limits.href }}" selected="selected">{{ limits.text }}</option>
+							{% else %}
+							<option value="{{ limits.href }}">{{ limits.text }}</option>
+							{% endif %}
+							{% endfor %}
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="row list-row">
+				{% for product in products %}
+				<div class="list-item__col {% if nice.productlist_grid_hover_effect %}grid-hover-effect{% endif %} product-grid col-md-4 col-sm-6 {% if '1' == nice.productlist_cols_on_mobile %}col-xs-12{% else %}col-xs-6{% endif %}">
+					<div class="thumb-hover-1 product-thumb transition">
+						<div class="product-thumb__image {% if nice.productlist_image_margins %}-has-margins{% endif %}"><a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive" /></a></div>
+						<div class="product-thumb__info">
+							{% if product.rating %}
+							<div class="product-thumb__rating">
+								{% for i in 1..5 %}
+								{% if product.rating < i %}<span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span> {% else %} <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>{% endif %}
+								{% endfor %}
+							</div>
+							{% endif %}
+							<a class="product-thumb__name {% if 'bold' == nice.productlist_name_font_weight %}-bold-sm{% endif %}" href="{{ product.href }}">{{ product.name }}</a>
+							{% if nice.productlist_description %}<p class="product-thumb__description {% if not nice.productlist_description_on_mobile %}hidden-xs hidden-sm{% endif %}">{{ product.description }}</p>{% endif %}
+
+							{% if (product['options']) %}
+    						    <div class="options">
+      							  <div id="option_{{ product['product_id'] }}">
+        							{% for option in product['options'] %}
+          							  {% if (option['type'] == 'select') %}
+            							<div id="option-{{ option['product_option_id'] }}" class="option">
+              							  {% if (option['required']) %}*{% endif %} <label>{{ option['name'] }}:</label><br />
+              							  <select name="option[{{ option['product_option_id'] }}]" onchange="recalc({{ product['product_id'] }});" class="form-control">
+                						    <option value="" price_prefix="" price="">{{ text_select }}</option>
+                							{% for option_value in option['product_option_value'] %}
+                  							  <option value="{{ option_value['product_option_value_id'] }}" price_prefix="{{ option_value['price_prefix'] }}" price="{{ option_value['price'] }}">{{ option_value['name'] }} {% if (option_value['price']) %}({{ option_value['price_prefix'] }}{{ option_value['price'] }}){% endif %}</option>
+                							{% endfor %}
+              							  </select>
+            							</div>
+          							  {% endif %}
+          							  {% if (option['type'] == 'radio') %}
+            						    <div id="option-{{ option['product_option_id'] }}" class="option">
+              							  {% if (option['required']) %}*{% endif %} <label>{{ option['name'] }}:</label><br />
+              							  {% for option_value in option['product_option_value'] %}
+                							<input type="radio" price_prefix="{{ option_value['price_prefix'] }}" price="{{ option_value['price'] }}" onchange="recalc({{ product['product_id'] }});" name="option[{{ option['product_option_id'] }}]" value="{{ option_value['product_option_value_id'] }}" id="option-value-{{ option_value['product_option_value_id'] }}" />
+                							<label for="option-value-{{ option_value['product_option_value_id'] }}">
+                  							  {{ option_value['name'] }}
+                							</label><br />
+              							  {% endfor %}
+										</div>
+          							  {% endif %}
+          							  {% if (option['type'] == 'checkbox') %}
+            							<div id="option-{{ option['product_option_id'] }}" class="option">
+              							  {% if (option['required']) %}*{% endif %} <label>{{ option['name'] }}:</label><br />
+              							  {% for option_value in option['product_option_value'] %}
+                						    <input type="checkbox" price_prefix="{{ option_value['price_prefix'] }}" price="{{ option_value['price'] }}" onchange="recalc({{ product['product_id'] }});" name="option[{{ option['product_option_id'] }}][]" value="{{ option_value['product_option_value_id'] }}" id="option-value-{{ option_value['product_option_value_id'] }}" />
+                							<label for="option-value-{{ option_value['product_option_value_id'] }}">{{ option_value['name'] }} {% if (option_value['price']) %}({{ option_value['price_prefix'] }}{{ option_value['price'] }}){% endif %}</label><br />
+              							  {% endfor %}
+            							</div>
+          							  {% endif %}
+        							{% endfor %}
+      							  </div>
+    						    </div>
+							{% endif %}
+
+							{% if product.price %}
+							<div class="price">
+								{% if not product.special %}
+								<span class="price-value {% if 'bold' == nice.productlist_price_font_weight %}-bold{% endif %}"><span class="price_no_format{{ product.product_id }}" price="{{ product.price_no_format }}">{{ product.price }}</span> </span>
+								{% else %}
+								<span class="price-old"><span class="price_no_format{{ product.product_id }}" price="{{ product.price_no_format }}">{{ product.price }}</span> </span><span class="price-new"><span class="special_no_format{{ product.product_id }}" price="{{ product.special_no_format }}">{{ product.special }}</span></span>
+								{% endif %}
+								{% if product.tax %}
+								<div  class="price-tax">{{ text_tax }} {{ product.tax }}</div>
+								{% endif %}
+							</div>
+							{% endif %}
+							<div class="product-thumb__hidden-wrapper">
+								<button type="button" class="btn btn-accent product-thumb__button-buy -grid-hover-effect-hidden" onclick="cart.add('{{ product.product_id }}', '{{ product.minimum }}');"><i class="fa fa-shopping-cart"></i> <span class="">{{ button_cart }}</span></button>
+
+								<!--<div class="product-thumb__compare" data-toggle="tooltip" title="{{ button_compare }}" onclick="compare.add('{{ product.product_id }}');"><i class="fa fa-exchange"></i></div> (иконка сравнения в карточке)-->
+
+								<div class="product-thumb__wishlist" data-toggle="tooltip" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product.product_id }}');"><i class="fa fa-heart-o"></i></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+			<div class="row">
+				<div class="col-sm-6 text-left">{{ pagination }}</div>
+				<div class="col-sm-6 text-right pagination__wrapper">
+				    <p class="pagination__item contrasty">
+    			        {{ results }}
+				    </p>
+				</div>
+			</div>
+			{% endif %}
+
+			{% if not categories and not products %}
+			<p>{{ text_empty }}</p>
+			<div class="buttons">
+				<div class="pull-right"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
+			</div>
+			{% endif %}
+			{{ content_bottom }}</div>
+		{{ column_right }}</div>
+</div>
+
+<!--microrazmetka -->
+<script type="application/ld+json">
+	{
+	  "@context": "https://schema.org",
+	  "@type": "ItemList",
+	  "itemListElement": [
+	    {% for product in products %}
+	    {
+	      "@type": "ListItem",
+		  "position": {{ loop.index }},
+	      "url": "{{ product.href }}"
+	    }{% if not loop.last %},{% endif %}
+	    {% endfor %}
+	  ]
+	}
+</script>
+<!--microrazmetka -->
+
+
+<script>
+	function price_format(n){
+		c = {{ currency['decimals'] is empty ? "0" : currency['decimals'] }};
+		d = '{{ currency['decimal_point'] }}';
+		t = '{{ currency['thousand_point'] }}';
+		s_left = '{{ currency['symbol_left'] }}';
+		s_right = '{{ currency['symbol_right'] }}';
+		n = n * {{ currency['value'] }};
+		i = parseInt(n = Math.abs(n).toFixed(c)) + '';
+		j = ((j = i.length) > 3) ? j % 3 : 0;
+		return s_left + (j ? i.substr(0, j) + t : '') + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : '') + s_right;
+	}
+</script>
+<style>.options {min-height:54px;}</style>
+
+{{ footer }}]]></add>
+	</operation>
+</file>
+
+
+<file path="catalog/view/theme/nice/template/product/product.twig">
+	<operation>
+		<search><![CDATA[$('#cart > ul').load('index.php?route=common/cart/info ul li');]]></search>
+		<add position="before"><![CDATA[
+		product_id = +$("input[name*='product_id']").val();
+		product_quantity = +$("input[name*='quantity']").val();
+		sendDataForEcommerceYandexMetrica({
+			id: product_id,
+			event: 'add',
+			id_type: 'product_id',
+			quantity: product_quantity
+		});
+]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA["price": "{{ price }}",]]></search>
+		<add position="replace"><![CDATA["price": "<span class=\"{{ live_options['module_live_options_price_container'] }}\">{{ price }}</span>",]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[{{ footer }}]]></search>
+		<add position="before"><![CDATA[
+<script type="text/javascript" src="index.php?route=product/live_options/js&product_id={{ product_id }}"></script>
+
+<script type="text/javascript"><!--
+	dataLayer.push({
+		"ecommerce": {
+			"currencyCode": "{{ currency_code }}",
+			"detail": {
+				"products": [
+					{
+						"id": "{{ metrica_product_id }}",
+						"name" : "{{ metrica_product_name }}",
+						"price": {{ metrica_product_price }},
+						"brand": "{{ metrica_product_manufacturer }}",
+						"category": "{{ metrica_product_category }}"
+					}
+				]
+			}
+		}
+	});
+//--></script>
+]]></add>
+	</operation>
+</file>
+
+
+<file path="system/engine/action.php">
+	<operation>
+		<search><![CDATA[include_once($file);]]></search>
+		<add position="replace"><![CDATA[include_once(modification($file));]]></add>
+	</operation>
+</file>
+
+
+<file path="system/engine/loader.php">
+	<operation>
+		<search><![CDATA[$template = new Template($this->registry->get('config')->get('template_engine'));]]></search>
+		<add position="replace"><![CDATA[//d_twig_manager.xml
+            $template = new Template($this->registry->get('config')->get('template_engine'), $this->registry);]]></add>
+	</operation>
+</file>
+
+
+<file path="system/library/cart/tax.php">
+	<operation>
+		<search><![CDATA[final class Tax {]]></search>
+		<add position="after"><![CDATA[
+	// a_vqmod_d_quickcheckout.xml
+    public function clearRates(){
+    	$this->tax_rates = array();
+    }
+]]></add>
+	</operation>
+</file>
+
+
+<file path="system/library/template/template.php">
+	<operation>
+		<search><![CDATA[require($file);]]></search>
+		<add position="replace"><![CDATA[require(modification($file));]]></add>
+	</operation>
+</file>
+
+
+<file path="system/library/template/twig.php">
+	<operation>
+		<search><![CDATA[private $data = array();]]></search>
+		<add position="after"><![CDATA[
+	//d_twig_manager.xml
+	private $registry = array();]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[public function __construct() {]]></search>
+		<add position="replace"><![CDATA[//d_twig_manager.xml
+	public function __construct($registry) {]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[\Twig_Autoloader::register();]]></search>
+		<add position="after"><![CDATA[
+		//d_twig_manager.xml
+		$this->registry = $registry;]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[$this->twig = new \Twig_Environment($loader, $config);]]></search>
+		<add position="after"><![CDATA[
+		//d_twig_manager.xml
+        if (file_exists(DIR_SYSTEM . 'library/template/Twig/Extension/DTwigManager.php')) {
+            $this->twig->addExtension(new \Twig_Extension_DTwigManager($this->registry));
+        }]]></add>
+	</operation>
+</file>
+
+
+<file path="system/library/config.php">
+	<operation>
+		<search><![CDATA[require($file);]]></search>
+		<add position="replace"><![CDATA[require(modification($file));]]></add>
+	</operation>
+</file>
+
+
+<file path="system/library/template.php">
+	<operation>
+		<search><![CDATA[public function __construct($adaptor) {]]></search>
+		<add position="replace"><![CDATA[//d_twig_manager.xml
+    public function __construct($adaptor, $registry = null) {]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[$this->adaptor = new $class();]]></search>
+		<add position="replace"><![CDATA[//d_twig_manager.xml
+			if ($adaptor !== null) {
+				$this->adaptor = new $class($registry);
+			} else {
+				$this->adaptor = new $class();
+			}]]></add>
+	</operation>
+</file>
+
+
+<file path="system/library/language.php">
+	<operation>
+		<search><![CDATA[require($file);]]></search>
+		<add position="replace"><![CDATA[require(modification($file));]]></add>
+	</operation>
+</file>
 
 
 <file path="admin/view/template/common/header.twig">
@@ -299,6 +2501,38 @@
 
 <!-- Приводим немного сайт к 152 ФЗ	 -->   
 <file path="catalog/controller/information/contact.php">
+	<operation>
+		<search><![CDATA[
+<?php
+		]]></search>
+		<add position="after"><![CDATA[
+require_once(DIR_SYSTEM . 'library/decliner/russian_cases_decliner.php');
+require_once(DIR_SYSTEM . 'library/decliner/russian_cases.php');
+
+// @todo: need some refactoring here
+]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[
+		if ((utf8_strlen($this->request->post['enquiry']) < 10) || (utf8_strlen($this->request->post['enquiry']) > 3000)) {
+		]]></search>
+		<add position="before"><![CDATA[		if (strpos($this->request->post['email'], '@') === false) {
+            $this->error['email'] = $this->language->get('error_at_email');
+        }
+
+        if (empty($this->request->post['email'])) {
+            $this->error['email'] = $this->language->get('error_blank_email');
+        }
+		]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[
+			if ((utf8_strlen($this->request->post['name']) < 3) || (utf8_strlen($this->request->post['name']) > 32)) {
+		]]></search>
+		<add position="replace"><![CDATA[if ((utf8_strlen($this->request->post['name']) < 2) || (utf8_strlen($this->request->post['name']) > 32)) {]]></add>
+	</operation>
 
 	<operation>
 		<search><![CDATA[
@@ -324,7 +2558,16 @@
 			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_account_id'));
 
 			if ($information_info) {
-				$data['text_agree'] = sprintf($this->language->get('text_agree'), $this->url->link('information/information/agree', 'information_id=' . $this->config->get('config_account_id'), true), $information_info['title'], $information_info['title']);
+				$decliner = new Decliner\RussianCasesDecliner();
+
+                $errorText = $decliner->declinePhrase($information_info['title'], \Decliner\RussianCases::ACCUSATIVE);
+
+				$data['text_agree'] = sprintf(
+                    $this->language->get('text_agree'),
+                    $this->url->link('information/information/agree', 'information_id=' . $this->config->get('config_account_id'), true),
+                    $information_info['title'],
+                    $errorText
+                );
 			} else {
 				$data['text_agree'] = '';
 			}
@@ -352,7 +2595,9 @@
 			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_account_id'));
 
 			if ($information_info && !isset($this->request->post['agree'])) {
-				$this->error['warning'] = sprintf($this->language->get('error_agree'), $information_info['title']);
+				$decliner = new Decliner\RussianCasesDecliner();
+                $errorText = $decliner->declinePhrase($information_info['title'], \Decliner\RussianCases::INSTRUMENTAL);
+				$this->error['warning'] = sprintf($this->language->get('error_agree'), $errorText);
 			}
 		}
 		]]></add>
@@ -364,13 +2609,34 @@
 
 	<operation>
 		<search><![CDATA[
-			<div class="row">{{ column_left }}
+		<div class="row">{{ column_left }}
 		]]></search>
-		<add position="before"><![CDATA[
-		{% if error_warning %}
-		<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
-		{% endif %}
-		]]></add>
+		<add position="before"><![CDATA[  {% if error_warning %}
+	<div class="alert alert-danger alert-dismissible">
+      <i class="fa fa-exclamation-circle"></i> {{ ' ' ~ error_warning }}
+    </div>
+  {% endif %}]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[
+        <input type="text" name="name" value="{{ name }}" id="input-name" class="form-control" />
+		]]></search>
+		<add position="replace"><![CDATA[<input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" />]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[
+		<input type="text" name="email" value="{{ email }}" id="input-email" class="form-control" />
+		]]></search>
+		<add position="replace"><![CDATA[<input type="email" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control" />]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[
+		<textarea name="enquiry" rows="10" id="input-enquiry" class="form-control">{{ enquiry }}</textarea>
+		]]></search>
+		<add position="replace"><![CDATA[<textarea name="enquiry" rows="10" id="input-enquiry" placeholder="{{ entry_enquiry }}" class="form-control">{{ enquiry }}</textarea>]]></add>
 	</operation>
 
 	<operation>
