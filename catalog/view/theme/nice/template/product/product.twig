@@ -15,15 +15,15 @@
             <div class="row">
               <div class="col-sm-6">
                 {% if review_status %}
-                
-               
-                
+
+
+
                 {% endif %}
   {#              <!-- AddThis Button BEGIN -->
                 <div class="addthis_toolbox addthis_default_style" data-url="{{ share }}"><a class="addthis_button_facebook_like" fb:like:layout="button_count"></a> <a class="addthis_button_tweet"></a> <a class="addthis_button_pinterest_pinit"></a> <a class="addthis_counter addthis_pill_style"></a></div>
                 <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-515eeaf54693130e"></script> 
                 <!-- AddThis Button END -->#}
-              </div>          
+              </div>
               <div class="col-sm-6">
                 {#<div class="btn-group pull-right">
                   <button type="button" data-toggle="tooltip" class="btn btn-default" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product_id }}');"><i class="fa fa-heart"></i></button>
@@ -31,7 +31,7 @@
                 </div>#}
               </div>
             </div>
-          </div>            
+          </div>
         </div>
         <div class="col-sm-9">
           <div class="row">
@@ -53,7 +53,7 @@
                       {% if manufacturer %}
                       <li><span class="meta-label">{{ text_manufacturer }}</span> <a href="{{ manufacturers }}" class="meta-value">{{ manufacturer }}</a></li>
                       {% endif %}
-                      
+
                       <li><span class="meta-label">{{ text_stock }}</span> <span class="meta-value">{{ stock }}</span></li>
                       {% if reward %}
                       <li><span class="meta-label">{{ text_reward }}</span> <span class="meta-value">{{ reward }}</span></li>
@@ -85,7 +85,7 @@
 
                   {% if description %}
                   <!-- tab-description -->
-                  <div class="tab-pane" id="tab-description">           
+                  <div class="tab-pane" id="tab-description">
                     <div class="product-description">{{ description }}</div>
                   </div>
                   {% endif %}
@@ -109,25 +109,25 @@
                         {% endfor %}
                       </table>
                     </div>
-                  {% endif %}                
+                  {% endif %}
                 </div>
               </div>
-                
-              <div id="product">           
+
+              <div id="product">
                 <div class="row">
                 <div class="col-xs-12">
-                  {{ block_conversion }}             
+                  {{ block_conversion }}
                 </div>
             </div>
-            
-            </div>
-            </div>                       
-          </div>
-          
-        </div>
-        
 
-        
+            </div>
+            </div>
+          </div>
+
+        </div>
+
+
+
         {% if tags %}
         <div class="row" id="product-row-2">
           <div class="col-sm-12">
@@ -139,14 +139,14 @@
           </div>
         </div>
         {% endif %}
-      </div>     
+      </div>
 
       {{ block_products_related }}
 
       {{ content_bottom }}
     </div>
   </div>
-    
+
 </div>
 <script type="text/javascript">
 $('select[name=\'recurring_id\'], input[name="quantity"]').change(function(){
@@ -167,12 +167,12 @@ $('select[name=\'recurring_id\'], input[name="quantity"]').change(function(){
 		}
 	});
 });
-</script> 
+</script>
 <script type="text/javascript">
 $('#button-cart').on('click', function() {
 
   var data = $('#product input[type=\'text\'], #product input[type=\'hidden\'], #product input[type=\'radio\']:checked, #product input[type=\'checkbox\']:checked, #product select, #product textarea');
-  
+
   console.log('data:');
   console.debug(data);
 
@@ -193,7 +193,7 @@ $('#button-cart').on('click', function() {
 
 			if (json['error']) {
         $('#add-to-cart-error').html('<div class="alert alert-danger alert-dismissible">{{ error.add_to_cart }}<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-              
+
 				if (json['error']['option']) {
 					for (i in json['error']['option']) {
 						var element = $('#input-option' + i.replace('_', '-'));
@@ -216,14 +216,14 @@ $('#button-cart').on('click', function() {
 
 			if (json['success']) {
         $('#report-modal .modal-title').html(json['nice_text_modal_add_to_cart_title']);
-        
-        $('#report-modal .modal-body').html('<div class="alert alert-success"><i class="fa fa-info-circle"></i>&nbsp;&nbsp;' + json['success'] + '</div>');  
-        
+
+        $('#report-modal .modal-body').html('<div class="alert alert-success"><i class="fa fa-info-circle"></i>&nbsp;&nbsp;' + json['success'] + '</div>');
+
 				$('#report-modal .modal-footer').html('<button type="button" class="btn modal_btn-close" data-dismiss="modal">'+json['nice_text_modal_button_to_continue']+'</button>\n\
 					<a href="' + json['button_to_cart_link'] + '" class="btn btn-primary modal_btn-to-cart">'+json['nice_text_modal_button_to_cart']+'</a>');
 
         $('#report-modal').modal('show');
-        
+
         $('#cart > button').html('<div class="cart-quantity-wrapper"><i class="fa fa-shopping-bag cart-icon"></i><span id="cart-quantity">' + json['quantity'] + '</div></span><div class="cart-total-wrapper"><span id="cart-total" class="hidden-xs hidden-sm">' + json['total'] + '</span></div>');
 
 				$('#cart > ul').load('index.php?route=common/cart/info ul li');
@@ -234,7 +234,7 @@ $('#button-cart').on('click', function() {
         }
 	});
 });
-</script> 
+</script>
 <script type="text/javascript">
 $('.date').datetimepicker({
 	language: '{{ datepicker }}',
@@ -303,7 +303,7 @@ $('button[id^=\'button-upload\']').on('click', function() {
 		}
 	}, 500);
 });
-</script> 
+</script>
 <script type="text/javascript">
 $('#review').delegate('.pagination a', 'click', function(e) {
     e.preventDefault();
@@ -394,23 +394,23 @@ $(document).ready(function() {
   function updateQuantity(value) {
     $('#input-quantity').val(parseInt($('#input-quantity').val(), 10) + value);
   }
-  
+
   $('#input-quantity--pluse').click(function() {
     updateQuantity(1);
-    
+
     $('#input-quantity').trigger('change');
   });
-  
+
   $('#input-quantity--minus').click(function() {
     if ($('#input-quantity').val () > 0) {
       updateQuantity(-1);
-    } 
+    }
 
     $('#input-quantity').trigger('change');
   });
 });
 </script>
-  
+
 <script type="text/javascript">
 function AjaxLivePrice() {
   $.ajax({
@@ -422,11 +422,11 @@ function AjaxLivePrice() {
       if (json.success) {
         $('#content .price').html(json.new_price.price);
         $('#content .price-special').html(json.new_price.special);
-        $('#content .tax').html("{{ text_tax }} " + json.new_price.tax);				
+        $('#content .tax').html("{{ text_tax }} " + json.new_price.tax);
       }
     }
   });
-}			
+}
 $('#product input[type=\'text\'], #product input[type=\'hidden\'], #product input[type=\'radio\'], #product input[type=\'checkbox\'], #product select, #product textarea').on('change', function() {
   AjaxLivePrice();
 });
