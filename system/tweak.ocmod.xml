@@ -917,62 +917,6 @@ $_['error_agree']    = 'Вы должны прочитать и согласит
 </file>
 
 
-<file path="catalog/view/theme/nice/javascript/common.js">
-	<operation>
-		<search><![CDATA[
-		html  = '<div id="modal-agree" class="modal">';
-		]]></search>
-		<add position="before"><![CDATA[			const modalTitle = $(element).attr('data-title');
-		]]></add>
-	</operation>
-
-	<operation>
-		<search><![CDATA[
-		html += '        <h4 class="modal-title">' + $(element).text() + '</h4>';
-		]]></search>
-		<add position="replace"><![CDATA[html += '        <h4 class="modal-title">' + modalTitle + '</h4>';]]></add>
-	</operation>
-</file>
-
-
-<file path="catalog/view/theme/nice/stylesheet/stylesheet.css">
-	<operation>
-		<search><![CDATA[
-		/* Nice Custom CSS . Begin */
-		]]></search>
-		<add position="before"><![CDATA[/**
- * Class for light contrasty background because black text and dark main theme are similar.
- */
-.contrasty {
-  background-color: var(--color-title-contrasty);
-}
-
-/**
- * Styles for pagination in category.twig
- */
-.pagination__wrapper {} /* for template semantic */
-.pagination__item {
-  display: inline-block;
-}
-
-.product-category__title {
-  text-align: center;
-  font-weight: bold;
-  font-size: 50px;
-  color: var(--color-primary);
-}
-
-.product-category__description p {
-  color: #595959 !important;
-  text-align: center;
-  font-family: Inter, sans-serif, 'Microsoft Sans Serif' !important;
-  margin-bottom: var(--space-2x) !important;
-}
-]]></add>
-	</operation>
-</file>
-
-
 <file path="catalog/view/theme/default/template/checkout/cart.twig">
 	<operation>
 		<search><![CDATA[{{ footer }}]]></search>
@@ -1530,6 +1474,16 @@ $_['error_agree']    = 'Вы должны прочитать и согласит
 
 
 <file path="catalog/view/theme/nice/template/common/header.twig">
+	<operation>
+		<search><![CDATA[<link href="catalog/view/theme/nice/stylesheet/stylesheet.css" rel="stylesheet">]]></search>
+		<add position="after"><![CDATA[	   <link href="catalog/view/theme/nice/stylesheet/overrided_stylesheet.css" rel="stylesheet">]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[<script src="catalog/view/theme/nice/javascript/common.js" type="text/javascript"></script>]]></search>
+		<add position="after"><![CDATA[    <script src="catalog/view/theme/nice/javascript/overrided_common.js" type="text/javascript"></script>]]></add>
+	</operation>
+
 	<operation>
 		<search><![CDATA[
 		<script src="//code.jivo.ru/widget/QJzfSBpTk4" async></script>
