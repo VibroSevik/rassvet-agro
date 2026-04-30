@@ -1,7 +1,7 @@
 <?php
-
 /*
- * location: admin/model/extension/d_opencart_patch/vqmod.php
+ *  location: admin/model/extension/d_opencart_patch/vqmod.php
+ *
  */
 
 class ModelExtensionDOpencartPatchVqmod extends Model {
