@@ -2151,6 +2151,14 @@ $_['error_agree']    = 'Вы должны прочитать и согласит
 </file>
 
 
+<file path="system/engine/action.php">
+	<operation>
+		<search><![CDATA[include_once($file);]]></search>
+		<add position="replace"><![CDATA[include_once(modification($file));]]></add>
+	</operation>
+</file>
+
+
 <file path="system/engine/loader.php">
 	<operation>
 		<search><![CDATA[$template = new Template($this->registry->get('config')->get('template_engine'));]]></search>
@@ -2169,6 +2177,14 @@ $_['error_agree']    = 'Вы должны прочитать и согласит
     	$this->tax_rates = array();
     }
 ]]></add>
+	</operation>
+</file>
+
+
+<file path="system/library/template/template.php">
+	<operation>
+		<search><![CDATA[require($file);]]></search>
+		<add position="replace"><![CDATA[require(modification($file));]]></add>
 	</operation>
 </file>
 
@@ -2205,6 +2221,14 @@ $_['error_agree']    = 'Вы должны прочитать и согласит
 </file>
 
 
+<file path="system/library/config.php">
+	<operation>
+		<search><![CDATA[require($file);]]></search>
+		<add position="replace"><![CDATA[require(modification($file));]]></add>
+	</operation>
+</file>
+
+
 <file path="system/library/template.php">
 	<operation>
 		<search><![CDATA[public function __construct($adaptor) {]]></search>
@@ -2220,6 +2244,14 @@ $_['error_agree']    = 'Вы должны прочитать и согласит
 			} else {
 				$this->adaptor = new $class();
 			}]]></add>
+	</operation>
+</file>
+
+
+<file path="system/library/language.php">
+	<operation>
+		<search><![CDATA[require($file);]]></search>
+		<add position="replace"><![CDATA[require(modification($file));]]></add>
 	</operation>
 </file>
 
