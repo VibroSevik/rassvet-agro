@@ -247,30 +247,6 @@ require_once(DIR_SYSTEM . 'library/decliner/russian_cases.php');
 </file>
 
 
-<file path="catalog/controller/checkout/checkout.php">
-	<operation>
-		<search><![CDATA[$data['footer'] = $this->load->controller('common/footer');]]></search>
-		<add position="after"><![CDATA[
-		if($this->config->get('d_quickcheckout_status')){
-            $data['d_quickcheckout'] = $this->load->controller('extension/module/d_quickcheckout');
-        }
-]]></add>
-	</operation>
-
-	<operation>
-		<search><![CDATA[$this->response->setOutput($this->load->view('checkout/checkout', $data));]]></search>
-		<add position="replace"><![CDATA[// a_vqmod_d_quickcheckout.xml
-        if($this->config->get('d_quickcheckout_status')){
-            $template = 'd_quickcheckout';
-        }else{
-            $template = 'checkout';
-        }
-
-        $this->response->setOutput($this->load->view('checkout/'.$template, $data));]]></add>
-	</operation>
-</file>
-
-
 <file path="catalog/controller/checkout/success.php">
 	<operation>
 		<search><![CDATA[if (isset($this->session->data['order_id'])) {]]></search>
@@ -501,18 +477,6 @@ require_once(DIR_SYSTEM . 'library/decliner/russian_cases.php');
 
         $data['selected_category_id'] = $this->request->get['category_id'] ?? 0;
         // <<<<<< Nice Theme . End
-]]></add>
-	</operation>
-</file>
-
-
-<file path="catalog/controller/event/theme.php">
-	<operation>
-		<search><![CDATA[return $twig->createTemplate($template)->render($args);]]></search>
-		<add position="before"><![CDATA[			//d_twig_manager.xml
-            if (file_exists(DIR_SYSTEM . 'library/template/Twig/Extension/DTwigManager.php')) {
-                $twig->addExtension(new Twig_Extension_DTwigManager($this->registry));
-            }
 ]]></add>
 	</operation>
 </file>
@@ -2112,28 +2076,6 @@ $_['error_agree']    = 'Вы должны прочитать и согласит
 </file>
 
 
-<file path="system/engine/loader.php">
-	<operation>
-		<search><![CDATA[$template = new Template($this->registry->get('config')->get('template_engine'));]]></search>
-		<add position="replace"><![CDATA[//d_twig_manager.xml
-            $template = new Template($this->registry->get('config')->get('template_engine'), $this->registry);]]></add>
-	</operation>
-</file>
-
-
-<file path="system/library/cart/tax.php">
-	<operation>
-		<search><![CDATA[final class Tax {]]></search>
-		<add position="after"><![CDATA[
-	// a_vqmod_d_quickcheckout.xml
-    public function clearRates(){
-    	$this->tax_rates = array();
-    }
-]]></add>
-	</operation>
-</file>
-
-
 <file path="system/library/template/template.php">
 	<operation>
 		<search><![CDATA[require($file);]]></search>
@@ -2142,61 +2084,10 @@ $_['error_agree']    = 'Вы должны прочитать и согласит
 </file>
 
 
-<file path="system/library/template/twig.php">
-	<operation>
-		<search><![CDATA[private $data = array();]]></search>
-		<add position="after"><![CDATA[
-	//d_twig_manager.xml
-	private $registry = array();]]></add>
-	</operation>
-
-	<operation>
-		<search><![CDATA[public function __construct() {]]></search>
-		<add position="replace"><![CDATA[//d_twig_manager.xml
-	public function __construct($registry) {]]></add>
-	</operation>
-
-	<operation>
-		<search><![CDATA[\Twig_Autoloader::register();]]></search>
-		<add position="after"><![CDATA[
-		//d_twig_manager.xml
-		$this->registry = $registry;]]></add>
-	</operation>
-
-	<operation>
-		<search><![CDATA[$this->twig = new \Twig_Environment($loader, $config);]]></search>
-		<add position="after"><![CDATA[
-		//d_twig_manager.xml
-        if (file_exists(DIR_SYSTEM . 'library/template/Twig/Extension/DTwigManager.php')) {
-            $this->twig->addExtension(new \Twig_Extension_DTwigManager($this->registry));
-        }]]></add>
-	</operation>
-</file>
-
-
 <file path="system/library/config.php">
 	<operation>
 		<search><![CDATA[require($file);]]></search>
 		<add position="replace"><![CDATA[require(modification($file));]]></add>
-	</operation>
-</file>
-
-
-<file path="system/library/template.php">
-	<operation>
-		<search><![CDATA[public function __construct($adaptor) {]]></search>
-		<add position="replace"><![CDATA[//d_twig_manager.xml
-    public function __construct($adaptor, $registry = null) {]]></add>
-	</operation>
-
-	<operation>
-		<search><![CDATA[$this->adaptor = new $class();]]></search>
-		<add position="replace"><![CDATA[//d_twig_manager.xml
-			if ($adaptor !== null) {
-				$this->adaptor = new $class($registry);
-			} else {
-				$this->adaptor = new $class();
-			}]]></add>
 	</operation>
 </file>
 
