@@ -2233,28 +2233,28 @@ $_['error_agree']    = 'Вы должны прочитать и согласит
 <!-- Добавляем ссылки на сайт, документацию, форум -->	
 	<operation>
 		<search><![CDATA[
-		<li><a href="http://www.opencart.com" target="_blank"><i class="fa fa-opencart fa-fw"></i> {{ text_homepage }}</a></li>
+		<li><a href="https://www.opencart.com" target="_blank"><i class="fa fa-opencart fa-fw"></i> {{ text_homepage }}</a></li>
 		]]></search>
 		<add position="replace"><![CDATA[
-		<li><a href="https://opencart.ru/" target="_blank"><i class="fa fa-opencart fa-fw"></i> {{ text_homepage }}</a></li>
+		<li><a href="https://opencart-russia.ru/" target="_blank"><i class="fa fa-opencart fa-fw"></i> {{ text_homepage }}</a></li>
 		]]></add>
 	</operation>
 	
 	<operation>
 		<search><![CDATA[
-		<li><a href="http://docs.opencart.com" target="_blank"><i class="fa fa-file-text-o fa-fw"></i> {{ text_documentation }}</a></li>
+		<li><a href="https://docs.opencart.com" target="_blank"><i class="fa fa-file-text-o fa-fw"></i> {{ text_documentation }}</a></li>
 		]]></search>
 		<add position="replace"><![CDATA[
-		<li><a href="https://www.opencart.ru/documentation" target="_blank"><i class="fa fa-file-text-o fa-fw"></i> {{ text_documentation }}</a></li>
+		<li><a href="http://forum.opencart-russia.ru/threads/soderzhanie.6030/" target="_blank"><i class="fa fa-file-text-o fa-fw"></i> {{ text_documentation }}</a></li>
 		]]></add>
 	</operation>
 	
 	<operation>
 		<search><![CDATA[
-		<li><a href="http://forum.opencart.com" target="_blank"><i class="fa fa-comments-o fa-fw"></i> {{ text_support }}</a></li>
+		<li><a href="https://forum.opencart.com" target="_blank"><i class="fa fa-comments-o fa-fw"></i> {{ text_support }}</a></li>
 		]]></search>
 		<add position="replace"><![CDATA[
-		<li><a href="https://www.opencart.ru/support target="_blank"><i class="fa fa-comments-o fa-fw"></i> {{ text_support }}</a></li>
+		<li><a href="http://forum.opencart-russia.ru" target="_blank"><i class="fa fa-comments-o fa-fw"></i> {{ text_support }}</a></li>
 		]]></add>
 	</operation>
 	
@@ -2262,15 +2262,6 @@ $_['error_agree']    = 'Вы должны прочитать и согласит
 
 <!-- Скрываем поля в форме товара -->
 <file path="admin/view/template/catalog/product_form.twig">
-	<operation>
-		<search><![CDATA[
-			<label class="col-sm-2 control-label" for="input-sku"><span data-toggle="tooltip" title="{{ help_sku }}">{{ entry_sku }}</span></label>
-		]]></search>
-		<add position="replace" offset="-2"><![CDATA[
-			   <label class="col-sm-2 control-label" for="input-sku"><span data-toggle="tooltip" title="{{ help_sku }}">{{ entry_sku }}</span></label>
-		]]></add>
-	</operation>
-	
 	<operation>
 		<search><![CDATA[
         <label class="col-sm-2 control-label" for="input-sku">
@@ -2311,7 +2302,6 @@ $_['error_agree']    = 'Вы должны прочитать и согласит
 		]]></search>
 		<add position="replace"><![CDATA[ ]]></add>
 	</operation>
-	
 </file>
 
 
@@ -2482,11 +2472,30 @@ $_['error_agree']    = 'Вы должны прочитать и согласит
 		<add position="replace" offset="1"><![CDATA[
 			{% if license.value == filter_license %}<a href="{{ license.href }}" class="btn btn-default active">{{ license.text }}</a>{% else %}<a href="{{ license.href }}" class="btn btn-default">{{ license.text }}</a>{% endif %}
 			{% endfor %}
-			<a href="https://www.opencart.ru/modules" target="_blank" class="btn btn-default">Модули для OpenCart</a>
+			<a href="https://shop.opencart-russia.ru/" target="_blank" class="btn btn-default">Расширения c opencart-russia.ru</a>
 			</div>
 			]]></add>
 	</operation>
 	
+</file>
+
+
+<!-- Предупреждение о Варезе  -->
+<file path="admin/view/template/marketplace/installer.twig">
+
+	<operation>
+		<search><![CDATA[
+			<legend>{{ text_upload }}</legend>
+		]]></search>
+		<add position="after"><![CDATA[
+		<div class="alert alert-info">
+		<i class="fa fa-info-circle"></i> Перед установкой расширения, рекомендуется прочесть важную информацию в статье
+		<a href="https://shop.opencart-russia.ru/o-warez-virus" class="alert-link" target="_blank">о Варезе и Вирусах</a>!
+		</div>
+
+		]]></add>
+	</operation>
+
 </file>
 
 
@@ -2661,78 +2670,6 @@ require_once(DIR_SYSTEM . 'library/decliner/russian_cases.php');
 	</operation>
 
 </file>
-
-
-<!-- Курсы валют с ЦБРФ -->
-<file path="admin/model/localisation/currency.php">
-
-	<operation>
-		<search><![CDATA[
-		public function refresh($force = false) {
-		]]></search>
-		<add position="replace"><![CDATA[
-			public function old_refresh($force = false) {
-		]]></add>
-	</operation>
-
-	<operation>
-		<search><![CDATA[
-		public function getTotalCurrencies() {
-		]]></search>
-		<add position="before"><![CDATA[
-		// Обновление валюты с ЦБРФ
-		public function refresh($force = true) {
-			$currencies_data = array();
-			
-			if ($force) {
-				$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "currency WHERE code != '" . $this->db->escape($this->config->get('config_currency')) . "'");
-			} else {
-				$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "currency WHERE code != '" . $this->db->escape($this->config->get('config_currency')) . "' AND date_modified < '" .  $this->db->escape(date('Y-m-d H:i:s', strtotime('-1 day'))) . "'");
-			}
-			
-			$currencies_data[$this->config->get('config_currency')] = true;
-			foreach ($query->rows as $result) {
-				$currencies_data[$result['code']] = true;
-			}
-
-			$curl = curl_init();
-			curl_setopt($curl, CURLOPT_URL, 'http://www.cbr.ru/scripts/XML_daily.asp');
-			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-			curl_setopt($curl, CURLOPT_HEADER, false);
-			curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 30);
-			curl_setopt($curl, CURLOPT_TIMEOUT, 30);
-			$content = curl_exec($curl);
-			curl_close($curl);
-			if (!$content)  return false;
-
-			$currencies = simplexml_load_string($content);
-			if (!$currencies || count($currencies) == 0) return false;
-			
-			foreach ($currencies as $currency) {
-				if (isset($currencies_data[(string)$currency->CharCode])) {
-					$value = str_replace(',', '.', (string)$currency->Value);
-					$currencies_data[(string)$currency->CharCode] = $value / $currency->Nominal;
-				}
-			}
-			
-			foreach ($currencies_data as $currency => $value) {
-				if ($currency != $this->config->get('config_currency')) {
-					$currencies_data[$currency] = $currencies_data[$this->config->get('config_currency')] / $value;
-				}
-			}
-			
-			$currencies_data[$this->config->get('config_currency')] = 1;
-			foreach ($currencies_data as $currency => $value) {
-				$this->db->query("UPDATE " . DB_PREFIX . "currency SET value = '" . (float)$value . "', date_modified = '" .  $this->db->escape(date('Y-m-d H:i:s')) . "' WHERE code = '" . $this->db->escape($currency) . "'");
-			}
-			
-			$this->cache->delete('currency');
-		}
-		]]></add>
-	</operation>
-
-</file>
-
 
 
 <!-- Заглушаем пока будущий функционал рекламы OpenCart в модулях-->

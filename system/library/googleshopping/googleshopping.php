@@ -2,9 +2,9 @@
 
 namespace googleshopping;
 
+use \googleshopping\Exception\Connection as ConnectionException;
+use \googleshopping\Exception\AccessForbidden as AccessForbiddenException;
 use \googleshopping\traits\StoreLoader;
-use \googleshopping\exception\Connection as ConnectionException;
-use \googleshopping\exception\AccessForbidden as AccessForbiddenException;
 
 class Googleshopping extends Library {
     use StoreLoader;
@@ -130,7 +130,7 @@ class Googleshopping extends Library {
         $sql = "SELECT * FROM `" . DB_PREFIX . "googleshopping_target` WHERE store_id=" . $store_id;
 
         return array_map(array($this, 'target'), $this->db->query($sql)->rows);
-    }    
+    }
 
     public function getTarget($advertise_google_target_id) {
         $sql = "SELECT * FROM `" . DB_PREFIX . "googleshopping_target` WHERE advertise_google_target_id=" . (int)$advertise_google_target_id;
@@ -367,7 +367,7 @@ class Googleshopping extends Library {
 
                 do {
                     ${'custom_label_' . ($i++)} = trim(strtolower(array_pop($campaigns)));
-                } while (!empty($campaigns));
+                } while ($campaigns);
             }
 
             $mpn = !empty($row['mpn']) ? $row['mpn'] : '';
@@ -583,7 +583,7 @@ class Googleshopping extends Library {
         return implode(",", array_map(array($this, 'integer'), $product_ids));
     }
 
-    public function integer(&$product_id) {
+    public function integer($product_id) {
         if (!is_numeric($product_id)) {
             return 0;
         } else {
@@ -665,7 +665,7 @@ class Googleshopping extends Library {
                     $product_reports = $this->getProductReports($chunk);
 
                     if (!empty($product_reports)) {
-                        $this->updateProductReports($product_reports, $this->store_id);
+                        $this->updateProductReports($product_reports);
                         $report_count += count($product_reports);
                     }
                 }
@@ -768,7 +768,7 @@ class Googleshopping extends Library {
             $entry['conversions'] = (int)$report['conversions'];
             $entry['cost'] = ((int)$report['cost']) / self::MICROAMOUNT;
             $entry['conversion_value'] = (float)$report['conversion_value'];
-            
+
             $values[] = "(" . implode(",", $entry) . ")";
         }
 
@@ -803,10 +803,10 @@ class Googleshopping extends Library {
                             if ($product_level_entries[$product_id]['destination_status'] == 'pending') {
                                 $product_level_entries[$product_id]['destination_status'] = 'approved';
                             }
-                        break;
+                            break;
                         case 'disapproved' :
                             $product_level_entries[$product_id]['destination_status'] = 'disapproved';
-                        break;
+                            break;
                     }
                 }
             }
@@ -849,7 +849,7 @@ class Googleshopping extends Library {
             $entry_status['destination_statuses'] = "'" . $this->db->escape(json_encode($entry_status['destination_statuses'])) . "'";
             $entry_status['data_quality_issues'] = "'" . $this->db->escape(json_encode($entry_status['data_quality_issues'])) . "'";
             $entry_status['item_level_issues'] = "'" . $this->db->escape(json_encode($entry_status['item_level_issues'])) . "'";
-            
+
             $product_advertise_google_status[] = "(" . implode(",", $entry_status) . ")";
         }
 
@@ -946,7 +946,7 @@ class Googleshopping extends Library {
         return $log_message;
     }
 
-    protected function sendEmailReport(&$report) {
+    protected function sendEmailReport($report) {
         if (!$this->setting->get('advertise_google_cron_email_status')) {
             return; //Do nothing
         }
@@ -973,7 +973,7 @@ class Googleshopping extends Library {
         $mail->setSubject(html_entity_decode($subject, ENT_QUOTES, "UTF-8"));
         $mail->setText(strip_tags($message));
         $mail->setHtml($message);
-        
+
         $mail->send();
     }
 
@@ -1012,7 +1012,7 @@ class Googleshopping extends Library {
 
         if (!is_file(DIR_IMAGE . $image_new) || (filemtime(DIR_IMAGE . $image_old) > filemtime(DIR_IMAGE . $image_new))) {
             list($width_orig, $height_orig, $image_type) = getimagesize(DIR_IMAGE . $image_old);
-            
+
             if ($width_orig * $height_orig * 4 > $this->memoryLimitInBytes() * 0.4) {
                 throw new \RuntimeException("Image too large, skipping: " . $image_old);
             }
@@ -1020,7 +1020,7 @@ class Googleshopping extends Library {
             if (!in_array($image_type, array(IMAGETYPE_PNG, IMAGETYPE_JPEG, IMAGETYPE_GIF))) {
                 throw new \RuntimeException("Unexpected image type, skipping: " . $image_old);
             }
-                        
+
             $path = '';
 
             $directories = explode('/', dirname($image_new));
@@ -1041,9 +1041,9 @@ class Googleshopping extends Library {
                 copy(DIR_IMAGE . $image_old, DIR_IMAGE . $image_new);
             }
         }
-        
+
         $image_new = str_replace(array(' ', ','), array('%20', '%2C'), $image_new);  // fix bug when attach image on email (gmail.com). it is automatic changing space " " to +
-        
+
         return $this->store_url . 'image/' . $image_new;
     }
 
@@ -1051,8 +1051,8 @@ class Googleshopping extends Library {
         return utf8_substr(
             trim(
                 preg_replace(
-                    '~\s+~', 
-                    ' ', 
+                    '~\s+~',
+                    ' ',
                     strip_tags(
                         html_entity_decode(htmlspecialchars_decode($text, ENT_QUOTES), ENT_QUOTES, 'UTF-8')
                     )
@@ -1065,7 +1065,7 @@ class Googleshopping extends Library {
 
     protected function setRuntimeExceptionErrorHandler() {
         set_error_handler(function($code, $message, $file, $line) {
-            if (error_reporting() === 0) {
+            if (!(error_reporting() & $code)) {
                 return false;
             }
 
@@ -1196,7 +1196,7 @@ class Googleshopping extends Library {
     public function getCampaignReports() {
         $targets = array();
         $statuses = array();
-        
+
         foreach ($this->getTargets($this->store_id) as $target) {
             $targets[] = $target['campaign_name'];
             $statuses[$target['campaign_name']] = $target['status'];
@@ -1346,7 +1346,7 @@ class Googleshopping extends Library {
             $header = explode(',', $lines[1]);
             $data = array();
             $keys = array();
-            
+
             $expected = array(
                 'Item Id' => 'offer_id',
                 'Impressions' => 'impressions',
@@ -1436,7 +1436,7 @@ class Googleshopping extends Library {
             'endpoint' => self::ENDPOINT_CAMPAIGN_TEST,
             'use_access_token' => true
         );
-        
+
         $result = $this->api($request);
 
         return $result['status'] === true;
@@ -1447,7 +1447,7 @@ class Googleshopping extends Library {
             'endpoint' => self::ENDPOINT_ACCESS_TOKEN_TEST,
             'use_access_token' => true
         );
-        
+
         try {
             $result = $this->api($request);
 
@@ -1547,7 +1547,7 @@ class Googleshopping extends Library {
             $this->deleteVerificationToken($token);
         } catch (\RuntimeException $e) {
             $this->deleteVerificationToken($token);
-            
+
             throw $e;
         }
     }
