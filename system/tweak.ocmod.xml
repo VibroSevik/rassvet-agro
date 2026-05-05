@@ -1252,7 +1252,7 @@ $_['error_agree']    = 'Вы должны прочитать и согласит
 	</operation>
 
 	<operation>
-		<search><![CDATA[{% else %} <span class="price-new">{{ product.special }}</span> <span class="price-old">{{ product.price }}</span> {% endif %}]]></search>
+		<search><![CDATA[{% else %} <span class="price-new">{{ product.special }}</span> <span class="price-old"><span class="price_no_format{{ product.product_id }}" price="{{ product.price_no_format }}">{{ product.price }}</span></span> {% endif %}]]></search>
 		<add position="replace"><![CDATA[{% else %} <span class="price-new"><span class="special_no_format{{ product.product_id }}" price="{{ product.special_no_format }}">{{ product.special }}</span></span> <span class="price-old"><span class="price_no_format{{ product.product_id }}" price="{{ product.price_no_format }}">{{ product.price }}</span> </span> {% endif %}]]></add>
 	</operation>
 </file>
