@@ -1,5 +1,7 @@
 <?php 
 
+$_['text_loading'] = 'Загрузка...';
+
 $_['title_payment_address']  						= 'Данные клиента';
 $_['description_payment_address']  					= '';
 $_['title_shipping_address']  						= 'Данные получателя';
