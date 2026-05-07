@@ -877,7 +877,7 @@ select.ve-input {
     opacity: 0; }
   .ve-radio--selected {
     font-weight: bold;
-    color: #648bfd; }
+    color: var(--color-primary); }
   .ve-radio i {
     position: unset; }
   .ve-radio i:after,
@@ -899,12 +899,12 @@ select.ve-input {
     -webkit-transform: scale(0);
             transform: scale(0); }
   .ve-radio [type=radio]:checked + i:after {
-    background-color: #648bfd;
+    background-color: var(--color-primary);
     -webkit-transform: scale(0.4);
             transform: scale(0.4);
     transition: .4s; }
   .ve-radio [type=radio]:checked + i:before {
-    border: 1px solid #648bfd;
+    border: 1px solid var(--color-primary);
     background-color: #fff; }
 
 .ve-switch {
@@ -1076,8 +1076,13 @@ label.ve-file {
   [type='range'].ve-input:disabled::-ms-fill-upper {
     cursor: not-allowed; }
 
-.ve-field:not(:last-child) {
-  margin-bottom: 10px; }
+.ve-field {
+  margin-bottom: 0;
+}
+
+.ve-field:not(:last-child):has(> div, > input, > select, > textarea, > form) {
+  margin-bottom: 10px;
+}
 
 .ve-field .ve-label {
   margin-bottom: 5px;
@@ -1268,7 +1273,7 @@ label.ve-file {
     margin-right: 15px; }
   .ve-card__header {
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    padding: 15px; }
+    padding: 7.5px 15px 7.5px 15px; }
     .ve-card__header h1:last-child,
     .ve-card__header h2:last-child,
     .ve-card__header h3:last-child,
@@ -1413,8 +1418,12 @@ a:not([href]):not([tabindex]).ve-btn {
   .ve-btn--primary,
   a.ve-btn--primary,
   a:not([href]):not([tabindex]).ve-btn--primary {
-    background: #648bfd;
-    color: #fff; }
+    color: #777;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    background-color: #e7e7e7;
+    background-image: linear-gradient(to bottom, #eeeeee, #dddddd);
+    background-repeat: repeat-x;
+    border-color: #dddddd #dddddd #b3b3b3 #b7b7b7; }
     .ve-btn--primary > *,
     a.ve-btn--primary > *,
     a:not([href]):not([tabindex]).ve-btn--primary > * {
@@ -1426,13 +1435,18 @@ a:not([href]):not([tabindex]).ve-btn {
     .ve-btn--primary:hover,
     a.ve-btn--primary:hover,
     a:not([href]):not([tabindex]).ve-btn--primary:hover {
-      background: #6e93fd; }
+      color: #333;
+      background-color: #e6e6e6;
+      background-image: linear-gradient(to bottom, #eeeeee, #dddddd);
+      background-repeat: repeat-x;
+      border-color: #dddddd #dddddd #b3b3b3 #b7b7b7; }
     .ve-btn--primary:active, .ve-btn--primary.active,
     a.ve-btn--primary:active,
     a.ve-btn--primary.active,
     a:not([href]):not([tabindex]).ve-btn--primary:active,
     a:not([href]):not([tabindex]).ve-btn--primary.active {
-      background: #1852fc; }
+      color: #ffffff;
+      background: var(--color-primary); }
   .ve-btn--danger,
   a.ve-btn--danger,
   a:not([href]):not([tabindex]).ve-btn--danger {
