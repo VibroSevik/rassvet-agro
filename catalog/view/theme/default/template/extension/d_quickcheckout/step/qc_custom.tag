@@ -7,7 +7,7 @@
 
         <!-- Step -->
         <div class="ve-card" if={ getConfig().custom.display == 1 && getState().config.guest.custom.style == 'card' }>
-            <div class="ve-card__header">
+            <div if={ getConfig().custom.show_header } class="ve-card__header">
                 <h4 class="ve-h4">
                     <span if={ getConfig().custom.icon } class="icon">
                         <i class="{ getConfig().custom.icon }"></i>
