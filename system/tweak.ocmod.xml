@@ -870,6 +870,11 @@ require_once(DIR_SYSTEM . 'library/decliner/russian_cases.php');
 
 <file path="catalog/language/ru-ru/information/contact.php">
 	<operation>
+		<search><![CDATA[$_['text_agree']     = 'Я прочитал <a href="%s" class="agree"><b>%s</b></a> и согласен с <br /> условиями безопасности и обработки персональных данных ';]]></search>
+		<add position="replace"><![CDATA[$_['text_agree']     = 'Я прочитал <a href="%1$s" class="agree" data-title="%2$s"><b>%3$s</b></a> и согласен с <br /> условиями безопасности и обработки персональных данных';]]></add>
+	</operation>
+
+	<operation>
 		<search><![CDATA[
 		$_['error_name']     = 'Имя должно быть от 3 до 32 символов!';
 		]]></search>
@@ -1473,7 +1478,7 @@ $_['error_agree']    = 'Вы должны прочитать и согласит
 
 	<operation>
 		<search><![CDATA[<script src="catalog/view/theme/nice/javascript/common.js" type="text/javascript"></script>]]></search>
-		<add position="after"><![CDATA[    <script src="catalog/view/theme/nice/javascript/overrided_common.js" type="text/javascript"></script>]]></add>
+		<add position="replace"><![CDATA[<script src="catalog/view/theme/nice/javascript/overrided_common.js" type="text/javascript"></script>]]></add>
 	</operation>
 
 	<operation>
@@ -2483,6 +2488,7 @@ require_once(DIR_SYSTEM . 'library/decliner/russian_cases.php');
 				$data['text_agree'] = sprintf(
                     $this->language->get('text_agree'),
                     $this->url->link('information/information/agree', 'information_id=' . $this->config->get('config_account_id'), true),
+                    $information_info['title'],
                     $errorText
                 );
 			} else {
