@@ -14,6 +14,7 @@ $_['d_quickcheckout_custom_language'] = array(
     );
 $_['d_quickcheckout_custom'] = array(
     'id' => 'custom',
+    'show_header' => false,
     'icon' => '',
     'text' => 'heading_title',
     'description' => 'description_custom',

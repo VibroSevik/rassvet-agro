@@ -23,7 +23,7 @@ $_['d_quickcheckout_cart_language'] = array(
 );
 $_['d_quickcheckout_cart'] = array(
     'id' => 'cart',
-    'icon' => '', //'fa fa-shopping-cart',
+    'icon' => 'fa fa-shopping-cart',
     'text' => 'heading_title',
     'description' => 'description_cart',
     'display_text' => 1,
