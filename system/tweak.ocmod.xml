@@ -276,6 +276,49 @@ require_once(DIR_SYSTEM . 'library/decliner/russian_cases.php');
 </file>
 
 
+<file path="catalog/controller/checkout/checkout.php">
+	<operation>
+		<search><![CDATA[
+<?php
+		]]></search>
+		<add position="after"><![CDATA[
+require_once(DIR_SYSTEM . 'library/decliner/russian_cases_decliner.php');
+require_once(DIR_SYSTEM . 'library/decliner/russian_cases.php');
+
+// @todo: need some refactoring here
+]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[$data['header'] = $this->load->controller('common/header');]]></search>
+		<add position="before"><![CDATA[
+		if ($this->config->get('config_account_id')) {
+			$this->load->model('catalog/information');
+
+			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_account_id'));
+
+			if ($information_info) {
+				$decliner = new Decliner\RussianCasesDecliner();
+
+                $errorText = $decliner->declinePhrase($information_info['title'], \Decliner\RussianCases::ACCUSATIVE);
+
+				$data['text_agree'] = sprintf(
+                    $this->language->get('text_agree'),
+                    $this->url->link('information/information/agree', 'information_id=' . $this->config->get('config_account_id'), true),
+                    $information_info['title'],
+                    $errorText
+                );
+			} else {
+				$data['text_agree'] = '';
+			}
+		} else {
+			$data['text_agree'] = '';
+		}
+]]></add>
+	</operation>
+</file>
+
+
 <file path="catalog/controller/checkout/success.php">
 	<operation>
 		<search><![CDATA[if (isset($this->session->data['order_id'])) {]]></search>
@@ -858,12 +901,46 @@ require_once(DIR_SYSTEM . 'library/decliner/russian_cases.php');
 </file>
 
 
+<file path="catalog/language/ru-ru/checkout/checkout.php">
+	<operation>
+		<search><![CDATA[$_['text_agree']                     = 'Я прочитал <a href="%s" class="agree"><b>%s</b></a> и согласен с <br /> условиями безопасности и обработки персональных данных';]]></search>
+		<add position="replace"><![CDATA[$_['text_agree']                     = 'Я прочитал <a href="%1$s" class="agree" data-title="%2$s"><b>%3$s</b></a> и согласен с <br /> условиями безопасности и обработки персональных данных';]]></add>
+	</operation>
+</file>
+
+
 <file path="catalog/language/ru-ru/common/header.php">
 	<operation>
 		<search><![CDATA[
 		$_['text_all']           = 'Смотреть Все';
 		]]></search>
 		<add position="after"><![CDATA[$_['text_contact']       = 'Контакты';]]></add>
+	</operation>
+</file>
+
+
+<file path="catalog/language/ru-ru/extension/d_quickcheckout/custom.php">
+	<operation>
+		<search><![CDATA[$_['error_comment_not_empty'] = 'Please leave a comment to your order.';]]></search>
+		<add position="after"><![CDATA[$_['text_agree'] = 'Я прочитал <a href="%1$s" class="agree" data-title="Оферта"><b>Оферту</b></a> и согласен с <br /> условиями безопасности и обработки персональных данных';]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[$_['error_comment_not_empty'] = 'Please leave a comment to your order.';]]></search>
+		<add position="after"><![CDATA[$_['error_agree'] = 'Вы должны прочитать и согласится с Офертой!';]]></add>
+	</operation>
+</file>
+
+
+<file path="catalog/language/ru-ru/extension/d_quickcheckout/payment_address.php">
+	<operation>
+		<search><![CDATA[$_['entry_fax'] = 'Fax';]]></search>
+		<add position="after"><![CDATA[$_['text_agree'] = 'Я прочитал <a href="%1$s" class="agree" data-title="Политика конфиденциальности"><b>Политику конфиденциальности</b></a> и согласен с <br /> условиями безопасности и обработки персональных данных';]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[$_['entry_fax'] = 'Fax';]]></search>
+		<add position="after"><![CDATA[$_['error_agree'] = 'Вы должны прочитать и согласится с Политикой конфиденциальности!';]]></add>
 	</operation>
 </file>
 
