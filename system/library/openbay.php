@@ -4,6 +4,7 @@ final class Openbay {
 	private $installed_modules = array();
 	public $installed_markets = array();
 	private $logging = 1;
+    private $logger;
 
 	public function __construct($registry) {
 		// OpenBay Pro
