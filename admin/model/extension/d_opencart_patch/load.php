@@ -1,7 +1,7 @@
 <?php
-
 /*
- * location: admin/model/extension/d_opencart_patch/load.php
+ *  location: admin/model/extension/d_opencart_patch/load.php
+ *
  */
 
 class ModelExtensionDOpencartPatchLoad extends Model {

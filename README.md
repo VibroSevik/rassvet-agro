@@ -1,10 +1,10 @@
-## Rassvet Agro | OpenCart 3.0.3.2 + PHP 7
+## Rassvet Agro | OpenCart 3.0.4.0 + PHP 8.0
 
 ## :computer: Installation on local machine
 
 > [!IMPORTANT]
 > Requirements for system and environment: <br>
-> 1) PHP 7.4 with [OpenCart requirements](https://blog.chenniweb.com/opencart-3-x-minimum-requirements-and-features/).
+> 1) PHP 8.0 with [OpenCart requirements](https://blog.chenniweb.com/opencart-3-x-minimum-requirements-and-features/).
 
 As an administrator:
 

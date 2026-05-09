@@ -1,10 +1,9 @@
 <?php
-
 /*
- * location: admin/model/extension/d_opencart_patch/event.php
+ *  location: admin/model/extension/d_opencart_patch/event.php
  *  
- * This is only a wrapper for basic event model. If you want full control of events
- * you should go for d_event_manager. You will be able to delete events by ID and more.
+ *  This is only a wrapper for basic event model. If you want full controll of events
+ *  you should go for d_event_manager. You will be able to delete events by ID and more.
  */
 
 class ModelExtensionDOpencartPatchEvent extends Model {
@@ -35,7 +34,7 @@ class ModelExtensionDOpencartPatchEvent extends Model {
     **/
     public function installDatabase(){
         
-        $this->db->query("CREATE TABLE IF NOT EXISTS `".DB_DATABASE."event` (
+        $this->db->query("CREATE TABLE IF NOT EXISTS `".DB_PREFIX."event` (
           `event_id` int(11) NOT NULL AUTO_INCREMENT,
           `code` varchar(32) NOT NULL,
           `trigger` text NOT NULL,

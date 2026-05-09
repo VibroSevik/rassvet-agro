@@ -1,77 +1,77 @@
 <?php
 namespace Session;
 class File {
-	private $directory;
+    private $directory;
 
-	public function read($session_id) {
-		$file = DIR_SESSION . '/sess_' . basename($session_id);
+    public function read($session_id) {
+        $file = DIR_SESSION . 'sess_' . basename($session_id);
 
-		if (is_file($file)) {
-			$handle = fopen($file, 'r');
+        if (is_file($file)) {
+            $handle = fopen($file, 'r');
 
-			flock($handle, LOCK_SH);
+            flock($handle, LOCK_SH);
 
-			$data = fread($handle, filesize($file));
+            $data = fread($handle, filesize($file));
 
-			flock($handle, LOCK_UN);
+            flock($handle, LOCK_UN);
 
-			fclose($handle);
+            fclose($handle);
 
-			return unserialize($data);
-		} else {
-			return array();
-		}
-	}
+            return unserialize($data);
+        } else {
+            return array();
+        }
+    }
 
-	public function write($session_id, $data) {
-		$file = DIR_SESSION . '/sess_' . basename($session_id);
+    public function write($session_id, $data) {
+        $file = DIR_SESSION . 'sess_' . basename($session_id);
 
-		$handle = fopen($file, 'w');
+        $handle = fopen($file, 'w');
 
-		flock($handle, LOCK_EX);
+        flock($handle, LOCK_EX);
 
-		fwrite($handle, serialize($data));
+        fwrite($handle, serialize($data));
 
-		fflush($handle);
+        fflush($handle);
 
-		flock($handle, LOCK_UN);
+        flock($handle, LOCK_UN);
 
-		fclose($handle);
+        fclose($handle);
 
-		return true;
-	}
+        return true;
+    }
 
-	public function destroy($session_id) {
-		$file = DIR_SESSION . '/sess_' . basename($session_id);
+    public function destroy($session_id) {
+        $file = DIR_SESSION . 'sess_' . basename($session_id);
 
-		if (is_file($file)) {
-			unset($file);
-		}
-	}
+        if (is_file($file)) {
+            unlink($file);
+        }
+    }
 
-	public function __destruct() {
-		if (ini_get('session.gc_divisor')) {
-			$gc_divisor = ini_get('session.gc_divisor');
-		} else {
-			$gc_divisor = 1;
-		}
+    public function __destruct() {
+        if (ini_get('session.gc_divisor')) {
+            $gc_divisor = ini_get('session.gc_divisor');
+        } else {
+            $gc_divisor = 1;
+        }
 
-		if (ini_get('session.gc_probability')) {
-			$gc_probability = ini_get('session.gc_probability');
-		} else {
-			$gc_probability = 1;
-		}
+        if (ini_get('session.gc_probability')) {
+            $gc_probability = ini_get('session.gc_probability');
+        } else {
+            $gc_probability = 1;
+        }
 
-		if ((rand() % $gc_divisor) < $gc_probability) {
-			$expire = time() - ini_get('session.gc_maxlifetime');
+        if ((rand() % $gc_divisor) < $gc_probability) {
+            $expire = time() - ini_get('session.gc_maxlifetime');
 
-			$files = glob(DIR_SESSION . '/sess_*');
+            $files = glob(DIR_SESSION . 'sess_*');
 
-			foreach ($files as $file) {
-				if (filemtime($file) < $expire) {
-					unlink($file);
-				}
-			}
-		}
-	}
+            foreach ($files as $file) {
+                if (filemtime($file) < $expire) {
+                    unlink($file);
+                }
+            }
+        }
+    }
 }

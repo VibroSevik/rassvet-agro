@@ -5,11 +5,11 @@
  * @copyright	Copyright (c) 2005 - 2017, OpenCart, Ltd. (https://www.opencart.com/)
  * @license		https://opensource.org/licenses/GPL-3.0
  * @link		https://www.opencart.com
-*/
+ */
 
 /**
-* Action class
-*/
+ * Action class
+ */
 class Action {
 	private $id;
 	private $route;
@@ -61,8 +61,8 @@ class Action {
 			return new \Exception('Error: Calls to magic methods are not allowed!');
 		}
 
-		$file  = DIR_APPLICATION . 'controller/' . $this->route . '.php';	
-		$class = 'Controller' . preg_replace('/[^a-zA-Z0-9]/', '', $this->route);
+		$file  = DIR_APPLICATION . 'controller/' . $this->route . '.php';
+		$class = 'Controller' . preg_replace('/[^a-zA-Z0-9]/', '', (string)$this->route);
 		
 		// Initialize the class
 		if (is_file($file)) {

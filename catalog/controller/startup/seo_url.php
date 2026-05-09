@@ -1,4 +1,4 @@
-<?php 
+<?php // ==========================================  seo_url.php v.140618 opencart-russia.ru ===============================
 class ControllerStartupSeoUrl extends Controller {
 	public function index() {
 		// Add rewrite to url class

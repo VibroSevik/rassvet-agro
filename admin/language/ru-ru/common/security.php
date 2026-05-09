@@ -14,6 +14,9 @@ $_['text_to']          = 'в';
 $_['text_config']      = 'Откройте файл config.php и измените его';
 $_['text_admin']       = 'Откройте файл admin/config.php и измените его';
 
+// Entry
+$_['entry_directory']  = 'Директория';
+
 // Button
 $_['button_move']      = 'Переместить';
 $_['button_manual']    = 'Самостоятельно';

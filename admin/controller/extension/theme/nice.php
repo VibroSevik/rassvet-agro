@@ -230,20 +230,6 @@ class ControllerExtensionThemeNice extends Controller {
 		
 		/* Promo
 		 ------------------------------------------------------------------------ */
-		$this->load->model('setting/modification');		
-		$modification = $this->model_setting_modification->getModificationByCode('NiceThemeBySergeTkach'); // A! Not Extension Code!
-		
-		$date_installed = new DateTime($modification['date_added']);			
-		$date_now = new DateTime();		
-		$date_diff = $date_now->diff($date_installed);		
-		$date['days_passed'] = $date_diff->days;
-		
-		$data['warship'] = false;
-		
-		if (preg_match('/\.(ru|рф|xn--p1ai)$/', HTTP_CATALOG)) {
-			$data['warship'] = true;
-		}
-
 		if (isset($this->request->post['theme_nice_subscribe_email'])) {
 			$data['theme_nice_subscribe_email'] = $this->request->post['theme_nice_subscribe_email'];
 		} elseif (isset($setting_info['theme_nice_subscribe_email'])) {

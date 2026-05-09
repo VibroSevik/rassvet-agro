@@ -5,11 +5,11 @@
  * @copyright	Copyright (c) 2005 - 2017, OpenCart, Ltd. (https://www.opencart.com/)
  * @license		https://opensource.org/licenses/GPL-3.0
  * @link		https://www.opencart.com
-*/
+ */
 
 /**
-* Router class
-*/
+ * Router class
+ */
 final class Router {
 	private $registry;
 	private $pre_action = array();
@@ -19,7 +19,7 @@ final class Router {
 	 * Constructor
 	 *
 	 * @param	object	$route
- 	*/
+ 	 */
 	public function __construct($registry) {
 		$this->registry = $registry;
 	}
@@ -28,7 +28,7 @@ final class Router {
 	 * 
 	 *
 	 * @param	object	$pre_action
- 	*/	
+ 	 */
 	public function addPreAction(Action $pre_action) {
 		$this->pre_action[] = $pre_action;
 	}
@@ -38,7 +38,7 @@ final class Router {
 	 *
 	 * @param	object	$action
 	 * @param	object	$error
- 	*/		
+ 	 */
 	public function dispatch(Action $action, Action $error) {
 		$this->error = $error;
 
@@ -62,7 +62,7 @@ final class Router {
 	 *
 	 * @param	object	$action
 	 * @return	object
- 	*/
+ 	 */
 	private function execute(Action $action) {
 		$result = $action->execute($this->registry);
 
@@ -77,5 +77,7 @@ final class Router {
 			
 			return $action;
 		}
+
+        return null;
 	}
 }

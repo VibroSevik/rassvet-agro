@@ -2218,27 +2218,27 @@ class CssMin
 	public static function initialise()
 		{
 		// Create the class index for autoloading or including
-		$paths = array(dirname(__FILE__));
-		while (list($i, $path) = each($paths))
-			{
-			$subDirectorys = glob($path . "*", GLOB_MARK | GLOB_ONLYDIR | GLOB_NOSORT);
-			if (is_array($subDirectorys))
-				{
-				foreach ($subDirectorys as $subDirectory)
-					{
-					$paths[] = $subDirectory;
-					}
-				}
-			$files = glob($path . "*.php", 0);
-			if (is_array($files))
-				{
-				foreach ($files as $file)
-					{
-					$class = substr(basename($file), 0, -4);
-					self::$classIndex[$class] = $file;
-					}
-				}
-			}
+		$paths = [__DIR__];
+        for ($i = 0; $i < count($paths); $i++) {
+            $currentPath = $paths[$i];
+
+            $subDirectories = glob($currentPath . "*", GLOB_MARK | GLOB_ONLYDIR | GLOB_NOSORT);
+
+            if ($subDirectories !== false) {
+                foreach ($subDirectories as $subDirectory) {
+                    $paths[] = $subDirectory;
+                }
+            }
+
+            $files = glob($currentPath . "*.php");
+
+            if ($files !== false) {
+                foreach ($files as $file) {
+                    $class = substr(basename($file), 0, -4);
+                    self::$classIndex[$class] = $file;
+                }
+            }
+        }
 		krsort(self::$classIndex);
 		// Only use autoloading if spl_autoload_register() is available and no __autoload() is defined (because 
 		// __autoload() breaks if spl_autoload_register() is used. 

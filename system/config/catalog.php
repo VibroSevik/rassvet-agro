@@ -8,7 +8,7 @@ $_['url_autostart']      = false;
 
 // Database
 $_['db_autostart']       = true;
-$_['db_engine']          = DB_DRIVER; // mpdo, mssql, mysql, mysqli or postgre
+$_['db_engine']          = DB_DRIVER; // mysqli or pgsql
 $_['db_hostname']        = DB_HOSTNAME;
 $_['db_username']        = DB_USERNAME;
 $_['db_password']        = DB_PASSWORD;
@@ -26,9 +26,7 @@ $_['template_directory'] = '';
 $_['template_cache']     = true;
 
 // Autoload Libraries
-$_['library_autoload']   = array(
-	'openbay'
-);
+$_['library_autoload']   = array('openbay');
 
 // Actions
 $_['action_pre_action']  = array(

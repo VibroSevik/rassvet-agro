@@ -19,7 +19,7 @@ function getURLVar(key) {
 		} else {
 			return '';
 		}
-	} else { 			// Изменения для seo_url OpenCart 3x
+	} else { 			// Изменения для seo_url от Русской сборки OpenCart 3x
 		var query = String(document.location.pathname).split('/');
 		if (query[query.length - 1] == 'cart') value['route'] = 'checkout/cart';
 		if (query[query.length - 1] == 'checkout') value['route'] = 'checkout/checkout';

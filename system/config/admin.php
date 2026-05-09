@@ -5,7 +5,7 @@ $_['site_ssl']          = HTTPS_SERVER;
 
 // Database
 $_['db_autostart']      = true;
-$_['db_engine']         = DB_DRIVER; // mpdo, mssql, mysql, mysqli or postgre
+$_['db_engine']         = DB_DRIVER; // mysqli or pgsql
 $_['db_hostname']       = DB_HOSTNAME;
 $_['db_username']       = DB_USERNAME;
 $_['db_password']       = DB_PASSWORD;
@@ -42,8 +42,5 @@ $_['action_event'] = array(
 	'view/*/before' => array(
 		999  => 'event/language',
 		1000 => 'event/theme'
-	),
-	'view/*/before' => array(
-		'event/language'
 	)
 );
