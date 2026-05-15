@@ -229,32 +229,6 @@ require_once(DIR_SYSTEM . 'library/decliner/russian_cases.php');
 </file>
 
 
-<file path="catalog/language/ru-ru/extension/d_quickcheckout/custom.php">
-	<operation>
-		<search><![CDATA[$_['error_comment_not_empty'] = 'Please leave a comment to your order.';]]></search>
-		<add position="after"><![CDATA[$_['text_agree'] = 'Я прочитал <a href="%1$s" class="agree" data-title="Оферта"><b>Оферту</b></a> и согласен с <br /> условиями безопасности и обработки персональных данных';]]></add>
-	</operation>
-
-	<operation>
-		<search><![CDATA[$_['error_comment_not_empty'] = 'Please leave a comment to your order.';]]></search>
-		<add position="after"><![CDATA[$_['error_agree'] = 'Вы должны прочитать и согласится с Офертой!';]]></add>
-	</operation>
-</file>
-
-
-<file path="catalog/language/ru-ru/extension/d_quickcheckout/payment_address.php">
-	<operation>
-		<search><![CDATA[$_['entry_fax'] = 'Fax';]]></search>
-		<add position="after"><![CDATA[$_['text_agree'] = 'Я прочитал <a href="%1$s" class="agree" data-title="Политика конфиденциальности"><b>Политику конфиденциальности</b></a> и согласен с <br /> условиями безопасности и обработки персональных данных';]]></add>
-	</operation>
-
-	<operation>
-		<search><![CDATA[$_['entry_fax'] = 'Fax';]]></search>
-		<add position="after"><![CDATA[$_['error_agree'] = 'Вы должны прочитать и согласится с Политикой конфиденциальности!';]]></add>
-	</operation>
-</file>
-
-
 <file path="catalog/language/ru-ru/information/contact.php">
 	<operation>
 		<search><![CDATA[$_['text_agree']     = 'Я прочитал <a href="%s" class="agree"><b>%s</b></a> и согласен с <br /> условиями безопасности и обработки персональных данных ';]]></search>
