@@ -32,31 +32,26 @@
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-theme" class="form-horizontal">
         {% if theme_nice_status != 0 and days_passed > 2 %}
           <div style="background: #f3f3f3; padding: 15px 15px 20px 15px; margin-bottom: 20px;">
-            {% if warship%}
-            <img class="img-responsive" style="" src="view/image/warship.png" alt="Русский военный корабль, иди нах*й!" />
-            {% else%}
-              <h4>{{ nice_promo_title }}</h4>
-              <div class="row">
-              {% for item in nice_promo %}
-              <div class="col-sm-2">
-                <a target="_blank" href="{{ item.link }}">
-                  <div class="row">
-                    <div class="col-sm-4" style="padding-right: 0;">
-                      <img class="img-responsive" style="width: 96px;" src="view/image/nice/extensions/{{ item.image }}" alt="{{ item.alt }}" />
-                    </div>
-                    <div class="col-sm-8" style="">
-                      <b>{{ item.title }}</b>
-                      <p>{{ item.description }}</p>
-                    </div>
+            <h4>{{ nice_promo_title }}</h4>
+            <div class="row">
+            {% for item in nice_promo %}
+            <div class="col-sm-2">
+              <a target="_blank" href="{{ item.link }}">
+                <div class="row">
+                  <div class="col-sm-4" style="padding-right: 0;">
+                    <img class="img-responsive" style="width: 96px;" src="view/image/nice/extensions/{{ item.image }}" alt="{{ item.alt }}" />
                   </div>
-                </a>
-              </div>
-              {% endfor %}
-              </div>
-            {% endif %}
+                  <div class="col-sm-8" style="">
+                    <b>{{ item.title }}</b>
+                    <p>{{ item.description }}</p>
+                  </div>
+                </div>
+              </a>
+            </div>
+            {% endfor %}
+            </div>
           </div>
           
-          {% if not warship and days_passed > 2 %}
           <div id="subscribe" class="{% if theme_nice_subscribe_email is not empty %}hidden{% endif %}" style="border: 2px dashed #cfcfcf; padding: 10px; margin-bottom: 15px;">
             <div class="row">
               <div class="col-sm-6">
@@ -73,7 +68,6 @@
               </div>
             </div>
           </div>
-          {% endif %}
         {% endif %}
           
           <fieldset>
