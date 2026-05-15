@@ -558,7 +558,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 100);
     }
 
-    mainMenuToggle.addEventListener('click', handleMainMenuToggle);
+    mainMenuToggle?.addEventListener('click', handleMainMenuToggle);
 
 
     // Close
