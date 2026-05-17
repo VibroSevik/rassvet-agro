@@ -48,13 +48,9 @@ or
 docker exec -i <database_container> mysql -u <mysql_user> -p<user_password> <database_name> < /path/to/your/dump.sql
 ```
 
-
-* Go to localhost:8080 and login into dashboard.
-
 > [!IMPORTANT]
-> Standard credentials for admin: <br>
-> login: admin <br>
-> password: foo
+> Application temporarily works only with database dump.
 
-> [!IMPORTANT]
-> Application works only with database dump.
+* Go to localhost:8080/admin and login into dashboard.
+
+* After go to Modules/Extensions page -> Modifications and refresh modifications for generation OCMOD files.
