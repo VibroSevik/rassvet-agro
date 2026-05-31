@@ -558,7 +558,7 @@ $_['d_quickcheckout_payment_address'] = array(
                 ),
                 'email' => array(
                     'display' => 1,
-                    'require' => 0,
+                    'require' => 1,
                     'errors' => array(
                         'error0' => array(
                             'min_length' => 3,
@@ -664,7 +664,7 @@ $_['d_quickcheckout_payment_address'] = array(
                 ),
                 'email' => array(
                     'display' => 1,
-                    'require' => 0,
+                    'require' => 1,
                     'errors' => array(
                         'error0' => array(
                             'min_length' => 3,

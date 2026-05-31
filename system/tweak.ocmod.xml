@@ -50,6 +50,16 @@
 </file>
 
 
+<file path="catalog/controller/extension/module/jivochat.php">
+    <operation>
+        <search><![CDATA[$jivoDescription = $address['postcode'] . ' ' . $address['city'] . ' ' . $address['address_1'];]]></search>
+        <add position="replace"><![CDATA[if (!empty($address)) {
+                    $jivoDescription = $address['postcode'] . ' ' . $address['city'] . ' ' . $address['address_1'];
+                }]]></add>
+    </operation>
+</file>
+
+
 <file path="catalog/controller/account/register.php">
 	<operation>
 		<search><![CDATA[
