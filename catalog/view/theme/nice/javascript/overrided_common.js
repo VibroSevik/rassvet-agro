@@ -595,7 +595,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function handleScreenSizeChange(mediaQuery) {
         if (mediaQuery.matches) {
-            mainMenuToggle.addEventListener('click', handleMainMenuClickOnMobile);
+            mainMenuToggle?.addEventListener('click', handleMainMenuClickOnMobile);
         }
     }
 
