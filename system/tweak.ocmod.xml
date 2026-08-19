@@ -108,7 +108,7 @@ require_once(DIR_SYSTEM . 'library/decliner/russian_cases.php');
 
 	<operation>
 		<search><![CDATA[
-				$data['text_agree'] = sprintf($this->language->get('text_agree'), $this->url->link('information/information/agree', 'information_id=' . $this->config->get('config_account_id'), true), $information_info['title']);
+				$data['text_agree'] = sprintf($this->language->get('text_agree'), $this->url->link('information/information/agree', 'information_id=' . $this->config->get('config_account_id'), true), $information_info['title'], $information_info['title']);
 		]]></search>
 		<add position="replace"><![CDATA[$decliner = new Decliner\RussianCasesDecliner();
 
@@ -119,7 +119,16 @@ require_once(DIR_SYSTEM . 'library/decliner/russian_cases.php');
             		$this->url->link('information/information/agree', 'information_id=' . $this->config->get('config_account_id'), true),
             		$information_info['title'],
             		$errorText
-        		);]]></add>
+        		);
+
+				$errorText = $decliner->declinePhrase('Пользовательское соглашение', \Decliner\RussianCases::ACCUSATIVE);
+
+                $data['user_agree'] = sprintf(
+                    $this->language->get('user_agree'),
+                    $this->url->link('information/information/agree', 'information_id=5', true),
+                    'Пользовательское соглашение',
+                    $errorText
+                );]]></add>
 	</operation>
 
 	<operation>
@@ -148,6 +157,25 @@ require_once(DIR_SYSTEM . 'library/decliner/russian_cases.php');
         		$errorText = $decliner->declinePhrase($information_info['title'], \Decliner\RussianCases::INSTRUMENTAL);
         		$this->error['warning'] = sprintf($this->language->get('error_agree'), $errorText);]]></add>
 	</operation>
+
+	<operation>
+		<search><![CDATA[
+		return !$this->error;]]></search>
+		<add position="before"><![CDATA[		// Пользовательское соглашение
+        if (!isset($this->request->post['user_agree'])) {
+            $this->error['warning'] = $this->language->get('error_user_agree');
+        }
+		]]></add>
+	</operation>
+</file>
+
+
+<file path="catalog/controller/common/header.php">
+	<operation>
+		<search><![CDATA[$data['wishlist'] = $this->url->link('account/wishlist', '', true);]]></search>
+		<add position="before"><![CDATA[		# Статья "Оплата и доставка" в шапке
+		$data['pay_and_delivery_link'] = $this->url->link('information/information', 'information_id=20');]]></add>
+	</operation>
 </file>
 
 
@@ -164,6 +192,14 @@ require_once(DIR_SYSTEM . 'library/decliner/russian_cases.php');
 		$_['error_email']          = 'E-Mail введен неправильно!';
 		]]></search>
 		<add position="after"><![CDATA[$_['error_blank_email']    = 'E-mail адрес не может быть пустым!';]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[
+		$_['error_agree']          = 'Вы должны прочитать и согласится с %s!';
+		]]></search>
+		<add position="after"><![CDATA[$_['user_agree']           = 'Я прочитал <a href="%1$s" class="agree" data-title="%2$s"><b>%3$s</b></a>  соглашение и согласен с <br /> условиями ';
+$_['error_user_agree']     = 'Для продолжения регистрации необходимо согласиться с Пользовательским соглашением!';]]></add>
 	</operation>
 </file>
 
@@ -304,6 +340,20 @@ $_['error_agree']    = 'Вы должны прочитать и согласит
 
 	<operation>
 		<search><![CDATA[
+		<div class="pull-right">{{ text_agree }}
+		]]></search>
+		<add position="before"><![CDATA[          <div class="pull-right">{{ user_agree }}
+            <input type="checkbox" name="user_agree" value="1" />
+          </div>]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[{% if agree %}]]></search>
+		<add position="replace" offset="6"><![CDATA[<input type="checkbox" name="agree" value="1" />]]></add>
+	</operation>
+
+	<operation>
+		<search><![CDATA[
 		{{ footer }}
 		]]></search>
 		<add position="before"><![CDATA[]]></add>
@@ -366,7 +416,21 @@ $_['error_agree']    = 'Вы должны прочитать и согласит
                   <button id="login-button" class="top-dropdown__toggle padding-r-n-xs" type="button" data-toggle="dropdown" title="{{ text_login }}" data-href="{{ login }}"><i class="fa fa-sign-in"></i> <span class="">{{ text_login }}</span></button>
                 {% endif %}
               </div>]]></add>
-		</operation>
+	</operation>
+
+	<operation>
+		<search><![CDATA[<div class="top-2__column header-icons-column">]]></search>
+		<add position="after"><![CDATA[            <div class="header-icons-item">
+                <a href="{{ pay_and_delivery_link }}">
+                  <span class="fa-stack fa-lg header-icon">
+                    <i class="fa fa-circle-thin fa-stack-2x"></i>
+                    <i class="fa fa-truck fa-stack-1x "></i>
+                  </span>
+                  <span class="header-icon-label">Оплата и доставка</span>
+                </a>
+              </div>
+              <div class="header-icons-item">]]></add>
+	</operation>
 </file>
 
 
@@ -629,7 +693,7 @@ $_['error_agree']    = 'Вы должны прочитать и согласит
 		<li><a href="https://www.opencart.ru/support target="_blank"><i class="fa fa-comments-o fa-fw"></i> {{ text_support }}</a></li>
 		]]></add>
 	</operation>
-	
+
 </file>
 
 <!-- Скрываем поля в форме товара -->
