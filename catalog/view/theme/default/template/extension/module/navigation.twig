@@ -1,0 +1,73 @@
+<style>
+    .navbar { margin-top: 30px; }
+    .navbar-default {
+        background-color: {{ menu_color }};
+        border-color: {{ menu_border_color }};
+        color: {{ text_color }};
+    }
+    .navbar .dropdown .{{ icon_fa_class }} {
+        margin-right: 8px;
+        font-size: 22px;
+    }
+    .navbar .dropdown > a {
+        display: flex;
+        align-items: center;
+    }
+    .navbar .dropdown-menu { background-color: {{ dropdown_menu_color }}; }
+    .navbar a { font-size: 16px; }
+    @media only screen and (min-width: 767px) {
+        .navbar li:hover { background-color: {{ button_color_on_hover }}; }
+        .navbar-collapse { padding-left: 0; }
+        .navbar-right { height: 52px; }
+        .navbar-right li { height: 100%; }
+    }
+    @media only screen and (max-width: 767px) {
+        .navbar .dropdown .{{ icon_fa_class }} { display: none; }
+    }
+</style>
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button"
+                    class="navbar-toggle collapsed"
+                    data-toggle="collapse"
+                    data-target="#navbar"
+                    aria-expanded="false"
+                    aria-controls="navbar">
+                <span class="sr-only">{{ toggle_navigation }}</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar">
+            <ul class="nav navbar-nav">
+                <li class="dropdown">
+                    <a href="#"
+                       class="dropdown-toggle"
+                       data-toggle="dropdown"
+                       role="button"
+                       aria-haspopup="true"
+                       aria-expanded="false">
+                        <i class="fa {{ icon_fa_class }}" aria-hidden="true"></i>
+                        {{ all_categories_button_text }}
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        {% for category in categories %}
+                            <li><a href="{{ category.href }}">{{ category.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                {% for page in pages %}
+                    <li><a href="{{ page.href }}">{{ page.name }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</nav>
