@@ -349,7 +349,7 @@ $_['error_agree']    = 'Вы должны прочитать и согласит
 
 	<operation>
 		<search><![CDATA[{% if agree %}]]></search>
-		<add position="replace" offset="6"><![CDATA[<input type="checkbox" name="agree" value="1" />]]></add>
+		<add position="replace" offset="4"><![CDATA[<input type="checkbox" name="agree" value="1" />]]></add>
 	</operation>
 
 	<operation>
